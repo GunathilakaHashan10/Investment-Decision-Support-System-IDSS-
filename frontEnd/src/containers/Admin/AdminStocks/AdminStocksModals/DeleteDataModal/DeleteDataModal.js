@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
+import * as myConstants from '../../../../Utils/Constants/Constants';
 import ReactLoading from 'react-loading';
 import lodingStyles from '../../../../../assets/css/ReactLoading/ReactLoading.css';
 import modalStyles from '../../../../../assets/css/Admin/AdminStocks/AdminStocksModals/DeleteDataModal/DeleteDataModal.css';
@@ -38,7 +39,7 @@ class DeleteDataModal extends Component {
         formData.append('endDate', this.state.endDate);
         formData.append('id', this.state.shareId);
 
-        axios.post('http://localhost:5000/deleteData', formData)
+        axios.post(`${myConstants.SEVER_URL}/admin/deleteData`, formData)
             .then(response => {
                 setTimeout(() => {
                     this.setState({

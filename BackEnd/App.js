@@ -61,7 +61,7 @@ app.use(shareHandleRoutes);
 app.use(indexHandleRoutes);
 app.use(ltpRoutes);
 app.use(shareComparsionRoutes);
-app.use(adminRoutes);
+app.use('/admin',adminRoutes);
 app.use(adsPublishRoutes);
 app.use(adsDetailsRoutes);
 app.use(publisherAds);

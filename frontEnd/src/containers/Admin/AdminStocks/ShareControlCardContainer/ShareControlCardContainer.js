@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ReactLoading from 'react-loading';
+import * as myConstants from '../../../Utils/Constants/Constants';
 import ShareControlCard from '../ShareControlCard/ShareControlCard';
 import UpdateShareModal from '../AdminStocksModals/UpdateShareModal/UpdateShareModal';
 import ShareDeleteModal from '../AdminStocksModals/ShareDeleteModal/ShareDeleteModal';
@@ -22,7 +23,7 @@ class ShareControlCardContainer extends Component {
 
     componentDidMount() {
         this.setState({ isLoading: true});
-        axios.get("http://localhost:5000/adminShares")
+        axios.get(`${myConstants.SEVER_URL}/admin/adminShares`)
             .then(response => {
                 
                 this.setState(prevState => {

@@ -9,6 +9,7 @@ const homeAdsSchema = new Schema({
     },
     publisherId: {
         type: Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
     propertyType: { 

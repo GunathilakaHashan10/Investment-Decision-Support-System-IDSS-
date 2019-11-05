@@ -74,9 +74,9 @@
     margin-right: 0.2rem;
     border: none;
     padding: 0.3rem 0;
-    border: 1px solid rgb(4, 68, 158);
+    border: 1px solid rgb(70, 14, 4);
     background-color: white;
-    color: rgb(4, 68, 158);
+    color: rgb(70, 14, 4);
     font-family: inherit;
     font-size: 0.7rem;
     font-weight: 500;
@@ -88,7 +88,7 @@
 }
 
 .button_container button:hover {
-    border: 1px solid rgb(4, 68, 158);
-    background-color: rgb(4, 68, 158);
+    border: 1px solid rgb(70, 14, 4);
+    background-color: rgb(70, 14, 4);
     color: white
 }

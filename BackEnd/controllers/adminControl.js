@@ -1,4 +1,7 @@
 const Share = require('../models/shareHandle/shareHandle');
+const LandAds = require('../models/LandAds/LandAds');
+const HomeAds = require('../models/HomeAds/HomeAds');
+const User = require('../models/auth/User');
 const { timeParse} = require('d3-time-format');
 
 const parseDate = timeParse("%Y-%m-%d");
@@ -130,4 +133,69 @@ exports.deleteShareData = (req, res, next) => {
         .catch(error => {
             console.log(error);
         })
+}
+
+exports.retriveAdvertisers = (req, res, next) => {
+    
+    User
+        .find({isAdvertiser:true})
+        .then(docs => {
+            if(docs.length === 0) {
+                return res.status(200).json({success: false});
+            }
+            return res.status(200).json({docs: docs, success:true});
+        })
+        .catch(error => {
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
+        });
+}
+
+exports.getPublisherAds = (req, res, next) => {
+    const publisherId = req.query.publisherId;
+    let allAds = [];
+    let salesAdsCount = 0;
+    let rentAdsCount = 0;
+   
+    HomeAds.find()
+        .then(HomeAds => {
+            if(HomeAds.length !== 0){
+                HomeAds.forEach(homeAd => {
+                    if(JSON.stringify(homeAd.publisherId) === JSON.stringify(publisherId)) {
+                        allAds.push(homeAd);
+                        if(homeAd.sellOrRent === "Rent") {
+                            rentAdsCount = rentAdsCount + 1;
+                        } else {
+                            salesAdsCount = salesAdsCount + 1;
+                        }
+                    }
+                })
+            } 
+            LandAds.find()
+            .then(LandAds => {
+                if(LandAds.length !== 0) {
+                    LandAds.forEach(landAd => {
+                        if(JSON.stringify(landAd.publisherId) === JSON.stringify(publisherId)){
+                            allAds.push(landAd);
+                            
+                            salesAdsCount = salesAdsCount + 1;
+                        }
+                    })
+                }
+                if(allAds.length !== 0) {
+                    res.status(200).json({allAds:allAds, salesAdsCount:salesAdsCount, rentAdsCount:rentAdsCount});
+                } else {
+                    throw new Error("No ads");
+                }
+            })
+        })
+        .catch(error => {
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
+        }) 
+
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ReactLoading from 'react-loading';
+import * as myConstants from '../../../../Utils/Constants/Constants';
 import lodingStyles from '../../../../../assets/css/ReactLoading/ReactLoading.css';
 import modalStyles from '../../../../../assets/css/Admin/AdminStocks/AdminStocksModals/DeleteShareModal/DeleteShareModal.css';
 
@@ -14,7 +15,7 @@ class ShareDeleteModal extends Component {
     handleDelete = () => {
         this.setState({isLoading: true})
 
-        axios.post('http://localhost:5000/deleteShare?id=' + this.state.shareId)
+        axios.post(`${myConstants.SEVER_URL}/admin/deleteShare?id=` + this.state.shareId)
             .then(response => {
                 console.log(response.data.message)
                 setTimeout(() => {
