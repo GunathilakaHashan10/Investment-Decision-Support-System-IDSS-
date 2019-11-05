@@ -1,0 +1,43 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.bank_head {
+    font-family: inherit;
+    margin: 1rem 0;
+    padding-left: 0.5rem;
+}
+
+.bank_description {
+    padding: 1rem 0;
+    height: 20%;
+    font-family: inherit;
+    font-weight: 500;
+    padding-left: 0.5rem;
+}
+
+.bank_table_row_head  {
+    width: 100%;
+}
+
+.bank_table_row_head td {
+    width: 10%;
+    padding: 0.5rem 0;
+    background-color: #006AFF;
+    color: white;
+    padding-left: 0.5rem;
+    font-family: inherit;
+    font-weight: 500;
+
+}
+
+.bank_table_row td {
+    width: 10%;
+    padding: 0.5rem 0;
+    padding-left: 0.5rem;
+    font-family: inherit;
+    font-weight: 500;
+    background-color: rgb(223, 231, 241);
+}

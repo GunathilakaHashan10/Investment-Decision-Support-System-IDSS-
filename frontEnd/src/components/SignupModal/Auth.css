@@ -1,0 +1,177 @@
+.form_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.input_name_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 80%;
+}
+
+.form_input_name {
+    display: block;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 80%;
+    font-family: inherit;
+    border: 1px solid #b3b9b3;
+}
+
+.form_input {
+    display: block;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 80%;
+    font-family: inherit;
+    border: 1px solid #b3b9b3;
+    transition: background 100ms;
+}
+
+.form_input:focus,
+.form_input_name:focus,
+.form_input_error:focus {
+    outline: none;
+}
+
+.form_input:hover,
+.form_input_name:hover {
+    background: #f5f5f0;
+}
+
+.form_checkBox {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0.5rem;
+}
+
+.form_checkBox label {
+    color: rgb(63, 63, 63);
+    font-size: 0.8rem;
+    font-family: inherit;
+}
+
+
+.form_button {
+    padding: 0 1.5rem;
+    height: 51px;
+    color: white;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #006AFF;
+    border: none;
+}
+
+.form_button_loading {
+    width: 6rem;
+    padding: 0 1.5rem;
+    height: 51px;
+    color: white;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #006AFF;
+    border: none;
+}
+
+.form_button:focus,
+.form_button_loading:focus {
+    outline: none;
+}
+
+.form_button:hover,
+.form_button_loading:hover {
+    background-color: rgba(0, 106, 255, 0.822);
+}
+
+
+.form_button_loading {
+    width: 10rem;
+    padding: 0 1.5rem;
+    height: 51px;
+    color: white;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #006AFF;
+    border: none;
+}
+
+.loading_container {
+    display: flex;
+    flex-basis: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/****Login page password Reset link ****/
+.reset_pw_link {
+    width: 20rem;
+    border: none;
+    background-color: white;
+    font-size: 0.8rem;
+    font-family: inherit;
+    color: rgb(63, 63, 63);
+    transition: color 200ms, text-decoration 200ms;
+}
+
+.reset_pw_link:focus {
+    outline: none;
+}
+
+.reset_pw_link:hover {
+    color: #006AFF;
+    text-decoration: underline;
+}
+
+
+/*****FormErrors styles *****/
+.form_input_name_error {
+    display: block;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 80%;
+    font-family: inherit;
+    border: 1px solid red;
+    transition: background 100ms;
+}
+
+.form_input_error {
+    display: block;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 80%;
+    font-family: inherit;
+    border: 1px solid red;
+    transition: background 100ms;
+}
+
+.form_errors {
+    color: rgba(255, 0, 0, 0.74);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/*** email verification succss *****/
+.form_input_email_verified {
+    display: block;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 80%;
+    font-family: inherit;
+    border: 1px solid #106310;
+    background-color: #3fe73f6e;
+    transition: background 100ms;
+}
+
+.verified_annotation {
+    position: absolute;
+    top: 25%;
+    left: 72%;
+    font-family: inherit;
+    font-size: 0.8rem;
+    color: #106310;
+}

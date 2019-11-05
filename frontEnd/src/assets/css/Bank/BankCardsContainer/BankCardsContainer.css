@@ -1,0 +1,53 @@
+.container {
+    position: relative;
+    top: 5.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cards_container {
+    display: inline-block;
+    width: 64%;
+    height: 50rem;
+    max-height: 50rem;
+}
+
+.aer_button {
+    position: fixed;
+    top: 6rem;
+    right: 1rem;
+    width: 15%;
+    padding: 1rem;
+    background-color: #006AFF;
+    color: white;
+    border: none;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.comparison_button {
+    position: fixed;
+    top: 10rem;
+    right: 1rem;
+    width: 15%;
+    padding: 1rem;
+    background-color: #006AFF;
+    color: white;
+    border: none;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.comparison_button:focus,
+.aer_button:focus {
+    outline: none;
+}
+
+.aer_button:hover,
+.comparison_button:hover {
+    background-color: rgb(4, 68, 158);
+}

@@ -1,0 +1,56 @@
+.container {
+    display: inline-block;
+    width: 50%;
+    height: 80vh;
+    position: relative;
+    top: 100px;
+    left: 400px;
+}
+
+.button_container {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+}
+
+.button {
+    width: 50%;
+    padding: 0.5rem 3rem;
+    border: none;
+    background-color: #006AFF;
+    color: white;
+    font-weight: 500;
+    font-family: inherit;
+}
+
+.button_active {
+    width: 50%;
+    padding: 0.5rem 3rem;
+    border: none;
+    margin-right: 0.5rem;
+    background-color: rgb(4, 68, 158);
+    color: white;
+    font-weight: 500;
+    font-family: inherit;
+}
+
+.button_home {
+    width: 50%;
+    padding: 0.5rem 3rem;
+    border: none;
+    margin-right: 0.5rem;
+    background-color: #006AFF;
+    color: white;
+    font-weight: 500;
+    font-family: inherit;
+}
+.button_home:focus,
+.button:focus,
+.button_active:focus {
+    outline: none;
+}
+
+.button:hover,
+.button_home:hover {
+    background-color:rgb(4, 68, 158);
+}

@@ -1,0 +1,70 @@
+.modal_container {
+    position: fixed;
+    left: 50%;
+    top:3%;
+    width: 90%;
+    height: 95%;
+    background-color: white;
+    z-index: 800;
+
+    -webkit-transform: translate(-50%, -0%);
+    -ms-transform: translate(-50%, -0%);
+    transform: translate(-50%, -0%);
+
+    /* animation-name: modal_animation;
+    animation-duration: 500ms; */
+}
+
+.modal:before {
+    content: "";
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.774);
+    /* background-color: rgba(255, 255, 255, 0.767); */
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 700;
+}
+
+/* @keyframes modal_animation {
+    0% {
+        height: 0%;
+    };
+    20% {
+        height: 20%;
+    };
+    40% {
+        height: 40%;
+    };
+    60% {
+        height: 60%;
+    };
+    80% {
+        height: 80%;
+    };
+    90% {
+        height: 85%;
+    };
+    100% {
+        height: 90%;
+    };
+} */
+
+.modal_closeButton {
+    position: absolute;
+    top: 0;
+    right: -40px;
+    border:none;
+    background-color: rgba(0, 0, 0, 0);
+    
+   
+}
+
+.modal_closeButton:focus {
+    outline-color: #006AFF;
+}
+
+.modal_closeButton:hover {
+    cursor: pointer;
+}

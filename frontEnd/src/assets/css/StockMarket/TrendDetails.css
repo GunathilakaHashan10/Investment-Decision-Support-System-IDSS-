@@ -1,0 +1,15 @@
+.container {
+    margin: 0 0.4rem;
+    width: 9vw;
+    text-align: center;
+    /* padding: 1rem 2.2rem; */
+    border: 1px solid rgba(0, 106, 255, 0.26);
+}
+.container > span {
+    margin: 0;
+    width: 3rem;
+}
+
+.header {
+    font-weight: 500;
+}

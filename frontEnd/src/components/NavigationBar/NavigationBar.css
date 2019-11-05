@@ -1,0 +1,232 @@
+.main_header {
+    width: 100%;
+    height: 5rem;
+    position: relative;
+    border-bottom: 1px solid #c4c2c2;
+}
+
+.main_header_fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5rem;
+    border-bottom: 1px solid #c4c2c2;
+    background-color: white;
+    z-index: 700;
+}
+
+.main_nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.main_nav_fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.main_nav_list {
+    display: flex;
+    flex-direction: row;
+    padding-right: 40px;
+    margin: 0;
+    height: 100%;
+}
+
+.main_nav_list_admin {
+    display: flex;
+    flex-direction: row;
+    padding-right: 20px;
+    padding-left: 20px;
+    margin: 0;
+    height: 100%;
+}
+
+
+.main_nav_list_item_control_panel {
+    display: none;
+}
+
+.main_nav_list_item {
+    list-style: none;
+    height: 100%;
+    margin: 2rem;
+}
+
+.main_nav_list_item_admin {
+    list-style: none;
+    height: 100%;
+    margin: 2rem 1rem;
+}
+
+.main_nav_list_item > a {
+    font-family: 'ABeeZee', sans-serif;
+    font-size: 1rem;
+    text-decoration: none;
+    color: #3b3b3b;
+}
+
+.main_nav_list_item  a:hover {
+    color: #006AFF;
+}
+
+.main_nav_logo > button {
+    border: none;
+    font-family: 'Heebo', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    text-align: center;
+    color: #006AFF;
+}
+
+/*** dropdown ****/
+.main_nav_dropdown_button {
+    border: none;
+    background-color: white;
+    font-family: 'ABeeZee', sans-serif;
+    font-size: 1rem;
+    color: #3b3b3b;
+}
+
+.main_nav_dropdown_button:focus {
+    outline: none;
+}
+
+.main_nav_dropdown_button:hover {
+    color: #006AFF;
+}
+
+.main_nav_dropdown_anchor:hover {
+    color: #006AFF;
+}
+
+.main_nav_dropdown_main_container {
+    display: flex;
+    flex-direction: row;
+}
+
+.main_nav_dropdown_container{
+    width: auto;
+    height: 65%;
+}
+
+.main_nav_dropdown_container:hover
+.main_nav_dropdown_content {
+    display: block;
+    transition: display 150ms;
+}
+
+.main_nav_dropdown_content_container {
+    display: flex;
+    flex-direction: row;
+}
+
+.main_nav_dropdown_content {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 5rem;
+    padding-left: 60px;
+    padding-top: 1rem;
+    width: 100vw;
+    border-top: 1px solid #c4c2c2;
+    background-color: white;
+    border-bottom:1px solid #c4c2c2;
+    z-index: 100;
+}
+
+.main_nav_dropdown_content_anchor_container {
+    display: flex;
+    flex-direction: column;
+    padding-right: 2rem;
+}
+
+.main_nav_dropdown_content_container_item {
+    padding-right: 1rem;
+}
+
+.main_nav_dropdown_content_container_item1 {
+    border-left: 1px solid #c4c2c2;
+    padding-left: 2rem;
+}
+
+.main_nav_dropdown_content_anchor_container button {
+    border: none;
+    font-family: 'ABeeZee', sans-serif;
+    font-size: 1rem;
+    background-color: white;
+    padding-bottom: 1.5rem;
+    color: #006AFF;
+    text-align: start;
+    animation-name: dropdown_button;
+    animation-duration: 200ms;
+}
+
+@keyframes dropdown_button {
+    0% {
+        padding-bottom: 0rem;
+    };
+    20% {
+        padding-bottom: 0.5rem;
+    };
+    40% {
+        padding-bottom: 0.7rem;
+    };
+    60% {
+        padding-bottom: 0.9rem;
+    };
+    80% {
+        padding-bottom: 1.1rem;
+    };
+    100% {
+        padding-bottom: 1.5rem;
+    };
+}
+
+.main_nav_dropdown_content_anchor_container button:focus {
+    outline: none;
+}
+
+.main_nav_dropdown_content_anchor_container button:hover {
+    color: rgba(0, 106, 255, 0.767);
+}
+
+.main_nav_dropdown_content_anchor_container a {
+    padding-bottom: 1.5rem;
+    text-decoration: none;
+    color: #006AFF;
+}
+
+.main_nav_dropdown_content_anchor_container a:hover {
+    color: rgba(0, 106, 255, 0.767);
+}
+
+.nav_button {
+    border: none;
+    background-color: white;
+    font-family: 'ABeeZee', sans-serif;
+    font-size: 1rem;
+    color: #3b3b3b;
+}
+
+.nav_button_admin {
+    display: none;
+}
+
+.nav_button:focus {
+    outline: none;
+}
+
+.nav_button:hover {
+    color: #006AFF;
+}

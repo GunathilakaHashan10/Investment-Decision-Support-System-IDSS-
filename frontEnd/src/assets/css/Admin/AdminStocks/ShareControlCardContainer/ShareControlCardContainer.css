@@ -1,0 +1,15 @@
+.container {
+    position: relative;
+    top: 5.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ShareControlCard_container {
+    display: inline-block;
+    width: 64%;
+    height: 50rem;
+    max-height: 50rem;
+}
