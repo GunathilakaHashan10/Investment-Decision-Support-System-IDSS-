@@ -6,21 +6,17 @@ class AdvertiserDetailsContainer extends Component {
     render() {
         return (
             <div className={styles.container}>
-                <div className={styles.sub_container}>
-                    <div className={styles.main_header}>
-                        <h2>Advertisers</h2>
-                    </div>
-                    <div className={styles.cards_container}>
-                        <AdvertiserDetailsCard />
-                        <AdvertiserDetailsCard />
-                        <AdvertiserDetailsCard />
-                        <AdvertiserDetailsCard />
-                        <AdvertiserDetailsCard />
-                        <AdvertiserDetailsCard />
-                        <AdvertiserDetailsCard />
-                        <AdvertiserDetailsCard />
-                        <AdvertiserDetailsCard />
-                    </div>
+                <div className={styles.advertiserControlCard_container}>
+                    <AdvertiserDetailsCard />
+                    <AdvertiserDetailsCard />
+                    <AdvertiserDetailsCard />
+                    <AdvertiserDetailsCard />
+                    <AdvertiserDetailsCard />
+                    <AdvertiserDetailsCard />
+                    <AdvertiserDetailsCard />
+                    <AdvertiserDetailsCard />
+                    <AdvertiserDetailsCard />
+                    <AdvertiserDetailsCard />
                 </div>
                 
                 
