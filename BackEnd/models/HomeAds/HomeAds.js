@@ -66,7 +66,8 @@ const homeAdsSchema = new Schema({
     homeImages: [{
             imageName: {type: String, required: false },
             imagePath: {type: String, required: false }
-        }]
+        }],
+    isBlocked: {type: Boolean}
     
 });
 

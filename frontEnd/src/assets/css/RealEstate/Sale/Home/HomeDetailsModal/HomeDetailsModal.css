@@ -2,8 +2,8 @@
     position: fixed;
     left: 50%;
     top:3%;
-    width: 90%;
-    height: 95%;
+    width: 90vw;
+    height: 95vh;
     background-color: white;
     z-index: 800;
 

@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
+import * as myConstants from '../../Utils/Constants/Constants';
 import styles from '../../../assets/css/Bank/BankCard/BankCard.css';
 
 class BankCard extends Component {
     
     render() {
+        console.log(this.props.bank.bankImage[0].imagePath)
         return (
             <div className={styles.container}>
                 <div className={styles.bankCard_container}>
                     <img 
-                        src={require(`../../../assets/images/Bank/${this.props.bank.bankId}.jpeg`)}
+                        src={`${myConstants.SEVER_URL}/${this.props.bank.bankImage[0].imagePath}`}
                         alt="BankImage"
                         className={styles.bankImage}
                     />

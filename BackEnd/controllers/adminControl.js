@@ -2,6 +2,7 @@ const Share = require('../models/shareHandle/shareHandle');
 const LandAds = require('../models/LandAds/LandAds');
 const HomeAds = require('../models/HomeAds/HomeAds');
 const User = require('../models/auth/User');
+const Bank = require('../models/bank/bank');
 const { timeParse} = require('d3-time-format');
 
 const parseDate = timeParse("%Y-%m-%d");
@@ -197,5 +198,161 @@ exports.getPublisherAds = (req, res, next) => {
             }
             return next(error);
         }) 
+
+}
+
+exports.controlBlockAds = (req, res, next) => {
+    const adId = req.body.adId;
+    const adType = req.body.adType;
+    
+        if(adType === "HomeSell" || adType === "HomeRent") {
+            HomeAds
+                .findById(adId)
+                .then(dbResponse => {
+                    if(!dbResponse) {
+                        throw new Error("Internal error");
+                    }
+                    dbResponse
+                        .updateOne({ isBlocked: false})
+                        .then(() => {
+                            res.json({success: false})
+                        })
+                    
+                })
+                .catch(error => {
+                    if (!error.statusCode) {
+                        error.statusCode = 500;
+                    }
+                    return next(error);
+                })
+        } else {
+            LandAds
+                .findById(adId)
+                .then(dbResponse => {
+                    if(!dbResponse) {
+                        throw new Error("Internal error");
+                    }
+                    dbResponse
+                    .updateOne({ isBlocked: false})
+                    .then(() => {
+                        res.json({success: false})
+                    })
+                })
+                .catch(error => {
+                    if (!error.statusCode) {
+                        error.statusCode = 500;
+                    }
+                    return next(error);
+                })
+        }
+        
+}
+
+    
+
+exports.controlUnblockAd = (req, res, next) => {
+    const adId = req.body.adId;
+    const adType = req.body.adType;
+
+        if(adType === "HomeSell" || adType === "HomeRent") {
+            HomeAds
+                .findById(adId)
+                .then(dbResponse => {
+                    if(!dbResponse) {
+                        throw new Error("Internal error");
+                    }
+                    dbResponse
+                    .updateOne({ isBlocked: true})
+                    .then(() => {
+                        res.json({success: true})
+                    })
+                })
+                .catch(error => {
+                    if (!error.statusCode) {
+                        error.statusCode = 500;
+                    }
+                    return next(error);
+                })
+        } else {
+            LandAds
+                .findByIdAndUpdate(adId)
+                .then(dbResponse => {
+                    if(!dbResponse) {
+                        throw new Error("Internal error");
+                    }
+                    dbResponse
+                    .updateOne({ isBlocked: true})
+                    .then(() => {
+                         res.json({success: true})
+                    })
+                })
+                .catch(error => {
+                    if (!error.statusCode) {
+                        error.statusCode = 500;
+                    }
+                    return next(error);
+                })
+        }
+    
+}
+
+exports.addBank = (req, res, next) => {
+    const bankId = req.body.data.bankId;
+    const bankName = req.body.data.bankName;
+    const description = req.body.data.description;
+    const interestRates = req.body.data.interestRates;
+
+   const newBank = new Bank({
+       bankName:bankName,
+       bankId:bankId,
+       description:description,
+       interestRates:interestRates
+   })
+
+   newBank
+        .save()
+        .then((result) => {
+            if(!result) {
+                throw new Error('Internal Error');
+            }
+            return res.json({success:true, message: result.bankName, id:result._id})
+        })
+        .catch(error => {
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
+        })
+}
+
+exports.postBankImage = (req, res, next) => {
+    const id = req.body.id;
+    const bankImages = req.files;
+    let images = [];
+    for(let i=0; i<bankImages.length; i++) {
+        const image = {
+            imageName:bankImages[i].filename,
+            imagePath: bankImages[i].path
+        }
+        images.push(image);
+    }
+
+    Bank
+        .findOne({bankId: id})
+        .then(bank => {
+            bank    
+                .updateOne({bankImage:images})
+                .then((result) => {
+                    return res.json({success: true})
+                })
+        })
+        .catch(error => {
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
+        })
+        
+
 
 }

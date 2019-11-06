@@ -43,7 +43,8 @@ const landAdsSchema = new Schema({
     landImages: [{
         imageName: {type: String, required: false },
         imagePath: {type: String, required: false }
-    }]
+    }],
+    isBlocked: {type: Boolean}
 });
 
 module.exports = mongoose.model('LandAds', landAdsSchema);

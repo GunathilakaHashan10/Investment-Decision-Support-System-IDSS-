@@ -15,4 +15,12 @@ router.get('/getAdvertisers', adminController.retriveAdvertisers);
 
 router.get('/getPublisherAds', adminController.getPublisherAds);
 
+router.post('/controlBlockAd', adminController.controlBlockAds);
+
+router.get('/controlUnblock', adminController.controlUnblockAd);
+
+router.post('/addBankNew', adminController.addBank);
+
+router.post('/addBankImage', adminController.postBankImage);
+
 module.exports  = router;

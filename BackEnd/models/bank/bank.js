@@ -42,7 +42,11 @@ const bankSchema = new Schema({
                 required: false
             }
         }
-    ]
+    ],
+    bankImage: [{
+        imageName: {type: String, required: false },
+        imagePath: {type: String, required: false }
+        }]
 })
 
 module.exports = mongoose.model('Bank', bankSchema)

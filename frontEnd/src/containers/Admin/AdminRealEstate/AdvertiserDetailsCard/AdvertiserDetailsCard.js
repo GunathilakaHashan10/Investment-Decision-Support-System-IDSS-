@@ -46,6 +46,7 @@ class AdvertiserDetailsCard extends Component {
 
     handleCloseDetailModal = () => {
         this.setState({isOpenDetailModal: false});
+        window.location.reload();
     }
 
     render() {

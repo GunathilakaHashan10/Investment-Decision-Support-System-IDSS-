@@ -52,6 +52,7 @@
     "postcss-preset-env": "6.6.0",
     "postcss-safe-parser": "4.0.1",
     "prop-types": "^15.7.2",
+    "qs": "^6.9.0",
     "query-string": "^6.8.3",
     "react": "^16.10.2",
     "react-animated-modal": "^1.1.1",

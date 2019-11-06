@@ -30,7 +30,7 @@ exports.postAddBank = (request, response, next) => {
 
 // get bank's id, name and description
 exports.postGetAllBanks = (request, response, next) => {
-    Bank.find({},'bankId bankName description')
+    Bank.find({},'bankId bankName description bankImage')
         .then((result) => {
             response.json({
                 payload: result

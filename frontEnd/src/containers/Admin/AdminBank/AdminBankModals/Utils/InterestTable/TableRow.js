@@ -17,6 +17,9 @@ const TableRow = (props) => {
                 <option value="One Year">One Year</option>
                 <option value="Two Years">Two Years</option>
                 <option value="Three Years">Three Years</option>
+                <option value="Four Years">Four Years</option>
+                <option value="Five Years">Five Years</option>
+                <option value="Ten Years">Ten Years</option>
             </select>
             <input type="number" className={styles.input_field} onChange={(e) => props.monthlyHandler(e, row.interestRateId)}/>
             <input type="number" className={styles.input_field} onChange={(e) => props.annualyHandler(e, row.interestRateId)}/>

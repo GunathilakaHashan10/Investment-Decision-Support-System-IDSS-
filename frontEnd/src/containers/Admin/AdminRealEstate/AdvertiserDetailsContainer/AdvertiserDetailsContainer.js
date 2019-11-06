@@ -32,7 +32,7 @@ class AdvertiserDetailsContainer extends Component {
                         isSuccess: response.data.success,
                         advertiserDetails: response.data.docs
                     })
-                }, 2000);
+                }, 1000);
                 
             })
             .catch(error => {
