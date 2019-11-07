@@ -34,7 +34,6 @@ class AddNewBankModal extends Component {
         let timeValue = 0;
         switch(e.target.value) {
             case "One Month":    timeValue = 1; break;
-            case "Two Months":   timeValue = 2; break;
             case "Three Months": timeValue = 3; break;
             case "Six Months":   timeValue = 6; break;
             case "One Year":     timeValue = 12; break;
@@ -42,7 +41,6 @@ class AddNewBankModal extends Component {
             case "Three Years":  timeValue = 36; break;
             case "Four Years":   timeValue = 48; break;
             case "Five Years":   timeValue = 60; break;
-            case "Ten Years":    timeValue = 120; break;
             default: break;    
         }
         interestRatesCopy[index].time = timeValue;

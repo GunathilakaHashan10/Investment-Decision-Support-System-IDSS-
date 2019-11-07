@@ -1,5 +1,9 @@
 const Bank = require('../models/bank/bank')
 
+const interestRateCalculator = (amount , interestRate) => {
+    return amount * interestRate / (12 * 100)
+}
+
 exports.postAddBank = (request, response, next) => {
     
     const bankName = request.body.bankName;
@@ -102,6 +106,59 @@ exports.postGetSpecificBankInterestRates = (request, response, next) => {
             response.json({error: e});
         })
 }
+
+
+exports.postGetBankComparison = (request, response, next) => {
+    const time = parseInt(request.body.time,10);
+    const sortType = request.body.sortType;
+    const amount = request.body.amount;
+
+    const payload = []
+
+
+    Bank.find({},'bankName interestRates')
+        .then((result) => {
+            const banks = result;
+           
+            banks.forEach((bank) => {
+                const bankName = bank.bankName;
+                const interestRateObj = bank.interestRates.find((interestRate) => {
+                    return interestRate.time === time
+                })
+                let interestRate = 0;
+                if(sortType === 'monthly'){
+                    interestRate = interestRateObj.monthly
+                }else if(sortType === 'annualy'){
+                    interestRate = interestRateObj.annualy
+                }else if (sortType === 'maturity') {
+                    interestRate = interestRateObj.maturity
+                }
+                console.log(interestRate)
+
+                if(amount){
+                    interestRate = interestRateCalculator(amount,interestRate);
+                }
+
+                payload.push({
+                    bankName,
+                    interestRate : interestRate.toFixed(2)
+                })
+            })
+            payload.sort((a,b) => {
+                return b.interestRate-a.interestRate
+            })
+            response.json({
+                payload
+            })
+        })
+        .catch((e) => {
+            console.log(e);
+            response.json({error: e});
+        })
+
+    
+}
+
 
 // exports.postGetAllBanks = (request, response, next) => {
 //     Bank.find()
