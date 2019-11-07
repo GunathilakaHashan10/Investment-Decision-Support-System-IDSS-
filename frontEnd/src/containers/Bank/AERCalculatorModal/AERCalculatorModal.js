@@ -42,6 +42,8 @@ class AERCalculatorModal extends Component {
     }
 
     calculateHandler = () => {
+        
+
         const  { maturity, time } = interestRateFinder(this.state.selectInterestRateId,this.state.interestRates);
         const AER = AERCalculator(maturity/100, 12/time);
         this.setState(() => ({

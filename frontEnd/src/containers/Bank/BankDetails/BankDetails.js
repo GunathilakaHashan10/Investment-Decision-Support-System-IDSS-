@@ -53,7 +53,7 @@ class BankDetails extends Component {
                                     <tr className={styles.bank_table_row} key={index}>
                                         {
                                             row.map((data, index) => (
-                                                <td key={index}>{data}</td>
+                                                <td key={index}>{data ? data : '-'}</td>
                                             ))
                                         }
                                     </tr>

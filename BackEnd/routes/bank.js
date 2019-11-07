@@ -10,6 +10,7 @@ router.post('/update-bank', bankController.postUpdateBank);
 router.post('/delete-bank', bankController.postDeleteBank);
 router.post('/get-bank', bankController.postGetSpecificBank);
 router.post('/get-bank-ir', bankController.postGetSpecificBankInterestRates);
+router.post('/compare-bank',bankController.postGetBankComparison);
 
 
 module.exports = router;
