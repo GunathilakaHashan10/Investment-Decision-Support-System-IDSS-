@@ -352,7 +352,104 @@ exports.postBankImage = (req, res, next) => {
             }
             return next(error);
         })
-        
+}
 
+exports.getAllBanks = (req, res, next) => {
+    Bank
+        .find()
+        .then(docs => {
+            if(docs.length === 0) {
+                return res.status(200).json({success: false});
+            }
+            return res.status(200).json({docs: docs, success:true});
+        })
+        .catch(error => {
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
+        });
+}
+
+exports.updateBank = (req, res, next) => {
+    const bankId = req.body.data.bankId;
+    const description = req.body.data.description;
+    const interestRates = req.body.data.interestRates;
+
+    Bank
+        .findById(bankId)
+        .then((bank) => {
+            if(!bank) {
+                throw new Error('Internal Error');
+            }
+            bank.updateOne({
+                description:description,
+                interestRates:interestRates
+            })
+            .then((result) => {
+                if(!result) {
+                    throw new Error('Internal Error');
+                }
+                return res.json({success:true, message: result.bankName, id:result._id})
+            })
+        })
+        .catch(error => {
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
+        })
+}
+
+exports.updateBankImage = (req, res, next) => {
+    const id = req.body.id;
+    const bankImages = req.files;
+    let images = [];
+    for(let i=0; i<bankImages.length; i++) {
+        const image = {
+            imageName:bankImages[i].filename,
+            imagePath: bankImages[i].path
+        }
+        images.push(image);
+    }
+
+    Bank
+        .findById(id)
+        .then((bank) => {
+            if(!bank) {
+                throw new Error('Internal Error');
+            }
+            bank.updateOne({
+                bankImage:images
+            })
+            .then(() => {
+                return res.json({success: true})
+            })
+        })
+        .catch(error => {
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
+        })
+}
+
+exports.deleteBank = (req, res, next) => {
+    const bankId = req.query.bankId;
+
+    Bank
+        .findByIdAndDelete(bankId)
+        .then((result) => {
+            if(!result) {
+                throw new Error('Internal error')
+            }
+            return res.status(200).json({message: "success"})
+        })
+        .catch(error => {
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
+        })
 
 }

@@ -8,7 +8,6 @@ const mapStyles = {
   };
 
 class GoogleMap extends Component {
-
     render() {
         return (
             <div className={styles.map_container}>

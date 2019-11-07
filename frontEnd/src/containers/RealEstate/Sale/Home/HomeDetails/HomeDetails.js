@@ -124,7 +124,7 @@ class HomeDetails extends Component {
                         <div className={styles.property_features_container}>
                             <span className={styles.property_feature}>AC Rooms</span>
                             <span className={styles.property_feature_icon}><IoIosCheckmark size="2em" color="#006AFF" /></span>
-                        </div>
+                            </div>
                         }
                         { homeAdsDetails.hotWater === true && 
                         <div className={styles.property_features_container}>

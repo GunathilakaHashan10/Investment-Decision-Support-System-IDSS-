@@ -1,19 +1,28 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ReactLoading from 'react-loading';
+import * as myConstants from '../../../../Utils/Constants/Constants';
 import lodingStyles from '../../../../../assets/css/ReactLoading/ReactLoading.css';
 import modalStyles from '../../../../../assets/css/Admin/AdminBank/AdminBankModals/DeleteBankModal/DeleteBankModal.css';
+import ErrorMessageModal from '../../../../Utils/ErrorMessageModal/ErrorMessageModal';
 
 class DeleteBankModal extends Component {
     state = {
         isLoading: false,
-        isDeleteSuccess: null
+        isDeleteSuccess: null,
+        bankId: this.props.bankId,
+        error: null,
+        openErrorModal: false
+    }
+
+    handelCloseErrorMessageModal = () =>{
+        this.setState({openErrorModal: false })
     }
 
     handleDelete = () => {
         this.setState({isLoading: true})
 
-        axios.post()
+        axios.post(`${myConstants.SEVER_URL}/admin/delete-bank?bankId=${this.state.bankId}`)
             .then(response => {
                 setTimeout(() => {
                     this.setState({
@@ -24,12 +33,15 @@ class DeleteBankModal extends Component {
                 
             })
             .catch(error => {
-                console.log(error);
+                this.setState({
+                    error:error.message,
+                    openErrorModal: true
+                })
             })
     }
 
     render(){
-        const { isLoading, isDeleteSuccess } = this.state;
+        const { isLoading, isDeleteSuccess, openErrorModal } = this.state;
         let deleteContent = null;
         
         let reactLoading = (
@@ -100,6 +112,12 @@ class DeleteBankModal extends Component {
                     {isLoading ? reactLoading : deleteContent}
 
                 </div>
+                {openErrorModal && 
+                    <ErrorMessageModal 
+                        error={this.state.error}
+                        closeModal={this.handelCloseErrorMessageModal}
+                    />    
+                }
             </div>
         )
     }

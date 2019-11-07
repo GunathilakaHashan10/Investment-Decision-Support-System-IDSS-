@@ -21,6 +21,7 @@ class HomeCard extends Component {
     handleModalClose = () => {
         this.setState({isOpenModel:false})
     }
+    
     render() {
         return(
             <div className={styles.container}>
@@ -51,7 +52,13 @@ class HomeCard extends Component {
                         <IoIosMap size="2.5em" color="white" />
                     </button>
                 </div>
-                {this.state.isOpenModel && <HomeDetailsModal closeModal={this.handleModalClose} homeDetails={this.props.homeDetails} homeImages={this.state.homeImages}/>}
+                {this.state.isOpenModel &&
+                     <HomeDetailsModal 
+                        closeModal={this.handleModalClose} 
+                        homeDetails={this.props.homeDetails} 
+                        homeImages={this.state.homeImages}
+                    />
+                }
             </div>
         )
     }

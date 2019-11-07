@@ -155,6 +155,7 @@
 }
 
 .button_container {
+    position: relative;
     display: flex;
     flex-direction: row;
     margin: 0 0.5rem;
@@ -162,7 +163,7 @@
     width: 68%;
 }
 
-.button_container button {
+.control_button {
     width: 20%;
     margin-left: 0.5rem;
     border: none;
@@ -177,12 +178,90 @@
     
 }
 
-.button_container button:focus {
+.control_button:focus {
     outline: none;
 }
 
-.button_container button:hover {
+.control_button:hover {
     border: 1px solid #036b13;
     background-color: white;
     color: #036b13;
+}
+
+/***Error message **/
+.error_message {
+    position: absolute;
+    font-family: inherit;
+    font-weight: 500;
+    color: red;
+    font-size: 0.8rem;
+    left: -100px;    
+}
+
+/**** ***************/
+.success_annotation {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.success_message {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.control_button_loading {
+    width: 20%;
+    margin-left: 0.5rem;
+    border: none;
+    padding: 0.4rem 0;
+    border: 1px solid #036b13;
+    background-color: #036b13;
+    color: white;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.8rem;
+    border-radius: 3px;
+}
+
+/***Result modal***/
+.result_modal_container {
+    position: fixed;
+    left: 50%;
+    top:30%;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 5px;
+    width: 30%;
+    max-width: 35%;
+    height: auto;
+    box-shadow: 1rem 1rem 3rem 2rem rgba(189, 186, 186, 0.445);
+    z-index: 400;
+
+    -webkit-transform: translate(-50%, -20%);
+    -ms-transform: translate(-50%, 0);
+    transform: translate(-50%, -20%);
+
+    animation-name: modal_animation;
+    animation-duration: 300ms;
+}
+
+.result_modal:before {
+    content: "";
+    position: fixed;
+    /* background-color: rgba(0, 106, 255, 0.466); */
+    background-color: rgba(255, 255, 255, 0.507);
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+
+.loading_container {
+    display: flex;
+    flex-basis: row;
+    justify-content: space-around;
+    align-items: center;
 }

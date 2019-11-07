@@ -19,12 +19,29 @@ const TableRow = (props) => {
                 <option value="Four Years">Four Years</option>
                 <option value="Five Years">Five Years</option>
             </select>
-            <input type="number" className={styles.input_field} onChange={(e) => props.monthlyHandler(e, row.interestRateId)}/>
-            <input type="number" className={styles.input_field} onChange={(e) => props.annualyHandler(e, row.interestRateId)}/>
-            <input type="number" className={styles.input_field} onChange={(e) => props.maturityHandler(e, row.interestRateId)}/>
+
+            <input 
+                type="number" 
+                className={styles.input_field}
+                value={row.monthly} 
+                onChange={(e) => props.monthlyHandler(e, row.interestRateId)}
+            />
+            <input 
+                type="number" 
+                className={styles.input_field} 
+                value={row.annualy} 
+                onChange={(e) => props.annualyHandler(e, row.interestRateId)}
+            />
+            <input 
+                type="number" 
+                className={styles.input_field} 
+                value={row.maturity} 
+                onChange={(e) => props.maturityHandler(e, row.interestRateId)}
+            />
+
             <button 
                 className={styles.delete_button}
-                onClick={(e) => props.deleteInterestRateHandler(e, row.id)}
+                onClick={(e) => props.deleteInterestRateHandler(e, row.interestRateId)}
             >
                 <IoIosTrash size="1.5em" color="#615f5f79"/>
             </button>

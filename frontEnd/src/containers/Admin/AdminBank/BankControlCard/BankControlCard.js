@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import * as myConstants from '../../../Utils/Constants/Constants';
 import styles from '../../../../assets/css/Admin/AdminBank/BankControlCard/BankControlCard.css';
-import BankImage from '../../../../assets/images/Bank/4934c535-4470-4626-bea0-a5fd9cff5caa.jpeg';
 import EditBankModal from '../AdminBankModals/EditBankModal/EditBankModal';
 import DeleteBankModal from '../AdminBankModals/DeleteBankModal/DeleteBankModal';
 
@@ -15,6 +15,11 @@ class BankControlCard extends Component {
     }
 
     handleCloseEditBankModal = () => {
+        this.setState({isOpenEditBankModal: false});
+        window.location.reload();
+    }
+
+    handleCancelEditBankModal = () => {
         this.setState({isOpenEditBankModal: false});
     }
 
@@ -31,18 +36,21 @@ class BankControlCard extends Component {
         this.setState({isOpenDeleteBankModal: false})
     }
 
+    
+
     render() {
         const { isOpenEditBankModal, isOpenDeleteBankModal } = this.state;
+        const { bankName, description, bankImage } = this.props.bankData;
         return(
             <div className={styles.container}>
                 <div className={styles.bankCard_container_box}>
                     <div className={styles.bank_image_container}>
-                        <img src={BankImage} alt="bankImage" className={styles.bank_image} />
+                        <img src={`${myConstants.SEVER_URL}/${bankImage[0].imagePath}`} alt="bankImage" className={styles.bank_image} />
                     </div>
 
                     <div className={styles.bank_card_details_container}>
-                        <h2 className={styles.bank_name}>Bank of Ceylon</h2>
-                        <p className={styles.description}>Your Money will grow with us,Giving you the best return in town!</p>
+                        <h2 className={styles.bank_name}>{bankName}</h2>
+                        <p className={styles.description}>{description}</p>
                         <div className={styles.button_container}>
                             <button 
                                 className={styles.control_button}
@@ -62,13 +70,16 @@ class BankControlCard extends Component {
                 {isOpenEditBankModal &&
                     <EditBankModal 
                         closeModal={this.handleCloseEditBankModal}
+                        bankData={this.props.bankData}
+                        handleCancel={this.handleCancelEditBankModal}
                     />
                 }
                 {isOpenDeleteBankModal &&
                     <DeleteBankModal 
                         closeModal={this.handleCloseDeleteBankModal}
-                        bankName="Bank of Ceylon"
                         handleCancel={this.handleCancel}
+                        bankId={this.props.bankData._id}
+                        bankName={this.props.bankData.bankName}
                     />
                 }
             </div>

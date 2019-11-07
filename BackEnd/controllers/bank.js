@@ -133,7 +133,6 @@ exports.postGetBankComparison = (request, response, next) => {
                 }else if (sortType === 'maturity') {
                     interestRate = interestRateObj.maturity
                 }
-                console.log(interestRate)
 
                 if(amount){
                     interestRate = interestRateCalculator(amount,interestRate);

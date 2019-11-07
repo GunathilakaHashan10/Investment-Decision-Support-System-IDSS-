@@ -17,7 +17,14 @@ class AddNewBankModal extends Component {
         openErrorModal: false,
         isLoading: false,
         isSuccess: null,
-        message: null
+        message: null,
+        formErrors: {
+            bankName: "",
+            description: "",
+            bankImage: "",
+            interestRates: ""
+        },
+        isFormErrors: false
     }
 
     handelCloseErrorMessageModal = () => {
@@ -121,12 +128,33 @@ class AddNewBankModal extends Component {
         
     }
 
+    
+
     bankNameHandler = (e) => {
         const  bankName = e.target.value;
 
         this.setState(() => ({
             bankName
         }))
+
+        if(bankName.length < 6) {
+                this.setState((prevState) => {
+                    let formErrors = {...prevState.formErrors};
+                    formErrors.bankName = "minimum 6 characaters required"
+                    return { 
+                        formErrors,
+                        isFormErrors: true
+                     }
+                })
+        } else {
+            this.setState((prevState) => {
+                let formErrors = {...prevState.formErrors};
+                formErrors.bankName = ""
+                return { 
+                    formErrors
+                 }
+            })
+        }
     }
 
     bankDescriptionHandler = (e) => {
@@ -135,17 +163,93 @@ class AddNewBankModal extends Component {
         this.setState(() => ({
             description
         }))
+
+        if(description.length < 10) {
+            this.setState((prevState) => {
+                let formErrors = {...prevState.formErrors};
+                formErrors.description = "minimum 10 characaters required"
+                return { 
+                    formErrors,
+                    isFormErrors: true
+                }
+            })
+        } else {
+            this.setState((prevState) => {
+                let formErrors = {...prevState.formErrors};
+                formErrors.description = ""
+                return { 
+                    formErrors
+                 }
+            })
+        }
     }
 
     bankImageOnChangeHandler = (e) => {
         this.setState({
-            [e.target.name]:e.target.files
+            [e.target.name]:e.target.files,
+            isFormErrors: false
         })
+
     }
 
     bankDataSubmitHandler = () => {
+        const { interestRates, bankImage, bankName, description } = this.state;
+        const formErrors = {...this.state.formErrors};
+        if(interestRates.length === 0) {
+            this.setState((prevState) => {
+                let formErrors = {...prevState.formErrors};
+                formErrors.interestRates = "No interestRates provided";
+                return { formErrors }
+            })
+        } else if(interestRates.length < 8) {
+            this.setState((prevState) => {
+                let formErrors = {...prevState.formErrors};
+                formErrors.interestRates = "minimum 8 terms required";
+                return { formErrors }
+            })
+        } else {
+            this.setState((prevState) => {
+                let formErrors = {...prevState.formErrors};
+                formErrors.interestRates = "";
+                return { formErrors }
+            })
+        }
+
+        if(bankImage.length === 0) {
+            this.setState((prevState) => {
+                let formErrors = {...prevState.formErrors};
+                formErrors.bankImage = "No bank image provided";
+                return { formErrors }
+            })
+        } else {
+            this.setState((prevState) => {
+                let formErrors = {...prevState.formErrors};
+                formErrors.bankImage = "";
+                return { formErrors }
+            })
+        }
+
+        if(bankName.length === 0) {
+            this.setState((prevState) => {
+                let formErrors = {...prevState.formErrors};
+                formErrors.bankName = "Bank name is required"
+                return {  formErrors }
+            })
+        }
+
+        if(description.length === 0) {
+            this.setState((prevState) => {
+                let formErrors = {...prevState.formErrors};
+                formErrors.description = "Bank description is required"
+                return {  formErrors }
+            })
+        }
+
+        if((formErrors.bankName !== "") || (formErrors.description !== "") || (formErrors.bankImage !== "") || (formErrors.interestRates !== "")) {
+           return this.setState({isFormErrors: true})
+        }    
+        
         this.setState({isLoading: true})
-        const {bankName, bankImage, description, interestRates} = this.state;
         let id = uuid();
         const formData = new FormData();
         formData.append('id',id);
@@ -198,7 +302,8 @@ class AddNewBankModal extends Component {
     }
 
     render() {
-        const {isSuccess, isLoading, openErrorModal, message} = this.state;
+        const {isSuccess, isLoading, openErrorModal, message, isFormErrors} = this.state;
+        const formErrors = {...this.state.formErrors}
         let content = null;
         if(isSuccess === null) {
             content = (
@@ -206,6 +311,7 @@ class AddNewBankModal extends Component {
                 <div className={modalStyles.modal_container}>
                     <div className={modalStyles.addNewBank_container}>
                         <h2 className={modalStyles.add_bank_header}>Add new bank</h2>
+                        {isFormErrors && formErrors.bankName.length > 0 ? <span className={modalStyles.form_errors}>{formErrors.bankName}</span> : ""}
                         <div className={modalStyles.bank_details_container}>
                             <span className={modalStyles.label_container}>
                                 <span>Bank Name</span>
@@ -213,6 +319,7 @@ class AddNewBankModal extends Component {
                             </span>
                             <input className={modalStyles.bank_data} type="text" name="bankName" onChange={this.bankNameHandler}/>
                         </div>
+                        {isFormErrors && formErrors.description.length > 0 ? <span className={modalStyles.form_errors}>{formErrors.description}</span> : ""}
                         <div className={modalStyles.bank_details_container}>
                             <span className={modalStyles.label_container}>
                                 <span>Description</span>
@@ -222,13 +329,22 @@ class AddNewBankModal extends Component {
                         </div>
                     </div>
 
+                    {isFormErrors && formErrors.bankImage.length > 0 ? <span className={modalStyles.form_errors}>{formErrors.bankImage}</span> : ""}
                     <div className={modalStyles.bank_details_container}>
                         <span className={modalStyles.label_container}>
                             <span>Bank image</span>
                             <span>:</span>
                         </span>
-                        <input type="file" multiple={true} className={modalStyles.bank_data} name="bankImage" onChange={this.bankImageOnChangeHandler} />
+                        <input 
+                            type="file" 
+                            multiple={true} 
+                            className={modalStyles.bank_data} 
+                            name="bankImage" 
+                            onChange={this.bankImageOnChangeHandler} 
+                            accept="image/*"
+                            />
                     </div>
+                    {isFormErrors && formErrors.interestRates.length > 0 ? <span className={modalStyles.form_errors}>{formErrors.interestRates}</span> : ""}
                     <InterestTable 
                         interestRates={this.state.interestRates}
                         termHandler={this.termHandler}
@@ -241,10 +357,11 @@ class AddNewBankModal extends Component {
                     <div className={modalStyles.button_container}>
                         <button
                             onClick={this.bankDataSubmitHandler}
+                            className={isLoading ? modalStyles.control_button_loading : modalStyles.control_button}
                         >
                         {isLoading 
                             ? <div className={modalStyles.loading_container}>
-                                <ReactLoading type={'spin'} color={'white'} height={'20%'} width={'20%'} /> 
+                                <ReactLoading type={'spin'} color={'white'} height={'15%'} width={'15%'} /> 
                                 <span>wait..</span>
                             </div>
                             : "Add"
@@ -252,6 +369,7 @@ class AddNewBankModal extends Component {
                         </button>
                         <button
                             onClick={this.props.closeModal}
+                            className={modalStyles.control_button}
                         >
                         Cancel
                         </button>
@@ -269,6 +387,7 @@ class AddNewBankModal extends Component {
                         <div className={modalStyles.button_container}>
                             <button
                                 onClick={this.props.closeModal}
+                                className={modalStyles.control_button}
                             >
                             Ok
                             </button>
@@ -287,6 +406,7 @@ class AddNewBankModal extends Component {
                         <div className={modalStyles.button_container}>
                             <button
                                 onClick={this.props.closeModal}
+                                className={modalStyles.control_button}
                             >
                             Ok
                             </button>

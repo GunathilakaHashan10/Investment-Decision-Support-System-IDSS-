@@ -23,4 +23,12 @@ router.post('/addBankNew', adminController.addBank);
 
 router.post('/addBankImage', adminController.postBankImage);
 
+router.get('/get-all-banks', adminController.getAllBanks);
+
+router.post('/update-bank-data', adminController.updateBank);
+
+router.post('/update-bank-image', adminController.updateBankImage);
+
+router.post('/delete-bank', adminController.deleteBank);
+
 module.exports  = router;

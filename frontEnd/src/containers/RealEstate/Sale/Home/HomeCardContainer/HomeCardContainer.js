@@ -67,6 +67,7 @@ class HomeCardContainer extends Component {
                 isOpenSortBy: false
             });
     }
+
     render() {
         return(
             <div className={styles.container}>
@@ -104,7 +105,11 @@ class HomeCardContainer extends Component {
                 {
                     this.state.homesAdsSell.map(homeAd => {
                         return (
-                            <HomeCard key={homeAd._id} homeDetails={homeAd} getCo={this.props.getCo} />
+                            <HomeCard 
+                                key={homeAd._id} 
+                                homeDetails={homeAd} 
+                                getCo={this.props.getCo} 
+                            />
                         )
                     })
                 }
