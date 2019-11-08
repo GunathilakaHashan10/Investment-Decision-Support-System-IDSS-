@@ -53,6 +53,9 @@ exports.storeMessages = (req, res, next) => {
                 }
             })
             .catch(error => {
+                if (!error.statusCode) {
+                    error.statusCode = 500;
+                }
                 return next(error);
             })
 }
@@ -68,7 +71,7 @@ exports.getMessages = (req, res, next) => {
         .populate('messages.sender')
         .then(message => {
             if(!message) {
-                throw new Error('No messages');
+                return res.json({isMessagesAvailable: false});
             }
             message.messages.forEach((value, index) => {
                 const messageDetails = {
@@ -83,9 +86,12 @@ exports.getMessages = (req, res, next) => {
                 }
                 messages.push(messageDetails);
             })
-            res.json(messages)
+            return res.json({messages:messages, isMessagesAvailable: true});
         })
         .catch(error => {
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
             return next(error);
         })
         
@@ -110,6 +116,9 @@ exports.setMessageViewed = (req, res, next) => {
             })
         })
         .catch(error => {
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
             return next(error);
         })
 }

@@ -1,0 +1,28 @@
+.error_container {
+    position: absolute;
+    width: 60vw;
+    height: 79.5vh;
+    background-color: thistle;
+    margin: 0;
+    background-image: url('../../../images//Homes/ExH2.jpg');
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.error_message {
+    font-family: inherit;;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 0;
+    
+}
+
+.error_message_sub {
+    font-family: inherit;;
+    font-weight: 500;
+    font-size: 1rem;
+    color: white;
+}

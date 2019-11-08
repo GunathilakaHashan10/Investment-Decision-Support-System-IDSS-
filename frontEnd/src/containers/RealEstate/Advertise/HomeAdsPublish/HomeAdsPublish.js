@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import * as myConstants from '../../../Utils/Constants/Constants';
 import JwtDecode from 'jwt-decode';
 import axios from 'axios';
 import styles from '../../../../assets/css/RealEstate/Advertise/HomeAdsPublish/HomeAdsPublish.css';
 import ResultsModal from '../ResultsModal/ResultsModal';
+import ErrorMessageModal from '../../../Utils/ErrorMessageModal/ErrorMessageModal';
 
 class HomeAdsPublish extends Component {
     state = {
@@ -26,7 +28,13 @@ class HomeAdsPublish extends Component {
         modalMessage: null,
         imageFiles: null,
         longitude: null,
-        latitude: null
+        latitude: null,
+        error: null,
+        openErrorModal: false
+    }
+
+    handleCloseErrorModal = () => {
+        this.setState({openErrorModal: false});
     }
 
     handleSubmit = (event) => {
@@ -64,14 +72,17 @@ class HomeAdsPublish extends Component {
             formData.append('adsImages',imageFiles[i]);
         }
 
-        axios.post('http://localhost:5000/adPublish?pathName=homeImages', formData)
+        axios.post(`${myConstants.SEVER_URL}/adPublish?pathName=homeImages`, formData)
             .then(res => {
                 this.setState({
                     modalMessage: res.data.message
                 })
             })
             .catch(error => {
-                console.log(error);
+                this.setState({
+                    error: error.message,
+                    openErrorModal: true
+                })
             }) 
 
     }
@@ -261,7 +272,16 @@ class HomeAdsPublish extends Component {
                 </div> 
                 </form>  
                 {this.state.isOpenResultsModal 
-                    && <ResultsModal closeModal={this.handleCloseResultsModal} message={this.state.modalMessage}/>} 
+                    && <ResultsModal 
+                            closeModal={this.handleCloseResultsModal} 
+                            message={this.state.modalMessage}/>
+                }
+                {this.state.openErrorModal &&
+                    <ErrorMessageModal 
+                        closeModal={this.handleCloseErrorModal}
+                        error={this.state.error}
+                    />
+                } 
             </div>
         )
     }

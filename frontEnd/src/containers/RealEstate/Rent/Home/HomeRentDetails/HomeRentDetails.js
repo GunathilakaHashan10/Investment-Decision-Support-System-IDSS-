@@ -3,6 +3,7 @@ import axios from 'axios';
 import { IoIosCheckmark } from 'react-icons/io';
 import styles from '../../../../../assets/css/RealEstate/Sale/Home/HomeDetails/HomeDetails.css';
 import MessageBoxModal from '../../../MessageBoxModal/MessageBoxModal';
+import PageFooterModal from '../../../PageFooterForModal/PageFooterForModal';
 
 class HomeRentDetails extends Component {
     state = {
@@ -157,7 +158,7 @@ class HomeRentDetails extends Component {
                         </div>
                         }
                     </div>
-                    
+                    <PageFooterModal />
                 </div>
                 { isOpenModal && 
                     <MessageBoxModal 

@@ -3,6 +3,7 @@ import axios from 'axios';
 import {IoIosGrid, IoMdPin} from 'react-icons/io';
 import styles from '../../../../../assets/css/RealEstate/Sale/Land/LandDetails/LandDetails.css';
 import MessageBoxModal from '../../../MessageBoxModal/MessageBoxModal';
+import PageFooterModal from '../../../PageFooterForModal/PageFooterForModal';
 
 class LandDetails extends Component {
     state = {
@@ -107,6 +108,7 @@ class LandDetails extends Component {
                             {this.state.landAdsDetails.propertyDetails}
                         </p>
                     </div>
+                    <PageFooterModal />
                 </div>
                 { isOpenModal && 
                         <MessageBoxModal 

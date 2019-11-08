@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as myConstants from '../../../../Utils/Constants/Constants';
 import styles from '../../../../../assets/css/RealEstate/Sale/Land/LandCard/LandCard.css';
 import AdsDeleteModal from '../../AdsDeleteModal/AdsDeleteModal';
 import AdsUpdateModal from '../../AdsUpdateModal/AdsUpdateModal';
@@ -42,7 +43,7 @@ class LandAdsCard extends Component {
         return(
             <div className={styles.container}>
                 <div className={styles.land_card_container}>
-                    <img src={`http://localhost:5000/${this.state.cardLandImage}`} alt="Land" className={styles.land_card_image} />
+                    <img src={`${myConstants.SEVER_URL}/${this.state.cardLandImage}`} alt="Land" className={styles.land_card_image} />
                     <div className={styles.land_card_details} >
                         <h2 className={styles.home_price}>{`Rs.${this.props.landDetails.price}/perch`}</h2>
                         <span className={styles.no_perches}>{`${this.props.landDetails.areaOfLand} perches available`}</span>

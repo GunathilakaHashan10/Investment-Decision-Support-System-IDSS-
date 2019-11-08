@@ -5,3 +5,36 @@
     left: 245px;
     width: 81.2%;
 }
+
+.no_ads_container {
+    position: fixed;
+    top: 100px;
+    width: 80%;
+    height: 80%;
+    background-image: url(../../../../images/Homes/ExH2.jpg);
+    background-origin: border-box;
+    /* background-position: center; */
+}
+
+.oophs_message {
+    font-family: inherit;
+    color: white;
+    font-size: 2rem;
+    margin-left: 5rem;
+}
+
+.message01 {
+    font-family: inherit;
+    color: white;
+    font-weight: 500;
+    font-size: 1.5rem;
+    margin-left: 5rem;
+}
+
+.message02 {
+    font-family: inherit;
+    color: white;
+    font-weight: 500;
+    font-size: 1rem;
+    margin-left: 5rem;
+}

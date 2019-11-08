@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import * as myConstants from '../../../../Utils/Constants/Constants';
 import axios from 'axios';
-import { IoIosArrowDown, IoMdSearch } from 'react-icons/io';
+import { IoIosArrowDown, IoMdSearch, IoIosInformationCircle } from 'react-icons/io';
 import styles from '../../../../../assets/css/RealEstate/Sale/Home/HomeCardContainer/HomeCardContainer.css';
+import errorstyles from '../../../../../assets/css/RealEstate/ErrorDetatils/ErrorDetatils.css';
 import HomeCard from '../HomeCard/HomeCard';
+import ErrorMessageModal from '../../../../Utils/ErrorMessageModal/ErrorMessageModal';
+import PageFooter from '../../../../PageFooter/PageFooter';
 
 class HomeCardContainer extends Component {
     state = {
@@ -10,7 +14,13 @@ class HomeCardContainer extends Component {
         isSortByContent: "Homes for you",
         homesAdsSell: [],
         propertyType: null,
-        adsCount: null
+        adsCount: null,
+        error: null,
+        openErrorModal: false
+    }
+
+    handleCloseErrorModal = () => {
+        this.setState({openErrorModal:false})
     }
 
     componentDidMount() {
@@ -36,8 +46,9 @@ class HomeCardContainer extends Component {
             
             default: break;
         }
+        this.setState({propertyType:propertyType})
 
-        axios.get(`http://localhost:5000/homeAdsSell?type=${propertyType}`)
+        axios.get(`${myConstants.SEVER_URL}/homeAdsSell?type=${propertyType}`)
             .then(response => {
                 if(response.data != null) {
                     this.setState(preveState => {
@@ -48,11 +59,12 @@ class HomeCardContainer extends Component {
                         }
                     })
                 }
-                
-
             })
             .catch(error => {
-                console.log(error);
+               this.setState({
+                   error:error.message,
+                   openErrorModal: true
+               })
             })
     }
     
@@ -69,15 +81,21 @@ class HomeCardContainer extends Component {
     }
 
     render() {
-        return(
-            <div className={styles.container}>
-                <div className={styles.search_box_container}>
-                    <div className={styles.search_input_container}>
-                        <input type="text" name="loaction" placeholder="Location" className={styles.search_box}/>
-                        <button className={styles.search_box_button}><IoMdSearch size="1.6em" color="#006AFF" /></button>
-                    </div>
+        const { homesAdsSell, propertyType } = this.state;
+        let content = null;
+        if(homesAdsSell.length === 0) {
+            content = (
+                <div className={errorstyles.error_container}>
+                    <h2 className={errorstyles.error_message}>{`No ${propertyType} advertisments are available right now`}</h2>
+                    <h3 className={errorstyles.error_message_sub}>Sorry for the inconvenience</h3>
+                    <IoIosInformationCircle size="5em" color="white"/>
+                    <PageFooter />
                 </div>
-                <div className={styles.title_container}>
+            )
+        } else {
+            content = (
+                <div>
+                    <div className={styles.title_container}>
                     <h2 className={styles.title}>{`Real Estate & ${this.state.propertyType}s For Sale`}</h2>
                     <div className={styles.results_and_sortBy_container}>
                         <h3 className={styles.results}>{`${this.state.adsCount} results`}</h3>
@@ -113,8 +131,27 @@ class HomeCardContainer extends Component {
                         )
                     })
                 }
-                
+                <PageFooter />
                 </div>
+                </div>
+            )
+        }
+        return(
+            <div className={styles.container}>
+                <div className={styles.search_box_container}>
+                    <div className={styles.search_input_container}>
+                        <input type="text" name="loaction" placeholder="Location" className={styles.search_box}/>
+                        <button className={styles.search_box_button}><IoMdSearch size="1.6em" color="#006AFF" /></button>
+                    </div>
+                </div>
+                {content}
+                {this.state.openErrorModal &&
+                    <ErrorMessageModal 
+                        closeModal={this.handleCloseErrorModal}
+                        error={this.state.error}
+                    />
+
+                }
             </div>
         )
     }

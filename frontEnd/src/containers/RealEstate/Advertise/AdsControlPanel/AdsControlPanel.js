@@ -3,16 +3,25 @@ import JwtDecode from 'jwt-decode';
 import axios from 'axios';
 import { Route } from 'react-router-dom';
 import ReactLoading from 'react-loading';
+import * as myConstants from '../../../Utils/Constants/Constants';
 import lodingStyles from '../../../../assets/css/ReactLoading/ReactLoading.css';
+import styles from '../../../../assets/css/RealEstate/Advertise/AdsControlPanel/AdsControlPanel.css';
 import AdsSideNav from '../AdsSideNav/AdsSideNav';
 import AllAds from '../AllAds/AllAds';
 import AdsPublishContainer from '../AdsPublishContainer/AdsPublishContainer';
 import AdvertiserRegisterPage from '../AdvertiserRegisterPage/AdvertiserRegisterPage';
+import ErrorMessageModal from '../../../Utils/ErrorMessageModal/ErrorMessageModal';
 
 class AdsControlPanel extends Component {
     state = {
         loading: true,
-        isAdvertiser: false
+        isAdvertiser: false,
+        error: null,
+        openErrorModal: false
+    }
+
+    handleCloseErrorModal = () => {
+        this.setState({openErrorModal: false});
     }
 
     componentDidMount() {
@@ -20,17 +29,25 @@ class AdsControlPanel extends Component {
         const decodedToken = JwtDecode(token);
         const uId = decodedToken.userId;
 
-        axios.get('http://localhost:5000/advertiser/checkIsAdvertiser?id=' + uId)
+        
+
+        axios.get(`${myConstants.SEVER_URL}/advertiser/checkIsAdvertiser?id=` + uId)
             .then(response => {
-                this.setState({ isAdvertiser: response.data.isAdvertiser});
+                setTimeout(() => {
+                    this.setState({ 
+                        isAdvertiser: response.data.isAdvertiser,
+                        loading: false 
+                    });
+                },1500);
+               
             })
             .catch(error => {
-                console.log(error);
+                this.setState({
+                    error: error.message,
+                    openErrorModal: true
+                })
             })
 
-        setTimeout(() => {
-            this.setState({ loading: false })
-        },2000);
     }
 
     handleNavigation = (event) => {
@@ -44,7 +61,7 @@ class AdsControlPanel extends Component {
             content = (<AdvertiserRegisterPage />);
         } else {
             content = (
-                <div>
+                <div >
                     <AdsSideNav handleNav={this.handleNavigation}/>
                     <Route path={`${this.props.match.path}`} exact={true} component={AllAds}/>
                     <Route path={`${this.props.match.path}/home-ads`} component={AllAds}/>
@@ -66,6 +83,12 @@ class AdsControlPanel extends Component {
                 </div>
                 
                     
+            }
+            {this.state.openErrorModal &&
+                <ErrorMessageModal 
+                    closeModal={this.handleCloseErrorModal}
+                    error={this.state.error}
+                />
             }
             </div>
             

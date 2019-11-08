@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import JwtDecode from 'jwt-decode';
 import axios from 'axios';
+import * as myConstants from '../../../Utils/Constants/Constants';
 import { IoMdArrowDropright, IoMdArrowDropleft} from 'react-icons/io';
 import styles from '../../../../assets/css/Admin/ControlPanelSideNav/ControlPanelSideNav.css';
 import MessageInboxModal from '../MessageInboxModal/MessageInboxModal';
@@ -14,7 +15,7 @@ class AdsSideNav extends Component {
         isOpenMessageInboxModal: false,
         error: null,
         errorModalOpen: false,
-        advertiserMessages: [{}]
+        advertiserMessages: []
     }
 
     componentDidMount() {
@@ -22,11 +23,16 @@ class AdsSideNav extends Component {
         const decodedToken = JwtDecode(token);
         const pId = decodedToken.userId;
 
-        axios.get('http://localhost:5000/contact/getMessages?pId='+ pId)
+        axios.get(`${myConstants.SEVER_URL}/contact/getMessages?pId=`+ pId)
             .then(response => {
-                this.setState({
-                    advertiserMessages: response.data
-                })
+                if(response.data.isMessagesAvailable) {
+                    this.setState({
+                        advertiserMessages: response.data.messages
+                    })
+                } else {
+                  return this.setState({advertiserMessages: []});
+                }
+                
             })
             .catch(error => {
                 this.setState({ 

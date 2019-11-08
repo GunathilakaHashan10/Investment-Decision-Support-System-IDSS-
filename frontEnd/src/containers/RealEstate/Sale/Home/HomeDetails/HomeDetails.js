@@ -3,6 +3,7 @@ import axios from 'axios';
 import { IoIosCheckmark } from 'react-icons/io';
 import styles from '../../../../../assets/css/RealEstate/Sale/Home/HomeDetails/HomeDetails.css';
 import MessageBoxModal from '../../../MessageBoxModal/MessageBoxModal';
+import PageFooterModal from '../../../PageFooterForModal/PageFooterForModal';
 
 class HomeDetails extends Component {
     state = {
@@ -156,8 +157,9 @@ class HomeDetails extends Component {
                             <span className={styles.property_feature_icon}><IoIosCheckmark size="2em" color="#006AFF" /></span>
                         </div>
                         }
+                        
                     </div>
-                    
+                    <PageFooterModal /> 
                 </div>
                 { isOpenModal && 
                     <MessageBoxModal 
@@ -171,6 +173,7 @@ class HomeDetails extends Component {
                         adVersion={this.state.adVersion}
                     />
                 }
+                
             </div>
         );
     }

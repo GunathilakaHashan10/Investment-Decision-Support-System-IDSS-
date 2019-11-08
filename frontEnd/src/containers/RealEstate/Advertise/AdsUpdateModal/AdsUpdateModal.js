@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import * as myConstants from '../../../Utils/Constants/Constants';
 import modalStyles from '../../../../assets/css/RealEstate/Advertise/AdsUpdateModal/AdsUpdateModal.css';
 import MessageModal from '../../../Utils/MessageModal/MessageModal';
+import ErrorMessageModal from '../../../Utils/ErrorMessageModal/ErrorMessageModal';
 
 class AdsUpdateModal extends Component {
     state = {
@@ -14,6 +16,12 @@ class AdsUpdateModal extends Component {
         response: null,
         adType: this.props.adType,
         adId: this.props.id,
+        error: null,
+        openErrorModal: false
+    }
+
+    handleCloseErrorModal = () => {
+        this.setState({openErrorModal: false});
     }
 
     handleOnchange = (e) => {
@@ -35,18 +43,20 @@ class AdsUpdateModal extends Component {
         formData.append('adType', adType);
         formData.append('adId', adId);
 
-        axios.post('http://localhost:5000/updateAd', formData)
+        axios.post(`${myConstants.SEVER_URL}/updateAd'`, formData)
             .then(response => {
                 this.setState({
                     response: response.data.message
                 })
-                console.log(this.state.response)
                 setTimeout(() => {
                     state.disAbleLoading();
                 },2000);
             })
             .catch(error => {
-                console.log(error);
+                this.setState({
+                    error: error.message,
+                    openErrorModal: true
+                })
             })
 
     }
@@ -143,6 +153,12 @@ class AdsUpdateModal extends Component {
                         handleOperation={this.handleSubmit}
                         handelCancel={this.handelCancel}
                     />}
+                    {this.state.openErrorModal &&
+                        <ErrorMessageModal 
+                            closeModal={this.handleCloseErrorModal}
+                            error={this.state.error}
+                        />
+                    }
             </div>
         )
     }

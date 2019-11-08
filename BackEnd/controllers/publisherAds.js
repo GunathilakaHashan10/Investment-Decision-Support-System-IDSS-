@@ -24,15 +24,18 @@ exports.getAllPublisherAds = (req, res, next) => {
                         }
                     })
                 }
-                if(allAds.length != 0) {
-                    res.status(200).json(allAds);
+                if(allAds.length !== 0) {
+                    res.status(200).json({allAds:allAds, isAdsAvailable: true});
                 } else {
-                    res.json(null);
+                    res.json({isAdsAvailable: false});
                 }
             })
         })
         .catch(error => {
-            console.log(error);
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
         }) 
 }
 
@@ -46,8 +49,12 @@ exports.deleteAd = (req, res, next) => {
             res.status(200).json({message: "success"})
         })
         .catch(error => {
-            console.log(error);
             res.json({message: "failed"})
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
+            
         })
     } else {
         LandAds.findByIdAndDelete(adId)
@@ -55,8 +62,11 @@ exports.deleteAd = (req, res, next) => {
             res.status(200).json({message: "success"})
         })
         .catch(error => {
-            console.log(error);
-            res.json({message: "failed"})
+            res.json({message: "failed"});
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
         })
     }
 }
@@ -67,7 +77,6 @@ exports.updateAd = (req, res, next) => {
     const adId = req.body.adId;
     const adType = req.body.adType;
 
-    console.log(adId)
 
     if(adType === 'home') {
         HomeAds.findById(adId)
@@ -81,13 +90,19 @@ exports.updateAd = (req, res, next) => {
             })
             .catch(error => {
                 res.json({message: "Operation failed"});
-                console.log(error);
+                if (!error.statusCode) {
+                    error.statusCode = 500;
+                }
+                return next(error);
             })
             
         })
         .catch(error => {
-            console.log(error);
             res.json({message: "Operation failed"})
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
         })
     } else {
         LandAds.findById(adId)
@@ -101,12 +116,18 @@ exports.updateAd = (req, res, next) => {
             })
             .catch(error => {
                 res.json({message: "Operation failed"});
-                console.log(error);
+                if (!error.statusCode) {
+                    error.statusCode = 500;
+                }
+                return next(error);
             })
         })
         .catch(error => {
-            console.log(error);
             res.json({message: "failed"})
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
         })
     }
 

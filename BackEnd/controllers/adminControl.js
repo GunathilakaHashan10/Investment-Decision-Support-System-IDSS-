@@ -187,9 +187,7 @@ exports.getPublisherAds = (req, res, next) => {
                 }
                 if(allAds.length !== 0) {
                     res.status(200).json({allAds:allAds, salesAdsCount:salesAdsCount, rentAdsCount:rentAdsCount});
-                } else {
-                    throw new Error("No ads");
-                }
+                } 
             })
         })
         .catch(error => {

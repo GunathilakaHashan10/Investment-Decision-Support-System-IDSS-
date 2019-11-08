@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import * as myConstants from '../../../Utils/Constants/Constants';
 import axios from 'axios';
 import ReactLoading from 'react-loading';
 import lodingStyles from '../../../../assets/css/ReactLoading/ReactLoading.css';
 import modalStyles from '../../../../assets/css/Admin/AdminStocks/AdminStocksModals/DeleteShareModal/DeleteShareModal.css';
+import ErrorMessageModal from '../../../Utils/ErrorMessageModal/ErrorMessageModal';
 
 
 class AdsDeleteModal extends Component {
@@ -10,7 +12,13 @@ class AdsDeleteModal extends Component {
         isLoading: false,
         adId: this.props.id,
         adType: this.props.adType,
-        isDeleteSuccess: null
+        isDeleteSuccess: null,
+        error: null,
+        openErrorModal: false
+    }
+
+    handleCloseErrorModal = () => {
+        this.setState({openErrorModal: false});
     }
 
     handleDelete = () => {
@@ -19,7 +27,7 @@ class AdsDeleteModal extends Component {
         formData.append('id', this.state.adId);
         formData.append('adType', this.state.adType);
 
-        axios.post('http://localhost:5000/deleteAd', formData)
+        axios.post(`${myConstants.SEVER_URL}/deleteAd`, formData)
             .then(response => {
                 setTimeout(() => {
                     this.setState({
@@ -30,7 +38,10 @@ class AdsDeleteModal extends Component {
                 
             })
             .catch(error => {
-                console.log(error);
+                this.setState({
+                    error: error.message,
+                    openErrorModal: true
+                })
             })
     }
 
@@ -106,6 +117,12 @@ class AdsDeleteModal extends Component {
                     {isLoading ? reactLoading : deleteContent}
 
                 </div>
+                {this.state.openErrorModal &&
+                    <ErrorMessageModal 
+                        closeModal={this.handleCloseErrorModal}
+                        error={this.state.error}
+                    />
+                }
             </div>
         )
     }

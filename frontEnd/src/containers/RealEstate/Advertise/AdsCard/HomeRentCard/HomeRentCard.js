@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import * as myConstants from '../../../../Utils/Constants/Constants';
-import styles from '../../../../../assets/css/RealEstate/Advertise/AdsCard/HomeAdsCard.css';
+import styles from '../../../../../assets/css/RealEstate/Sale/Home/HomeCard/HomeCard.css';
 import AdsDeleteModal from '../../AdsDeleteModal/AdsDeleteModal';
 import AdsUpdateModal from '../../AdsUpdateModal/AdsUpdateModal';
 
-class HomeAdsCard extends Component {
+class HomeRentCard extends Component {
     state = {
         homeCardImage: this.props.homeDetails.homeImages[0].imagePath,
         isModalOpen: false,
@@ -34,20 +34,19 @@ class HomeAdsCard extends Component {
         this.setState({ isOpenAdsUpdateModal: false })
     }
 
-    
 
-    render(){
+    render() {
         const { isModalOpen, adId, adType, isOpenAdsUpdateModal } = this.state;
         let location = this.props.homeDetails.location.split(',');
         let city = location[location.length - 1];
         return(
             <div className={styles.container}>
                 <div className={styles.home_card_container}>
-                    <img src={`${myConstants.SEVER_URL}/${this.state.homeCardImage}`} alt="home" className={styles.home_card_image}/>
-                    <div className={styles.home_card_details} >
-                        <h2 className={styles.home_price}>{`${this.props.homeDetails.price}M`}</h2>
-                        <span className={styles.no_beds}>{`${this.props.homeDetails.bedRooms}beds`}</span>
-                        <span className={styles.no_bath}>{`${this.props.homeDetails.bathRooms}ba`}</span>
+                    <img src={`${myConstants.SEVER_URL}/${this.state.homeCardImage}`} alt="home" className={styles.home_card_image} />
+                    <div className={styles.home_card_details} onClick={this.handleModalOpen}>
+                        <h2 className={styles.home_rent}>{`Rs.${this.props.homeDetails.price}/month`}</h2>
+                        <span className={styles.no_beds_rent}>{`${this.props.homeDetails.bedRooms}beds`}</span>
+                        <span className={styles.no_bath_rent}>{`${this.props.homeDetails.bathRooms}bath`}</span>
                         
                     </div>
                     <div className={styles.home_card_address}>
@@ -55,7 +54,7 @@ class HomeAdsCard extends Component {
                     </div>
                     <div className={styles.home_card_sale_container}>
                         <span className={styles.indicator}></span>
-                        <span className={styles.sale_rent_annotation}>{`${this.props.homeDetails.propertyType} for ${this.props.homeDetails.sellOrRent}`}</span>
+                        <span className={styles.sale_rent_annotation}>{`${this.props.homeDetails.propertyType} for rent`}</span>
                     </div>
                     <div className={styles.home_card_time_period_annotation}>
                         5 days on here
@@ -72,27 +71,28 @@ class HomeAdsCard extends Component {
                         Delete
                         </button>
                     </div>
+                   
                 </div>
-                {isModalOpen && 
+                    {isModalOpen && 
                         <AdsDeleteModal 
                             closeModal={this.handleModalClose} 
                             id={adId} 
                             handelCancel={this.handelCancel} 
                             adType={adType}
                         />
-                }
+                    }
 
-                {isOpenAdsUpdateModal && 
-                    <AdsUpdateModal 
-                        closeModal={this.handleCloseAdsUpdateModal} 
-                        id={adId} 
-                        adDetails={this.props.homeDetails} 
-                        adType={adType}
-                        />
-                }
+                    {isOpenAdsUpdateModal && 
+                        <AdsUpdateModal 
+                            closeModal={this.handleCloseAdsUpdateModal} 
+                            id={adId} 
+                            adDetails={this.props.homeDetails} 
+                            adType={adType}
+                            />
+                    }
             </div>
-        );
+        )
     }
 }
 
-export default HomeAdsCard;
+export default HomeRentCard;
