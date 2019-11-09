@@ -24,7 +24,7 @@ class AddNewBankModal extends Component {
             bankImage: "",
             interestRates: ""
         },
-        isFormErrors: null
+        isFormErrors: false
     }
 
     handelCloseErrorMessageModal = () => {
@@ -151,8 +151,7 @@ class AddNewBankModal extends Component {
                 let formErrors = {...prevState.formErrors};
                 formErrors.bankName = ""
                 return { 
-                    formErrors,
-                    isFormErrors: false
+                    formErrors
                  }
             })
         }
@@ -179,8 +178,7 @@ class AddNewBankModal extends Component {
                 let formErrors = {...prevState.formErrors};
                 formErrors.description = ""
                 return { 
-                    formErrors,
-                    isFormErrors: false
+                    formErrors
                  }
             })
         }
@@ -197,75 +195,171 @@ class AddNewBankModal extends Component {
     bankDataSubmitHandler = () => {
         const { interestRates, bankImage, bankName, description, isFormErrors} = this.state;
         const formErrors = {...this.state.formErrors};
+
         if(interestRates.length === 0) {
-            this.setState((prevState) => {
-                let formErrors = {...prevState.formErrors};
-                formErrors.interestRates = "No interestRates provided";
-                return { formErrors }
-            })
-            this.setState({isFormErrors: true})
-        } else if(interestRates.length < 2) {
-            this.setState((prevState) => {
-                let formErrors = {...prevState.formErrors};
-                formErrors.interestRates = "minimum 8 terms required";
-                return { formErrors }
-            })
-            this.setState({isFormErrors: true})
-        } else if (interestRates.length > 2) {
-            this.setState((prevState) => {
-                let formErrors = {...prevState.formErrors};
-                formErrors.interestRates = "";
-                return { formErrors }
-            })
-            this.setState({isFormErrors: true})
+            formErrors.interestRates = "No interestRates provided"
+        } else if (interestRates.length < 8) {
+            formErrors.interestRates = "minimum 8 terms required"
         } else {
-            this.setState({isFormErrors: false})
+            formErrors.interestRates = ""
         }
- 
+
         if(bankImage.length === 0) {
-            this.setState((prevState) => {
-                let formErrors = {...prevState.formErrors};
-                formErrors.bankImage = "No bank image provided";
-                return { formErrors }
-            })
-            this.setState({isFormErrors: true})
+            formErrors.bankImage = "No bank image provided";
         } else {
-            this.setState((prevState) => {
-                let formErrors = {...prevState.formErrors};
-                formErrors.bankImage = "";
-                return { formErrors }
-            })
-            this.setState({isFormErrors: false})
-            
+            formErrors.bankImage = "";
         }
 
         if(bankName.length === 0) {
-            this.setState((prevState) => {
-                let formErrors = {...prevState.formErrors};
-                formErrors.bankName = "Bank name is required"
-                return {  formErrors }
-            })
-            this.setState({isFormErrors: true})
+            formErrors.bankName = "Bank name is required"
+        } else if (bankName.length < 6) {
+            formErrors.bankName = "minimum 6 characaters required"
+        } else {
+            formErrors.bankName = ""
         }
 
         if(description.length === 0) {
-            this.setState((prevState) => {
-                let formErrors = {...prevState.formErrors};
-                formErrors.description = "Bank description is required"
-                return {  formErrors }
-            })
-            this.setState({isFormErrors: true})
-        }
-
-        if((formErrors.bankName !== "") || (formErrors.description !== "") || (formErrors.bankImage !== "") || (formErrors.interestRates !== "")) {
-           return this.setState({isFormErrors: true})
+            formErrors.description = "Bank description is required"
+        } else if (description.length < 10) {
+            formErrors.description = "minimum 10 characaters required"
         } else {
-            this.setState({isFormErrors: false})
+            formErrors.description = ""
         }
-        
-        if(isFormErrors === false) {
 
-            this.setState({isLoading: true})
+        if( formErrors.description || formErrors.interestRates || formErrors.bankImage || formErrors.bankName) {
+            this.setState(() => ({
+                formErrors,
+                isFormErrors: true
+            }))
+        } else {
+            this.setState(() => {
+                return {
+                    formErrors,
+                    isFormErrors: false
+                }
+            })
+            this.sendAddBankAxio(bankImage, bankName, description, interestRates)
+        }
+
+
+////////////////////////////////////
+        // if(interestRates.length === 0) {
+        //     this.setState((prevState) => {
+        //         let formErrors = {...prevState.formErrors};
+        //         formErrors.interestRates = "No interestRates provided";
+        //         return { formErrors }
+        //     })
+        //     this.setState({isFormErrors: true})
+        // } else if(interestRates.length < 8) {
+        //     this.setState((prevState) => {
+        //         let formErrors = {...prevState.formErrors};
+        //         formErrors.interestRates = "minimum 8 terms required";
+        //         return { formErrors }
+        //     })
+        //     this.setState({isFormErrors: true})
+        // } else if (interestRates.length > 8) {
+        //     this.setState((prevState) => {
+        //         let formErrors = {...prevState.formErrors};
+        //         formErrors.interestRates = "";
+        //         return { formErrors }
+        //     })
+        //     this.setState({isFormErrors: true})
+        // }
+
+        // if(bankImage.length === 0) {
+        //     this.setState((prevState) => {
+        //         let formErrors = {...prevState.formErrors};
+        //         formErrors.bankImage = "No bank image provided";
+        //         return { formErrors }
+        //     })
+        //     this.setState({isFormErrors: true})
+        // } else {
+        //     this.setState((prevState) => {
+        //         let formErrors = {...prevState.formErrors};
+        //         formErrors.bankImage = "";
+        //         return { formErrors }
+        //     })
+            
+        // }
+
+        // if(bankName.length === 0) {
+        //     this.setState((prevState) => {
+        //         let formErrors = {...prevState.formErrors};
+        //         formErrors.bankName = "Bank name is required"
+        //         return {  formErrors }
+        //     })
+        //     this.setState({isFormErrors: true})
+        // }
+
+        // if(description.length === 0) {
+        //     this.setState((prevState) => {
+        //         let formErrors = {...prevState.formErrors};
+        //         formErrors.description = "Bank description is required"
+        //         return {  formErrors }
+        //     })
+        //     this.setState({isFormErrors: true})
+        // }
+
+        // if(!(formErrors.bankName !== "") || (formErrors.description !== "") || (formErrors.bankImage !== "") || (formErrors.interestRates !== "")) {
+        //    return this.setState({isFormErrors: true})
+        // } 
+        
+//         if(!isFormErrors) {
+
+//             this.setState({isLoading: true})
+//             let id = uuid();
+//             const formData = new FormData();
+//             formData.append('id',id);
+//             for(let i=0; i<bankImage.length; i++){
+//                 formData.append("adsImages", bankImage[i]);
+//             }
+            
+//             const bankData = {
+//                 bankId:id,
+//                 bankName:bankName,
+//                 description:description,
+//                 interestRates:interestRates
+//             }
+            
+    
+//             axios.post(`${myConstants.SEVER_URL}/admin/addBankNew`, {
+//                     data:bankData
+//                 })
+//                  .then(response => {
+//                     setTimeout(() => {
+//                         this.setState({
+//                             isLoading: false,
+//                             isSuccess: response.data.success,
+//                             message: response.data.message
+//                         });
+//                         if(response.data.success){
+//                             axios.post(`${myConstants.SEVER_URL}/admin/addBankImage?pathName=bankImages`, formData)
+//                                 .then(res => {
+//                                     console.log(res.data)
+//                                 })
+//                                 .catch(error => {
+//                                     this.setState({
+//                                         isLoading: false,
+//                                         error: error.message,
+//                                         openErrorModal: true
+//                                     })
+//                                 })
+//                         }
+//                     }, 1500);
+    
+//                 })
+//                 .catch(error => {
+//                     this.setState({
+//                         isLoading: false,
+//                         error: error.message,
+//                         openErrorModal: true
+//                     })
+//                 })
+//         } 
+}
+
+sendAddBankAxio( bankImage, bankName, description, interestRates ) {
+    this.setState({isLoading: true})
             let id = uuid();
             const formData = new FormData();
             formData.append('id',id);
@@ -314,11 +408,7 @@ class AddNewBankModal extends Component {
                         openErrorModal: true
                     })
                 })
-        } 
-
-         
-
-    }
+}
 
     render() {
         const {isSuccess, isLoading, openErrorModal, message, isFormErrors} = this.state;
@@ -450,4 +540,3 @@ class AddNewBankModal extends Component {
 }
 
 export default AddNewBankModal;
-
