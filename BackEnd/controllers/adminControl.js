@@ -451,3 +451,21 @@ exports.deleteBank = (req, res, next) => {
         })
 
 }
+
+exports.getAllUsers = (req, res, next) => {
+    User
+        .find()
+        .then((users) => {
+            if(users.length === 0) {
+                return res.json({success: false})
+            }
+
+            return res.json({userData:users, success: true})
+        })
+        .catch((error) => {
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
+        })
+}

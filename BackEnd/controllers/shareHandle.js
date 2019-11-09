@@ -1,4 +1,5 @@
 const path = require('path');
+const mongoose = require('mongoose');
 const csv = require('csv-parser');
 const fs = require('fs');
 const { timeParse} = require('d3-time-format');
@@ -6,6 +7,7 @@ const { timeParse} = require('d3-time-format');
 const Share = require('../models/shareHandle/shareHandle');
 const Ltp = require('../models/Ltp/Ltp');
 const ShareValue = require('../testModels/Share');
+const { folderPath } = require('../public/tsvFiles/folderPath');
 
 const parseDate = timeParse("%Y-%m-%d");
 
@@ -40,12 +42,12 @@ exports.postAddShare = (req, res, next) => {
                         duration: duration,
                         filePath: filePath,
                         fileName: fileName 
-                    })
+                    }) 
 
                     share.save()
                         .then(result => {
                             if(result) {
-                                const filePath = path.join('/home','/hashan', '/Testing in server', '/temp_server', '/public', '/tsvFiles', result.fileName);
+                                const filePath = path.join(folderPath, result.fileName);
                                 fs.createReadStream(filePath)
                                 .pipe(csv()) /*{ separator: '\t' }*/
                                 .on('data', (data) => results.push(data))
@@ -66,13 +68,14 @@ exports.postAddShare = (req, res, next) => {
                                                     resultDoc.save();
                                                 })
                                                 .catch(error => {
-                                                    console.log(error);
+                                                    res.json({success: false, message:`Failed the operation`})
                                                 })
                                               
                                     })
                                 }); 
+                                fs.unlinkSync(filePath);
                             }
-                            res.status(201).json({message: 'Share added successfully!'});
+                           return res.json({success: true, message:`${shareName} added successfully`})
                         })
                 } else if (shareDoc) {
                     shareDoc.updateOne({
@@ -116,16 +119,7 @@ exports.postAddShare = (req, res, next) => {
                     
                                 });
                                 })
-                                .catch(error => {
-                                    console.log(error);
-                                    res.json({
-                                        message: 'Error'
-                                    });
-                                    if(!err.statusCode) {
-                                        err.statusCode = 500;
-                                    }
-                                    next(err);
-                                }) 
+                                fs.unlinkSync(filePath);
                         }
                     })
                     .catch(error => {
@@ -170,22 +164,32 @@ exports.getShares = (req, res, next) => {
             })
             res.status(200).json(company);
         })
-        .catch(err => {
-            console.log(err);
+        .catch(error => {
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
         });
 }
 
 exports.getShareFile = (req, res, next) => {
     const id = req.query.id;
-
-    Share.findById(id)
+    if(id === "5d25fe63969e062b7126c319") {
+        return;
+    } else {
+        Share.findById(id)
         .then(share => {
             res.status(200).json({result: share.ltp})
             
         }) 
         .catch(error => {
-            console.log(error);
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
         })
+    }
+    
 
 }
 
@@ -225,13 +229,15 @@ exports.getSlope = (req, res, next) => {
                     slopeOfShares.push(slopeAndShare);
                 }
             })
-            // console.log(slopeOfShares);
             res.status(200).json(slopeOfShares);
              
         })
         .catch(error => {
-            console.log(error);
             res.json(error);
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
         })
 }
 
@@ -243,7 +249,10 @@ exports.getLtp = (req, res, next) => {
             
         })
         .catch(error => {
-            console.log(error);
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
         })
 }
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as myConstants from '../../Utils/Constants/Constants';
 import { Route } from 'react-router-dom';
 import axios from 'axios';
 
@@ -7,33 +8,42 @@ import ChandleStickMA from '../Charts/Index/indexMA';
 import ChandleStickTrendLine from '../Charts/Index/indexTrendLine';
 import ComparisonModal from '../ComparisonModal/ComparisonModal';
 import styles from '../../../assets/css/ChartContainerPage/ChartContainerPage.css';
+import ErrorMessageModal from '../../Utils/ErrorMessageModal/ErrorMessageModal';
 
 class ChartContainerPage extends Component {
     state = {
         company: [],
         companyId: "5d25fe63969e062b7126c319",
         companyTitle: 'Company name',
-        isOpenComparsionModal: false
+        isOpenComparsionModal: false,
+        error: null,
+        openErrorModal: false
+    }
+
+    handleCloseErrorModal = () => {
+        this.setState({openErrorModal:false});
     }
 
     componentDidMount() {
-        axios.get("http://localhost:5000/shares") 
+        axios.get(`${myConstants.SEVER_URL}/stock/shares`) 
             .then(res => {
                 if(res.status !== 200) {
                     throw new Error('Fecthing shares failed');
                 }
                 const shareDetails = res.data;
-                
                 this.setState(prevState => {
                     return {
                         company: prevState.company.concat(shareDetails),
-                        companyId: shareDetails[0].shareId
-                        
+                        companyId: shareDetails[0].shareId 
                     }
                 })
+                this.setState({companyId:shareDetails[0].shareId})
             })
             .catch(error => {
-                console.log(error);
+                this.setState({
+                    error:error.message,
+                    openErrorModal:true
+                })
             })
     }
 
@@ -49,8 +59,6 @@ class ChartContainerPage extends Component {
             companyTitle: event.currentTarget.value,
             companyId: event.currentTarget.id
         })
-
-        console.log(this.state.companyId);
         this.props.history.push(`${this.props.match.url}`);
         
     }
@@ -137,7 +145,12 @@ class ChartContainerPage extends Component {
                         </div>
                     </div>
                 </div>
-
+                {this.state.openErrorModal &&
+                    <ErrorMessageModal 
+                        closeModal={this.handleCloseErrorModal}
+                        error={this.state.error}
+                    />
+                }                    
             </div>
         );
     }

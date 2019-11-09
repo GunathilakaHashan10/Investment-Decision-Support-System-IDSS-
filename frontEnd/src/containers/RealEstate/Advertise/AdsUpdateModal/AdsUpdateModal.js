@@ -43,7 +43,7 @@ class AdsUpdateModal extends Component {
         formData.append('adType', adType);
         formData.append('adId', adId);
 
-        axios.post(`${myConstants.SEVER_URL}/updateAd'`, formData)
+        axios.post(`${myConstants.SEVER_URL}/updateAd`, formData)
             .then(response => {
                 this.setState({
                     response: response.data.message

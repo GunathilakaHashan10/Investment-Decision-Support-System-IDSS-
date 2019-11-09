@@ -1,8 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import ReactLoading from 'react-loading';
+import * as myConstants from '../../../Utils/Constants/Constants';
 import styles from '../../../../assets/css/ReactLoading/ReactLoading.css';
 import ChandleStickTrendLine from '../ChandleStickTrendLine';
+import ErrorMessageModal from '../../../Utils/ErrorMessageModal/ErrorMessageModal';
 
 import { timeParse } from "d3-time-format";
 
@@ -11,12 +13,19 @@ const parseDate = timeParse("%Y-%m-%d");
 class ChandleStickTrendLineChart extends React.Component {
     state = {
         data: [{date: parseDate("2019-01-04"),}, {date: parseDate("2019-01-04"),}],
-        isLoading: false
+        isLoading: false,
+        error: null,
+        openErrorModal: false
+    }
+
+
+    handleCloseErrorModal = () => {
+        this.setState({openErrorModal:false});
     }
   
     componentDidMount() {
         this.setState({ isLoading: true})
-        axios.get("http://localhost:5000/getFile?id=" + this.props.companyId)
+        axios.get(`${myConstants.SEVER_URL}/stock/getFile?id=` + this.props.companyId)
         .then(response => {
             let data = response.data.result.sort(function(a, b){return parseDate(a.date) - parseDate(b.date)}).map(value => {
                 return {
@@ -36,13 +45,16 @@ class ChandleStickTrendLineChart extends React.Component {
             })
         })
         .catch(error => {
-            console.log(error);
+            this.setState({
+                error:error.message,
+                openErrorModal:true
+            })
         })
     }
 
     componentWillReceiveProps() { 
             this.setState({ isLoading: true})   
-            axios.get("http://localhost:5000/getFile?id=" + this.props.companyId)
+            axios.get(`${myConstants.SEVER_URL}/stock/getFile?id=` + this.props.companyId)
             .then(response => {
             let data = response.data.result.sort(function(a, b){return parseDate(a.date) - parseDate(b.date)}).map(value => {
                 return {
@@ -62,8 +74,11 @@ class ChandleStickTrendLineChart extends React.Component {
             })
             })
             .catch(error => {
-                console.log(error);
-            });
+                this.setState({
+                    error:error.message,
+                    openErrorModal:true
+                })
+            })
     }
     
     render() {
@@ -79,6 +94,12 @@ class ChandleStickTrendLineChart extends React.Component {
                         <ReactLoading type={'spin'} color={'#006AFF'} height={'5%'} width={'5%'} />
                     </div>
                 }
+                {this.state.openErrorModal &&
+                    <ErrorMessageModal 
+                        closeModal={this.handleCloseErrorModal}
+                        error={this.state.error}
+                    />
+                } 
             </div>
         )
     }

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import * as myConstants from '../../Utils/Constants/Constants';
 import { timeParse } from "d3-time-format";
 import styles from '../../../assets/css/StockMarket/SlopeDetails.css';
+import ErrorMessageModal from '../../Utils/ErrorMessageModal/ErrorMessageModal';
 
 const parseDate = timeParse("%Y-%m-%d");
 
@@ -11,11 +13,17 @@ class SlopeDetails extends Component {
         xStart: null,
         xEnd: null,
         slopeOfShares: [],
-        isLoding: false
+        isLoding: false,
+        error: null,
+        openErrorModal: false
+    }
+
+    handleCloseErrorModal = () => {
+        this.setState({openErrorModal:false});
     }
 
     componentDidMount() {
-        axios.get("http://localhost:5000/getFile?id=" + this.props.shareId)
+        axios.get(`${myConstants.SEVER_URL}/stock/getFile?id=` + this.props.shareId)
             .then(response => {
                 
                 this.setState({
@@ -35,11 +43,12 @@ class SlopeDetails extends Component {
                     })
                     )
                 })
-                console.log("xStart: " + this.state.xStart);
-                console.log("xEnd: " + this.state.xEnd);
             })
             .catch(error => {
-                console.log(error);
+                this.setState({
+                    error:error.message,
+                    openErrorModal:true
+                })
             })
     }
 
@@ -67,16 +76,17 @@ class SlopeDetails extends Component {
         formData.append("xStart", this.state.xStart);
         formData.append("xEnd", this.state.xEnd);
 
-        axios.post("http://localhost:5000/getSlope", formData)
+        axios.post(`${myConstants.SEVER_URL}/stock/getSlope`, formData)
             .then(response => {
-                // console.log(response.data);
                 this.setState({
                     slopeOfShares: response.data
                 })
-                console.log(this.state.slopeOfShares);
             })
             .catch(error => {
-                console.log(error);
+                this.setState({
+                    error:error.message,
+                    openErrorModal:true
+                })
             })
 
     }
@@ -96,6 +106,12 @@ class SlopeDetails extends Component {
                     );
                 })}
                 </div>
+                {this.state.openErrorModal &&
+                    <ErrorMessageModal 
+                        closeModal={this.handleCloseErrorModal}
+                        error={this.state.error}
+                    />
+                } 
             </div>
         )
     }

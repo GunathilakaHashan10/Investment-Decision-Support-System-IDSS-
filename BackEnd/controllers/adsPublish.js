@@ -67,7 +67,10 @@ exports.postPublishHomeAd = (req, res, next) => {
             }
         })
         .catch(error => {
-            console.log(error);
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
         })
 }
 

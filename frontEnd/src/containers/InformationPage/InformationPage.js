@@ -1,52 +1,51 @@
-import React, { Component } from 'react';
-import {IoIosJournal, IoIosPhotos, IoMdSearch} from 'react-icons/io';
-import styles from '../../../assets/css/RealEstate/HomePage/HomePage.css';
+import React from 'react';
+import styles from '../../assets/css/DashBodard/DashBodard.css';
+import cardImage1 from '../../assets/images/Dashboard/stock.png';
+import cardImage2 from '../../assets/images/Dashboard/fd.png';
+import cardImage3 from '../../assets/images/Dashboard/realestate.jpeg';
 
-
-class HomePageRealEstate extends Component {
-    render() {
-        return(
-            <div className={styles.container}>
-                <main>
-                    <div className={styles.main_background}>
-                        
-                        <div className={styles.container_sub}>
+const InformationPage = (props) => {
+  return  (<div className={styles.container}>
                     <div className={styles.details_card}>
                         <div className={styles.image_container}>
-                            <IoIosJournal size="10em" color="white" className={styles.logo_image}/>
+                            <img src={cardImage1} alt="logo" className={styles.logo_image}/>
                         </div>
                         <div className={styles.header_contanier}>
-                            <h2>Buy a property</h2>
+                            <h2>See stock Data</h2>
                         </div>
                         <div className={styles.description_container}>
-                           Find a best property to buy as your choise
+                           Study the market performance of stocks by comparing with each
                         </div>
                         <button 
                             className={styles.card_button}
+                            onClick={props.handleSection}
+                            id="stockMarket"
                         >
-                        See homes
+                        See Stocks
                         </button>
                     </div>
                     <div className={styles.details_card}>
                         <div className={styles.image_container}>
-                            <IoIosPhotos size="10em" color="white" className={styles.logo_image}/>
+                            <img src={cardImage2} alt="logo" className={styles.logo_image}/>
                         </div>
                         <div className={styles.header_contanier}>
-                            <h2>Sell a property</h2>
+                            <h2>Find a best fixed deposit</h2>
                         </div>
                         <div className={styles.description_container}>
-                            Start your Real estate buissness with us
+                            Calculate your interest for the deposits and find a better fixed deposit
                         </div>
                         <button 
                             className={styles.card_button}
+                            onClick={props.handleSection}
+                            id="bank"
                         >
-                        Publish your ads
+                        See Fixed deposits
                         </button>
                     
                     </div>
                     <div className={styles.details_card}>
                         <div className={styles.image_container}>
-                            <IoMdSearch size="10em" color="white" className={styles.logo_image}/>
+                            <img src={cardImage3} alt="logo" className={styles.logo_image}/>
                         </div>
                         <div className={styles.header_contanier}>
                             <h2>Find a property</h2>
@@ -56,19 +55,15 @@ class HomePageRealEstate extends Component {
                         </div>
                         <button 
                             className={styles.card_button}
+                            onClick={props.handleSection}
+                            id="realEstate"
                         >
-                        See homes
+                        See Real estate
                         </button>
                     
                     </div>
                 
-                </div>
-                    </div>
-                </main>
-            </div>
-        );
-    }
+                </div>)
 }
 
-export default HomePageRealEstate;
-
+export default InformationPage;

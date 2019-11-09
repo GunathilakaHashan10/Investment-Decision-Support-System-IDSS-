@@ -5,7 +5,7 @@ import styles from './NavigationBar.css';
 const NavigationBar = (props) => {
     return (
         <div>
-            <header className={props.bankActive === "Bank" || props.bankActive === "Real Estate" || props.type==="admin" ? styles.main_header_fixed :styles.main_header} >
+            <header className={props.bankActive === "Bank" || props.bankActive === "Real Estate" || props.type==="admin" || props.type === "User" ? styles.main_header_fixed : styles.main_header} >
                 <nav className={styles.main_nav}>
                     <ul className={localStorage.getItem('RDACTP') === '2485693124578965412478933254895464123648'? styles.main_nav_list_admin :styles.main_nav_list}>
                         <li 
@@ -244,10 +244,10 @@ const NavigationBar = (props) => {
                                     id="bank" 
                                     className={styles.main_nav_dropdown_button}
                                     onClick={props.handleNav}
-                                >Bank
+                                >Fixed Deposits
                                 </button>
                                 <div className={styles.main_nav_dropdown_content}>
-                                    <h4>Banks</h4>
+                                    <h4>Fixed Deposits</h4>
                                     <div className={styles.main_nav_dropdown_main_container}>
                                         <div className={styles.main_nav_dropdown_content_anchor_container}>
                                         <button>Home</button>

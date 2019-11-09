@@ -265,7 +265,6 @@ class HomeAdsPublish extends Component {
                     </button>
                     <button 
                         className={styles.button}
-                        onClick={this.handleOpenResultsModal}
                     >
                     Cancel
                     </button>

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import ReactTooltip from 'react-tooltip';
 import axios from 'axios';
+import * as myConstants from '../../../Utils/Constants/Constants';
 import DatePicker from 'react-datepicker';
 import ReactLoading from 'react-loading';
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
 import styles from '../../../../assets/css/StockMarket/CalculateExpectedReturn/CalculateExpectedReturn.css';
 import ListOfExpectedReturn from '../CalculateExpectedReturn/ListOfExpectedReturn';
+import ErrorMessageModal from '../../../Utils/ErrorMessageModal/ErrorMessageModal';
 
 
 class CalculateExpectedReturn extends Component {
@@ -24,12 +26,18 @@ class CalculateExpectedReturn extends Component {
         expectedReturn: null,
         expectedReturnOfShares: [],
         isLoading: false,
-        isLoading02: false
+        isLoading02: false,
+        error: null,
+        openErrorModal: false
         
     }
 
+    handleCloseErrorModal = () => {
+        this.setState({openErrorModal:false});
+    }
+
     componentWillMount() {
-        axios.get("http://localhost:5000/shares") 
+        axios.get(`${myConstants.SEVER_URL}/stock/shares`) 
             .then(res => {
                 if(res.status !== 200) {
                     throw new Error('Fecthing shares failed');
@@ -43,13 +51,16 @@ class CalculateExpectedReturn extends Component {
                         
                     }
                 })
-                console.log(this.state.companyId);
             })
             .catch(error => {
-                console.log(error);
+                this.setState({
+                    error:error.message,
+                    openErrorModal:true
+                })
             })
+            
 
-        axios.get("http://localhost:5000/getDates")
+        axios.get(`${myConstants.SEVER_URL}/shareCompare/getDates`)
             .then(response => {
                 let investmentEndDate = new Date(response.data.endDate);
                 let investment_year = investmentEndDate.getFullYear();
@@ -64,8 +75,11 @@ class CalculateExpectedReturn extends Component {
                 })
             })
             .catch(error => {
-                console.log(error);
-            });
+                this.setState({
+                    error:error.message,
+                    openErrorModal:true
+                })
+            })
     }
 
     convert = (str) => {
@@ -149,7 +163,7 @@ class CalculateExpectedReturn extends Component {
             formData.append('endDate', this.state.endDate);
             formData.append('investmentAmount', this.state.investmentAmount);
 
-            axios.post("http://localhost:5000/getExpectedReturn", formData)
+            axios.post(`${myConstants.SEVER_URL}/shareCompare/getExpectedReturn`, formData)
                 .then(response => {
                     this.setState({ 
                         expectedReturn: response.data.expectedReturn.toFixed(2),
@@ -157,7 +171,10 @@ class CalculateExpectedReturn extends Component {
                     })
                 })
                 .catch(error => {
-                    console.log(error);
+                    this.setState({
+                        error:error.message,
+                        openErrorModal:true
+                    })
                 })
         }
 
@@ -208,15 +225,19 @@ class CalculateExpectedReturn extends Component {
             formData.append('endDate', this.state.endDate);
             formData.append('investmentAmount', this.state.investmentAmount);
 
-            axios.post("http://localhost:5000/getExpectedReturnOfAllShares", formData)
+            axios.post(`${myConstants.SEVER_URL}/shareCompare/getExpectedReturnOfAllShares`, formData)
                 .then(response => {
                     this.setState({
                         expectedReturnOfShares: response.data.sort(function(a, b){return b.expectedReturn - a.expectedReturn}),
                         isLoading02: false
                     })
+                    
                 })
                 .catch(error => {
-                    console.log(error);
+                    this.setState({
+                        error:error.message,
+                        openErrorModal:true
+                    })
                 })
         }
 
@@ -323,6 +344,12 @@ class CalculateExpectedReturn extends Component {
                     
                 </div>
                 <ListOfExpectedReturn expectedReturnData={this.state.expectedReturnOfShares} isLoading={this.state.isLoading02}/>
+                {this.state.openErrorModal &&
+                    <ErrorMessageModal 
+                        closeModal={this.handleCloseErrorModal}
+                        error={this.state.error}
+                    />
+                } 
             </div>
         );
     }

@@ -77,7 +77,6 @@ exports.updateAd = (req, res, next) => {
     const adId = req.body.adId;
     const adType = req.body.adType;
 
-
     if(adType === 'home') {
         HomeAds.findById(adId)
         .then(result => {

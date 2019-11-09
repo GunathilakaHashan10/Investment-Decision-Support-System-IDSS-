@@ -57,10 +57,10 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended: false}));
 
 app.use('/auth',authRoutes);
-app.use(shareHandleRoutes);
+app.use('/stock',shareHandleRoutes);
 app.use(indexHandleRoutes);
 app.use(ltpRoutes);
-app.use(shareComparsionRoutes);
+app.use('/shareCompare',shareComparsionRoutes);
 app.use('/admin',adminRoutes);
 app.use(adsPublishRoutes);
 app.use(adsDetailsRoutes);

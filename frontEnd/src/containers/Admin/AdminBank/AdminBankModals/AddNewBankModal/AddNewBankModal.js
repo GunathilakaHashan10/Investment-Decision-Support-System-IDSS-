@@ -193,7 +193,7 @@ class AddNewBankModal extends Component {
     }
 
     bankDataSubmitHandler = () => {
-        const { interestRates, bankImage, bankName, description } = this.state;
+        const { interestRates, bankImage, bankName, description, isFormErrors} = this.state;
         const formErrors = {...this.state.formErrors};
         if(interestRates.length === 0) {
             this.setState((prevState) => {
@@ -201,18 +201,21 @@ class AddNewBankModal extends Component {
                 formErrors.interestRates = "No interestRates provided";
                 return { formErrors }
             })
+            this.setState({isFormErrors: true})
         } else if(interestRates.length < 8) {
             this.setState((prevState) => {
                 let formErrors = {...prevState.formErrors};
                 formErrors.interestRates = "minimum 8 terms required";
                 return { formErrors }
             })
-        } else {
+            this.setState({isFormErrors: true})
+        } else if (interestRates.length > 8) {
             this.setState((prevState) => {
                 let formErrors = {...prevState.formErrors};
                 formErrors.interestRates = "";
                 return { formErrors }
             })
+            this.setState({isFormErrors: true})
         }
 
         if(bankImage.length === 0) {
@@ -221,12 +224,14 @@ class AddNewBankModal extends Component {
                 formErrors.bankImage = "No bank image provided";
                 return { formErrors }
             })
+            this.setState({isFormErrors: true})
         } else {
             this.setState((prevState) => {
                 let formErrors = {...prevState.formErrors};
                 formErrors.bankImage = "";
                 return { formErrors }
             })
+            
         }
 
         if(bankName.length === 0) {
@@ -235,6 +240,7 @@ class AddNewBankModal extends Component {
                 formErrors.bankName = "Bank name is required"
                 return {  formErrors }
             })
+            this.setState({isFormErrors: true})
         }
 
         if(description.length === 0) {
@@ -243,61 +249,67 @@ class AddNewBankModal extends Component {
                 formErrors.description = "Bank description is required"
                 return {  formErrors }
             })
+            this.setState({isFormErrors: true})
         }
 
-        if((formErrors.bankName !== "") || (formErrors.description !== "") || (formErrors.bankImage !== "") || (formErrors.interestRates !== "")) {
+        if(!(formErrors.bankName !== "") || (formErrors.description !== "") || (formErrors.bankImage !== "") || (formErrors.interestRates !== "")) {
            return this.setState({isFormErrors: true})
-        }    
+        } 
         
-        this.setState({isLoading: true})
-        let id = uuid();
-        const formData = new FormData();
-        formData.append('id',id);
-        for(let i=0; i<bankImage.length; i++){
-            formData.append("adsImages", bankImage[i]);
-        }
-        
-        const bankData = {
-            bankId:id,
-            bankName:bankName,
-            description:description,
-            interestRates:interestRates
-        }
-        
+        if(!isFormErrors) {
 
-        axios.post(`${myConstants.SEVER_URL}/admin/addBankNew`, {
-                data:bankData
-            })
-             .then(response => {
-                setTimeout(() => {
+            this.setState({isLoading: true})
+            let id = uuid();
+            const formData = new FormData();
+            formData.append('id',id);
+            for(let i=0; i<bankImage.length; i++){
+                formData.append("adsImages", bankImage[i]);
+            }
+            
+            const bankData = {
+                bankId:id,
+                bankName:bankName,
+                description:description,
+                interestRates:interestRates
+            }
+            
+    
+            axios.post(`${myConstants.SEVER_URL}/admin/addBankNew`, {
+                    data:bankData
+                })
+                 .then(response => {
+                    setTimeout(() => {
+                        this.setState({
+                            isLoading: false,
+                            isSuccess: response.data.success,
+                            message: response.data.message
+                        });
+                        if(response.data.success){
+                            axios.post(`${myConstants.SEVER_URL}/admin/addBankImage?pathName=bankImages`, formData)
+                                .then(res => {
+                                    console.log(res.data)
+                                })
+                                .catch(error => {
+                                    this.setState({
+                                        isLoading: false,
+                                        error: error.message,
+                                        openErrorModal: true
+                                    })
+                                })
+                        }
+                    }, 1500);
+    
+                })
+                .catch(error => {
                     this.setState({
                         isLoading: false,
-                        isSuccess: response.data.success,
-                        message: response.data.message
-                    });
-                    if(response.data.success){
-                        axios.post(`${myConstants.SEVER_URL}/admin/addBankImage?pathName=bankImages`, formData)
-                            .then(res => {
-                                console.log(res.data)
-                            })
-                            .catch(error => {
-                                this.setState({
-                                    isLoading: false,
-                                    error: error.message,
-                                    openErrorModal: true
-                                })
-                            })
-                    }
-                }, 1500);
-
-            })
-            .catch(error => {
-                this.setState({
-                    isLoading: false,
-                    error: error.message,
-                    openErrorModal: true
+                        error: error.message,
+                        openErrorModal: true
+                    })
                 })
-            })
+        } 
+
+         
 
     }
 

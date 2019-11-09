@@ -5,6 +5,7 @@ import NavigationBar from '../../../components/NavigationBar/NavigationBar';
 import ChartContainerPage from '../../StockMarket/ChartContainerPage/ChartContainerPage';
 import RealEstateContainer from '../../RealEstate/RealEstateContainer/RealEstateContainer';
 import BankContainer from '../../Bank/BankContainer/BankContainer';
+import InformationPage from '../../InformationPage/InformationPage';
 
 class AdminContainer extends Component {
 
@@ -75,6 +76,18 @@ class AdminContainer extends Component {
                             type="admin"
                         />
                     )}/>
+                
+                    <Route 
+                    exact={true}  
+                    path={this.props.match.path} 
+                    render={props => (
+                        <InformationPage 
+                            {...props} 
+                            handleSection={this.handleSection} 
+                        />
+                        )}
+                    />/>
+
                 <Route path={`${this.props.match.path}/controlPanel`} component={AdminControlPanel}/>
 
                 <Route path={`${this.props.match.path}/stockMarket`} component={ChartContainerPage}/>
@@ -82,6 +95,8 @@ class AdminContainer extends Component {
                 <Route path={`${this.props.match.path}/realEstate`} component={RealEstateContainer}/>                
                 
                 <Route path={`${this.props.match.path}/bank`} component={BankContainer}/> 
+
+                
     
             </div>
         )

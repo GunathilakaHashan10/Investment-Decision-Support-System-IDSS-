@@ -31,4 +31,6 @@ router.post('/update-bank-image', adminController.updateBankImage);
 
 router.post('/delete-bank', adminController.deleteBank);
 
+router.get('/get-all-users', adminController.getAllUsers);
+
 module.exports  = router;

@@ -36,6 +36,7 @@ class AddNewShareModal extends Component {
     }
 
     handleOnSubmit = () => {
+        this.setState({isLoading:true});
         let formData = new FormData();
 
         formData.append('shareName', this.state.shareName);
@@ -45,15 +46,15 @@ class AddNewShareModal extends Component {
 
         
 
-        axios.post(`${myConstants.SEVER_URL}/upload?pathName=tsvFiles`, formData)
+        axios.post(`${myConstants.SEVER_URL}/stock/upload?pathName=tsvFiles`, formData)
             .then(response => {
                 setTimeout(() => {
                     this.setState({
                         isLoading: false,
                         isSuccess: response.data.success,
                         message: response.data.message
-                    }, 1500);
-                })
+                    });
+                },1500)
             })
             .catch(error => {
                 this.setState({

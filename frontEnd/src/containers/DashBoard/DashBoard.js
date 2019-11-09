@@ -5,6 +5,8 @@ import ChartContainerPage from '../StockMarket/ChartContainerPage/ChartContainer
 import RealEstateContainer from '../RealEstate/RealEstateContainer/RealEstateContainer';
 import BankContainer from '../Bank/BankContainer/BankContainer';
 import SelectSection from './SelectSection';
+import InformationPage from '../InformationPage/InformationPage';
+
 
 class DashBoardPage extends Component {
     
@@ -50,7 +52,6 @@ class DashBoardPage extends Component {
     }
 
     handleNavigation = (event) => {
-        console.log(event.currentTarget.id)
         switch(`${this.props.match.url}/${event.currentTarget.id}`) {
             case "/dashboard/stockMarket":
                 localStorage.removeItem("sectionName");
@@ -87,18 +88,49 @@ class DashBoardPage extends Component {
     render() {
         return(
             <div>
-                <NavigationBar sectionName={localStorage.getItem("sectionName") || "Right Decision"} bankActive={localStorage.getItem("sectionName")} logout={this.handleLogout} handleNav={this.handleNavigation}/>
+                <NavigationBar 
+                    sectionName={localStorage.getItem("sectionName") || "Right Decision"}
+                    bankActive={localStorage.getItem("sectionName")} 
+                    logout={this.handleLogout} 
+                    handleNav={this.handleNavigation}
+                    type="User"
+                />
 
-               { localStorage.getItem('RDACTP') !== '2485693124578965412478933254895464123648' && <Route exact={true} path={this.props.match.path} render={props => (<SelectSection {...props} handleSection={this.handleSection} />)}/>}
+                <Route 
+                    exact={true}  
+                    path={this.props.match.path} 
+                    render={props => (
+                        <InformationPage 
+                            {...props} 
+                            handleSection={this.handleSection} 
+                        />
+                        )}
+                    />/>
                 
                 <Route path={`${this.props.match.path}/stockMarket`} component={ChartContainerPage}/>
 
                 <Route path={`${this.props.match.path}/realEstate`} component={RealEstateContainer}/>                
                 
                 <Route path={`${this.props.match.path}/bank`} component={BankContainer}/> 
+
+                
             </div>
         );
     }
 }
 
 export default DashBoardPage;
+
+
+// { localStorage.getItem('RDACTP') !== '2485693124578965412478933254895464123648' && 
+//                         <Route 
+//                             exact={true} 
+//                             path={this.props.match.path} 
+//                             render={props => (
+//                                 <SelectSection 
+//                                     {...props} 
+//                                     handleSection={this.handleSection} 
+//                                 />
+//                                 )}
+//                             />
+//                     }

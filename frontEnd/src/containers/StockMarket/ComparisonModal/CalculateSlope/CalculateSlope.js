@@ -3,8 +3,10 @@ import ReactTooltip from 'react-tooltip';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
+import * as myConstants from '../../../Utils/Constants/Constants';
 import ListOfSlope from './ListOfSlope';
 import styles from '../../../../assets/css/StockMarket/CalculateSlope/CalculateSlope.css';
+import ErrorMessageModal from '../../../Utils/ErrorMessageModal/ErrorMessageModal';
 
 class CalculateSlope extends Component {
         state = {
@@ -12,7 +14,13 @@ class CalculateSlope extends Component {
           endDate: null,
           priceType: null,
           slopeData: [],
-          isLoading: false
+          isLoading: false,
+          error: null,
+          openErrorModal: false
+        }
+
+        handleCloseErrorModal = () => {
+            this.setState({openErrorModal:false});
         }
       
      
@@ -35,7 +43,7 @@ class CalculateSlope extends Component {
       }
 
       componentDidMount() {
-          axios.get("http://localhost:5000/getDates")
+          axios.get(`${myConstants.SEVER_URL}/shareCompare/getDates`)
                 .then(response => {
                     this.setState({
                         startDate: new Date(response.data.startDate),
@@ -43,8 +51,11 @@ class CalculateSlope extends Component {
                     })
                 })
                 .catch(error => {
-                    console.log(error);
-                });
+                    this.setState({
+                        error:error.message,
+                        openErrorModal:true
+                    })
+                })
       }
 
       handleSubmit = () => {
@@ -53,9 +64,9 @@ class CalculateSlope extends Component {
           formData.append('startDate', this.state.startDate);
           formData.append('endDate', this.state.endDate);
           formData.append('priceType', this.state.priceType);
+       
 
-
-          axios.post("http://localhost:5000/getSlopeResults", formData)
+          axios.post(`${myConstants.SEVER_URL}/shareCompare/getSlopeResults`, formData)
                 .then(response => {
                     this.setState({
                         slopeData: response.data.sort(function(a, b){return b.slope - a.slope}),
@@ -64,7 +75,10 @@ class CalculateSlope extends Component {
 
                 })
                 .catch(error => {
-                    console.log(error);
+                    this.setState({
+                        error:error.message,
+                        openErrorModal:true
+                    })
                 })
         
       }
@@ -124,6 +138,12 @@ class CalculateSlope extends Component {
                     >Calculate</button>
                 </div>
                 <ListOfSlope slopeData={this.state.slopeData} isLoading={this.state.isLoading}/>
+                {this.state.openErrorModal &&
+                    <ErrorMessageModal 
+                        closeModal={this.handleCloseErrorModal}
+                        error={this.state.error}
+                    />
+                } 
             </div>
         );
     }
