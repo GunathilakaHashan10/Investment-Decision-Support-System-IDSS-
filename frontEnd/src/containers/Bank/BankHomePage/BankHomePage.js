@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
-import styles from '../../../assets/css/DashBodard/DashBodard.css';
-import cardImage1 from '../../../assets/images/Dashboard/stock.png';
-import cardImage2 from '../../../assets/images/Dashboard/fd.png';
-import cardImage3 from '../../../assets/images/Dashboard/realestate.jpeg';
-
+import { IoIosApps, IoIosGitCompare, IoIosCalculator } from 'react-icons/io';
+import styles from '../../../assets/css/Bank/BankHomePage/BankHomePage.css';
 
 class BankHomePage extends Component {
     render() {
         return(
-            <div>
             <div className={styles.container}>
             
                 <div className={styles.details_card}>
                     <div className={styles.image_container}>
-                        <img src={cardImage2} alt="logo" className={styles.logo_image}/>
+                        <IoIosApps size="10em" color="white" className={styles.logo_image}/>
                     </div>
                     <div className={styles.header_contanier}>
                         <h2>Find a best fixed deposit</h2>
@@ -23,15 +19,15 @@ class BankHomePage extends Component {
                     </div>
                     <button 
                         className={styles.card_button}
-                    
+                        onClick={this.props.handleBank}
                     >
-                    See Fixed deposits
+                    Get started
                     </button>
                 
                 </div>
                 <div className={styles.details_card}>
                     <div className={styles.image_container}>
-                        <img src={cardImage1} alt="logo" className={styles.logo_image}/>
+                        <IoIosCalculator size="10em" color="white" className={styles.logo_image}/>
                     </div>
                     <div className={styles.header_contanier}>
                         <h2>AER value</h2>
@@ -41,14 +37,14 @@ class BankHomePage extends Component {
                     </div>
                     <button 
                         className={styles.card_button}
-                        
+                        onClick={this.props.handleBank}
                     >
-                    See Stocks
+                    Get started
                     </button>
                 </div>
                 <div className={styles.details_card}>
                     <div className={styles.image_container}>
-                        <img src={cardImage3} alt="logo" className={styles.logo_image}/>
+                        <IoIosGitCompare size="10em" color="white" className={styles.logo_image}/>
                     </div>
                     <div className={styles.header_contanier}>
                         <h2>Compare Fixed deposits</h2>
@@ -58,15 +54,15 @@ class BankHomePage extends Component {
                     </div>
                     <button 
                         className={styles.card_button}
-                    
+                        onClick={this.props.handleBank}
                     >
-                    See Real estate
+                     Get started
                     </button>
                 
                 </div>
         
         </div>
-            </div>
+            
         )
     }
 }

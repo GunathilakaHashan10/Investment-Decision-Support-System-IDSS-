@@ -1,14 +1,12 @@
 import React from 'react';
+import { MdAccountBalance, MdFindInPage, MdTimeline } from 'react-icons/md'
 import styles from '../../assets/css/DashBodard/DashBodard.css';
-import cardImage1 from '../../assets/images/Dashboard/stock.png';
-import cardImage2 from '../../assets/images/Dashboard/fd.png';
-import cardImage3 from '../../assets/images/Dashboard/realestate.jpeg';
 
 const InformationPage = (props) => {
   return  (<div className={styles.container}>
                     <div className={styles.details_card}>
                         <div className={styles.image_container}>
-                            <img src={cardImage1} alt="logo" className={styles.logo_image}/>
+                            <MdTimeline size="10em" color="white" className={styles.logo_image}/>
                         </div>
                         <div className={styles.header_contanier}>
                             <h2>See stock Data</h2>
@@ -26,7 +24,7 @@ const InformationPage = (props) => {
                     </div>
                     <div className={styles.details_card}>
                         <div className={styles.image_container}>
-                            <img src={cardImage2} alt="logo" className={styles.logo_image}/>
+                            <MdAccountBalance size="10em" color="white" className={styles.logo_image}/>
                         </div>
                         <div className={styles.header_contanier}>
                             <h2>Find a best fixed deposit</h2>
@@ -45,7 +43,7 @@ const InformationPage = (props) => {
                     </div>
                     <div className={styles.details_card}>
                         <div className={styles.image_container}>
-                            <img src={cardImage3} alt="logo" className={styles.logo_image}/>
+                            <MdFindInPage size="10em" color="white" className={styles.logo_image}/>
                         </div>
                         <div className={styles.header_contanier}>
                             <h2>Find a property</h2>

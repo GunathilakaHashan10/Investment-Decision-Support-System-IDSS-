@@ -33,4 +33,6 @@ router.post('/delete-bank', adminController.deleteBank);
 
 router.get('/get-all-users', adminController.getAllUsers);
 
+router.post('/delete-user', adminController.deleteUser);
+
 module.exports  = router;

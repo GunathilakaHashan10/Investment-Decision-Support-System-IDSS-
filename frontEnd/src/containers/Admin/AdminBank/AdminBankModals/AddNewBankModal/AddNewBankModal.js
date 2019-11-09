@@ -24,7 +24,7 @@ class AddNewBankModal extends Component {
             bankImage: "",
             interestRates: ""
         },
-        isFormErrors: false
+        isFormErrors: null
     }
 
     handelCloseErrorMessageModal = () => {
@@ -151,7 +151,8 @@ class AddNewBankModal extends Component {
                 let formErrors = {...prevState.formErrors};
                 formErrors.bankName = ""
                 return { 
-                    formErrors
+                    formErrors,
+                    isFormErrors: false
                  }
             })
         }
@@ -178,7 +179,8 @@ class AddNewBankModal extends Component {
                 let formErrors = {...prevState.formErrors};
                 formErrors.description = ""
                 return { 
-                    formErrors
+                    formErrors,
+                    isFormErrors: false
                  }
             })
         }
@@ -202,22 +204,24 @@ class AddNewBankModal extends Component {
                 return { formErrors }
             })
             this.setState({isFormErrors: true})
-        } else if(interestRates.length < 8) {
+        } else if(interestRates.length < 2) {
             this.setState((prevState) => {
                 let formErrors = {...prevState.formErrors};
                 formErrors.interestRates = "minimum 8 terms required";
                 return { formErrors }
             })
             this.setState({isFormErrors: true})
-        } else if (interestRates.length > 8) {
+        } else if (interestRates.length > 2) {
             this.setState((prevState) => {
                 let formErrors = {...prevState.formErrors};
                 formErrors.interestRates = "";
                 return { formErrors }
             })
             this.setState({isFormErrors: true})
+        } else {
+            this.setState({isFormErrors: false})
         }
-
+ 
         if(bankImage.length === 0) {
             this.setState((prevState) => {
                 let formErrors = {...prevState.formErrors};
@@ -231,6 +235,7 @@ class AddNewBankModal extends Component {
                 formErrors.bankImage = "";
                 return { formErrors }
             })
+            this.setState({isFormErrors: false})
             
         }
 
@@ -252,11 +257,13 @@ class AddNewBankModal extends Component {
             this.setState({isFormErrors: true})
         }
 
-        if(!(formErrors.bankName !== "") || (formErrors.description !== "") || (formErrors.bankImage !== "") || (formErrors.interestRates !== "")) {
+        if((formErrors.bankName !== "") || (formErrors.description !== "") || (formErrors.bankImage !== "") || (formErrors.interestRates !== "")) {
            return this.setState({isFormErrors: true})
-        } 
+        } else {
+            this.setState({isFormErrors: false})
+        }
         
-        if(!isFormErrors) {
+        if(isFormErrors === false) {
 
             this.setState({isLoading: true})
             let id = uuid();

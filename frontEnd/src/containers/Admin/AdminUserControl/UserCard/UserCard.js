@@ -4,8 +4,26 @@ import styles from '../../../../assets/css/Admin/AdminUserControl/UserCard/UserC
 import UserRemoveModal from '../UserModals/UserRemoveModal/UserRemoveModal';
 
 class UserCard extends Component {
+    state = {
+        isOpenUserRemoveModal: false
+    }
+
+    handleOpenUserRemoveModal = () => {
+        this.setState({isOpenUserRemoveModal: true})
+    }
+
+    handleCloseUserRemoveModal = () => {
+        this.setState({isOpenUserRemoveModal: false})
+        window.location.reload()
+    }
+
+    handleCancel = () => {
+        this.setState({isOpenUserRemoveModal: false})
+    }
+
+
     render(){
-        const { firstName, lastName, email, isAdvertiser } = this.props.user
+        const { firstName, lastName, email, isAdvertiser} = this.props.user
         return(
            <div className={styles.container}>
                 <div className={styles.userCard_container_box}>
@@ -29,9 +47,21 @@ class UserCard extends Component {
                     </div>
                     <div className={styles.button_container}>
                         <button>Block</button>
-                        <button>Remove</button>
+                        <button
+                            onClick={this.handleOpenUserRemoveModal}
+                        >
+                        Remove
+                        </button>
                     </div>
                 </div>
+                {this.state.isOpenUserRemoveModal &&
+                    <UserRemoveModal 
+                        closeModal={this.handleCloseUserRemoveModal}
+                        user={this.props.user}
+                        handleCancel={this.handleCancel}
+                    />
+
+                }
            </div>
         )
     }

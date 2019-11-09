@@ -9,6 +9,7 @@ import HomeDetailsModal from '../../../RealEstate/Sale/Home/HomeDetailsModal/Hom
 import LandDetailsModal from '../../../RealEstate/Sale/Land/LandDetailsModal/LandDetailsModal';
 import HomeRentDetailsModal from '../../../RealEstate/Rent/Home/HomeRentDetailsModal/HomeRentDetailsModal';
 import ErrorMessageModal from '../../../Utils/ErrorMessageModal/ErrorMessageModal';
+import AdsDeleteModal from '../AdsDeleteModal/AdsDeleteModal';
 
 class AdsDetailCard extends Component {
     state = {
@@ -23,7 +24,8 @@ class AdsDetailCard extends Component {
         isLoadingDelete: false,
         isBlocked: false,
         error: null,
-        openErrorModal: false
+        openErrorModal: false,
+        isOpenAdsDeleteModal: false
     }
 
     componentDidMount() {
@@ -37,9 +39,21 @@ class AdsDetailCard extends Component {
         } else {
             this.setState({modalType: "LandSell"})
         }
-
-        
     }
+
+    handleOpenAdsDeleteModal = () => {
+        this.setState({isOpenAdsDeleteModal: true})
+    }
+
+    handleCloseAdsDeleteModal = () => {
+        this.setState({isOpenAdsDeleteModal: true})
+        window.location.reload()
+    }
+
+    handleCancel = () => {
+        this.setState({isOpenAdsDeleteModal: true})
+    }
+    
     
 
     handleCloseErrorMessageModal = () => {
@@ -118,7 +132,7 @@ class AdsDetailCard extends Component {
 
 
     render() {
-       const {isOpenHomeDetailsModal, isOpenHomeRentDetailsModal, isOpenLandDetailsModal, isBlocked, openErrorModal, isLoadingBlock} = this.state;
+       const {isOpenHomeDetailsModal, isOpenHomeRentDetailsModal, isOpenLandDetailsModal, isBlocked, openErrorModal, isLoadingBlock, isOpenAdsDeleteModal} = this.state;
         return(
             <div>
                 <div className={styles.container}>
@@ -157,6 +171,7 @@ class AdsDetailCard extends Component {
                         </button>
                         <button
                             className={styles.control_button}
+                            onClick={this.handleOpenAdsDeleteModal}
                         >
                         Delete
                         </button>
@@ -189,6 +204,14 @@ class AdsDetailCard extends Component {
                     <ErrorMessageModal 
                         closeModal={this.handleCloseErrorMessageModal}
                         error={this.state.error}
+                    />
+                }
+                {isOpenAdsDeleteModal &&
+                    <AdsDeleteModal 
+                        closeModal={this.handleCloseAdsDeleteModal}
+                        handleCancel={this.handleCancel}
+                        adId={this.state.adId}
+                        adType={this.state.modalType}
                     />
                 }
             </div>

@@ -43,10 +43,15 @@ class UserCardContainer extends Component {
             content = (
                 <div className={styles.userControlCard_container}>
                     { userData.map((user) => {
-                        return ( <UserCard 
-                                    key={user._id}
-                                    user={user}
-                                 />)
+                        let card = null;
+                        if(user.accountType !== "2485693124578965412478933254895464123648") {
+                            card = ( <UserCard 
+                                key={user._id}
+                                user={user}
+                             />)
+                        }
+                        return card;
+                        
                     })
                     }
                 </div>
@@ -54,6 +59,9 @@ class UserCardContainer extends Component {
         } else {
             content = (
                 <div className={styles.userControlCard_container}>
+                    <h1>No users</h1>
+                    <h1>No users</h1>
+                    <h1>No users</h1>
                     <h1>No users</h1>
                 </div>
             )

@@ -469,3 +469,22 @@ exports.getAllUsers = (req, res, next) => {
             return next(error);
         })
 }
+
+exports.deleteUser = (req, res, next) => {
+    const userId = req.query.userId;
+
+    User
+        .findByIdAndDelete(userId)
+        .then((result) => {
+            if(!result) {
+                throw new Error('Internal error')
+            }
+            return res.status(200).json({message: "success"})
+        })
+        .catch(error => {
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
+        })
+}

@@ -61,6 +61,7 @@ class ControlPanelSideNav extends Component {
         this.setState({
             isOpenAddNewBankModal: false
         })
+        window.location.reload();
     }
 
     handleCloseAddNewShareModal = () => {
