@@ -42,7 +42,7 @@ class ChartContainerPage extends Component {
             .catch(error => {
                 this.setState({
                     error:error.message,
-                    openErrorModal:true
+                    openErrorModal: false
                 })
             })
     }

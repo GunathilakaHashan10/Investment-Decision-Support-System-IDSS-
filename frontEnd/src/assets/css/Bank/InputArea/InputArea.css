@@ -1,0 +1,67 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.input_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    widows: 35%;
+    margin-left: 1rem;
+}
+
+.input_container > span {
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 1rem;
+    width: 30%;
+} 
+
+.select_box {
+    width: 70%;
+    padding: 0.5rem 1rem;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.425);
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.select_box:focus,
+.input_area:focus,
+.compare_button:focus {
+    outline: none;
+}
+
+.select_box:hover,
+.input_area:hover {
+    background-color: rgb(224, 218, 218);
+}
+
+.input_area {
+    width: 80%;
+    padding: 0.5rem 1rem;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.425);
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.compare_button {
+    width: 10%;
+    background-color: #006AFF;
+    color: white;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.8rem;
+    border: 1px solid #006AFF;
+    transition: background-color 500ms, color 500ms;
+}
+
+.compare_button:hover {
+    background-color: white;
+    color: #006AFF;
+}

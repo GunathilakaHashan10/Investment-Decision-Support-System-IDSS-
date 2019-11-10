@@ -47,7 +47,7 @@ class ChandleStickChart extends React.Component {
         .catch(error => {
             this.setState({
                 error:error.message,
-                openErrorModal:true
+                openErrorModal:false
             })
         })
     }
