@@ -11,27 +11,34 @@ class AERCalculatorModal extends Component {
         selectBankId: '',
         interestRates: [],
         selectInterestRateId: '',
-        AER: 0.00
+        AER: 0.00,
+        formErrors: {
+            selectBankId:'',
+            selectInterestRateId: '',
+        },
+        isFormErrors: false
     }
 
     selectBankHandler = (e) => {
         const selectBankId = e.target.value;
-        this.setState(() => ({
-            selectBankId
-        }))
-        axios({
-            method: 'POST',
-            url: `http://localhost:5000/get-bank-ir?id=${selectBankId}`,
-            headers:{
-              'Content-Type': 'application/json'
-            }
-          }).then((response) => {
-                this.setState(() => ({
-                    interestRates: response.data.payload.interestRates
-                }));
-          }).catch(e => {
-            console.log(e);
-          });
+        if(selectBankId){
+            this.setState(() => ({
+                selectBankId
+            }))
+            axios({
+                method: 'POST',
+                url: `http://localhost:5000/get-bank-ir?id=${selectBankId}`,
+                headers:{
+                  'Content-Type': 'application/json'
+                }
+              }).then((response) => {
+                    this.setState(() => ({
+                        interestRates: response.data.payload.interestRates
+                    }));
+              }).catch(e => {
+                console.log(e);
+              });
+        }  
     } 
 
     selectInterestRateHandler = (e) => {
@@ -42,16 +49,40 @@ class AERCalculatorModal extends Component {
     }
 
     calculateHandler = () => {
+        const formErrors = this.state.formErrors
+        if (!document.getElementById('bank-selector').value) {
+            formErrors.selectBankId = 'select a bank is required'
+        } else {
+            formErrors.selectBankId = ''
+        }
         
-
-        const  { maturity, time } = interestRateFinder(this.state.selectInterestRateId,this.state.interestRates);
-        const AER = AERCalculator(maturity/100, 12/time);
-        this.setState(() => ({
-            AER
-        }))
+        if(!document.getElementById('ir-selector').value) {
+            formErrors.selectInterestRateId = 'select a term is required'
+        } else {
+            formErrors.selectInterestRateId = ''
+        }
+        
+        if(formErrors.selectBankId || formErrors.selectInterestRateId) {
+            this.setState(() => ({
+                formErrors,
+                isFormErrors: true
+            }))
+        } else {
+            this.setState(() => ({
+                formErrors,
+                isFormErrors: false
+            }))
+            const  { maturity, time } = interestRateFinder(this.state.selectInterestRateId,this.state.interestRates);
+            const AER = AERCalculator(maturity/100, 12/time);
+            this.setState(() => ({
+                AER
+            }))
+        } 
     }
 
     render() {
+        const isFormErrors = this.state.isFormErrors
+        const formErrors = { ... this.state.formErrors }
         return (
             <div className={modalStyles.modal}>
                 <div className={modalStyles.modal_container}>
@@ -61,8 +92,9 @@ class AERCalculatorModal extends Component {
                         <select 
                             className={modalStyles.select}
                             onChange={this.selectBankHandler}
+                            id="bank-selector"
                         >
-                            <option>Select Bank</option>
+                            <option value="" >Select Bank</option>
                             {
                                 this.props.banks.map((bank) => (
                                     <option  key={bank.bankId} value={bank.bankId}>{bank.bankName}</option>
@@ -70,13 +102,15 @@ class AERCalculatorModal extends Component {
                             }
                         </select>
                     </div>
+                    {isFormErrors && formErrors.selectBankId.length > 0 ? <span className={modalStyles.form_errors}>{formErrors.selectBankId}</span> : ""}
                     <div className={modalStyles.input_container}>
                         <span className={modalStyles.input_header}>Term: </span>
                         <select 
                             className={modalStyles.select}
                             onChange={this.selectInterestRateHandler}
+                            id="ir-selector"
                         >
-                            <option>Please select</option>
+                            <option value="" >Please select</option>
                             {
                                 this.state.interestRates.map((interestRate) => (
                                     <option
@@ -89,6 +123,7 @@ class AERCalculatorModal extends Component {
                             }
                         </select>
                     </div>
+                    {isFormErrors && formErrors.selectInterestRateId.length > 0 ? <span className={modalStyles.form_errors}>{formErrors.selectInterestRateId}</span> : ""}
                     <button 
                         className={modalStyles.calculate_button}
                         onClick={this.calculateHandler}

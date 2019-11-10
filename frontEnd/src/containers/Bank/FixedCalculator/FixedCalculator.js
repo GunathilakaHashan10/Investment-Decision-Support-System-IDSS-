@@ -10,7 +10,12 @@ class FixedCalculator extends Component {
         interestRates: [],
         selectInterestRateId: '',
         depositAmount: '',
-        irAmount:0
+        irAmount:0,
+        formErrors: {
+            depositAmount:'',
+            selectInterestRateId: '',
+        },
+        isFormErrors: false
     }
 
     componentDidMount() {
@@ -44,14 +49,40 @@ class FixedCalculator extends Component {
     }
 
     calculateHandler = () => {
-        const  { maturity, time } = interestRateFinder(this.state.selectInterestRateId,this.state.interestRates);
-        const irAmount = returnCalculor(maturity/100, time, parseFloat(this.state.depositAmount));
-        this.setState(() => ({
-            irAmount
-        }))
+        const formErrors = this.state.formErrors
+        if (!document.getElementById('depositor').value) {
+            formErrors.depositAmount = 'deposit amount is required'
+        } else {
+            formErrors.depositAmount = ''
+        }
+        
+        if(!document.getElementById('ir-selector').value) {
+            formErrors.selectInterestRateId = 'select a term is required'
+        } else {
+            formErrors.selectInterestRateId = ''
+        }
+        
+        if(formErrors.depositAmount || formErrors.selectInterestRateId) {
+            this.setState(() => ({
+                formErrors,
+                isFormErrors: true
+            }))
+        } else {
+            this.setState(() => ({
+                formErrors,
+                isFormErrors: false
+            }))
+            const  { maturity, time } = interestRateFinder(this.state.selectInterestRateId,this.state.interestRates);
+            const irAmount = returnCalculor(maturity/100, time, parseFloat(this.state.depositAmount));
+            this.setState(() => ({
+                irAmount
+            }))
+        }
     }
 
     render() {
+        const isFormErrors = this.state.isFormErrors
+        const formErrors = { ... this.state.formErrors }
         return (
             <div className={styles.container}>
                 <h2 className={styles.header}>Fixed Deposit Calculator</h2>
@@ -64,15 +95,18 @@ class FixedCalculator extends Component {
                         required={true}
                         value={this.state.depositAmount}
                         onChange={this.depositAmountHandler}
+                        id="depositor"
                     />
                 </div>
+                {isFormErrors && formErrors.depositAmount.length > 0 ? <span className={styles.form_errors}>{formErrors.depositAmount}</span> : ""}
                 <div className={styles.input_container}>
                     <span className={styles.input_label}>Deposit Period:</span>
                     <select 
                         className={styles.select}
                         onChange={this.selectInterestRateHandler}
+                        id="ir-selector"
                     >
-                        <option>Please select</option>
+                        <option value="" >Please select</option>
                         {
                             this.state.interestRates.map((interestRate) => (
                                 <option
@@ -85,6 +119,7 @@ class FixedCalculator extends Component {
                         }
                     </select>
                 </div>
+                {isFormErrors && formErrors.selectInterestRateId.length > 0 ? <span className={styles.form_errors}>{formErrors.selectInterestRateId}</span> : ""}
                 <button 
                     className={styles.calculate_button}
                     onClick={this.calculateHandler}
