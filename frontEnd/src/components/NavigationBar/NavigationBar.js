@@ -39,12 +39,7 @@ const NavigationBar = (props) => {
                                                     >
                                                     Ltp values
                                                     </button>
-                                                    <button
-                                                        id="index"
-                                                        onClick={props.handleNav}
-                                                    >
-                                                    Index values
-                                                    </button>
+                    
                                                     <button 
                                                         id="stockMarket/movingAverage"
                                                         onClick={props.handleNav}
@@ -58,14 +53,7 @@ const NavigationBar = (props) => {
                                                     Trend Line
                                                     </button>
                                                 </div>
-                                                <div className={styles.main_nav_dropdown_content_anchor_container}>
-                                                    <button
-                                                    id="more"
-                                                    onClick={props.handleNav}
-                                                    >
-                                                    More
-                                                    </button>
-                                                </div>
+                            
                                             </div>
                                         </div>
                                     </div>
@@ -224,16 +212,7 @@ const NavigationBar = (props) => {
                                         </div>
                                     </div>
 
-                                    <div className={styles.main_nav_dropdown_content_container_item1}>
-                                        <h4>Home Loans</h4>
-                                        <div className={styles.main_nav_dropdown_main_container}>
-                                            <div className={styles.main_nav_dropdown_content_anchor_container}>
-                                                <button>Find a Bank</button>
-                                                <button>Loan Calculator</button>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
+                
                                 </div>
                             </div>
                         </div>
@@ -250,9 +229,15 @@ const NavigationBar = (props) => {
                                     <h4>Fixed Deposits</h4>
                                     <div className={styles.main_nav_dropdown_main_container}>
                                         <div className={styles.main_nav_dropdown_content_anchor_container}>
-                                        <button>Home</button>
-                                        <button>Fixed deposits</button>
-                                        <button>Fix deposit Calculator</button>
+                                        <button
+                                            id="bank" 
+                                            onClick={props.handleNav}
+                                        >Home</button>
+                                        <button
+                                            id="bank/yourBanks"
+                                            onClick={props.handleNav}
+                                        >Fixed deposits</button>
+                    
                                     </div>
                                 </div>
                             </div>
@@ -260,7 +245,10 @@ const NavigationBar = (props) => {
                         </li>
                     </ul>
                     <div className={styles.main_nav_logo}>
-                        <button className={styles.nav_button}> {props.sectionName}</button>
+                        <button 
+                            id=""
+                            onClick={props.handleNav}
+                            className={styles.nav_button}> {props.sectionName}</button>
                     </div>
                     <ul className={styles.main_nav_list}>
                         <li className={localStorage.getItem('RDACTP') === '2485693124578965412478933254895464123648' ? styles.main_nav_list_item_admin :styles.main_nav_list_item}>

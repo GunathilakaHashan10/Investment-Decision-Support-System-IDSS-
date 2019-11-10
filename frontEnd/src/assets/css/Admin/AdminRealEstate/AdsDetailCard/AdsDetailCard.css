@@ -67,6 +67,7 @@
     width: 40%;
     top: 10%;
     right: 0.5rem;
+    justify-content: flex-end;
 }
 
 .control_button {

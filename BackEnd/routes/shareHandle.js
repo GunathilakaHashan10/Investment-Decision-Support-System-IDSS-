@@ -14,4 +14,6 @@ router.get('/ltp' , shareHandleController.getLtp);
 
 router.post('/getSlope', shareHandleController.getSlope);
 
+router.post('/update-share', shareHandleController.updateShare);
+
 module.exports = router;

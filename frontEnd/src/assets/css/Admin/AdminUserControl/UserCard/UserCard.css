@@ -89,6 +89,7 @@
     flex-direction: row;
     width: 100%;
     height: auto;
+    justify-content: flex-end;
 }
 
 .button_container button {

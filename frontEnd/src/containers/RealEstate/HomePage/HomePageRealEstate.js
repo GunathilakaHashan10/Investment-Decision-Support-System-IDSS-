@@ -23,6 +23,7 @@ class HomePageRealEstate extends Component {
                         </div>
                         <button 
                             className={styles.card_button}
+                            onClick={() => {this.props.history.push(`${this.props.match.url}/homes-sell`)}}
                         >
                         See homes
                         </button>
@@ -39,6 +40,7 @@ class HomePageRealEstate extends Component {
                         </div>
                         <button 
                             className={styles.card_button}
+                            onClick={() => {this.props.history.push(`${this.props.match.url}/advertise`)}}
                         >
                         Publish your ads
                         </button>
@@ -56,6 +58,7 @@ class HomePageRealEstate extends Component {
                         </div>
                         <button 
                             className={styles.card_button}
+                            onClick={() => {this.props.history.push(`${this.props.match.url}/homes-sell`)}}
                         >
                         See homes
                         </button>

@@ -33,6 +33,8 @@ class HomeAdsPublish extends Component {
         openErrorModal: false
     }
 
+
+
     handleCloseErrorModal = () => {
         this.setState({openErrorModal: false});
     }
@@ -127,7 +129,7 @@ class HomeAdsPublish extends Component {
     render() {
         return (
             <div className={styles.container}>
-                <form onSubmit={this.handleSubmit}>
+               
                 <div className={styles.input_container}>
                     <div className={styles.label_name}>
                         <span>Property Type</span>
@@ -257,7 +259,6 @@ class HomeAdsPublish extends Component {
                     />  
                 <div className={styles.button_container}>
                     <button 
-                        type="submit"
                         className={styles.button_home}
                         onClick={this.handleSubmit}
                     >
@@ -266,10 +267,10 @@ class HomeAdsPublish extends Component {
                     <button 
                         className={styles.button}
                     >
-                    Cancel
+                    Close
                     </button>
                 </div> 
-                </form>  
+              
                 {this.state.isOpenResultsModal 
                     && <ResultsModal 
                             closeModal={this.handleCloseResultsModal} 

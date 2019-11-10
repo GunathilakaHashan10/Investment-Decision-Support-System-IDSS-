@@ -138,12 +138,11 @@ class LandAdsPublish extends Component {
                         onClick={this.handleOnSubmit}
                     >
                     Publish
-                    </button>
+                    </button> 
                     <button 
                         className={styles.button}
-                        onClick={this.handleOpenResultsModal}
                     >
-                    Cancel
+                    Close
                     </button>
                 </div> 
                 {this.state.isOpenResultsModal 

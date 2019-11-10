@@ -119,8 +119,9 @@ class HomeRentCardContainer extends Component {
                                 return ( <HomeRentCard key={homeAd._id} homeAdDetails={homeAd} getCo={this.props.getCo}/>)
                             })
                         }
-                    <PageFooter />
+                    
                     </div>
+                    <PageFooter />
                 </div>
             )
         }

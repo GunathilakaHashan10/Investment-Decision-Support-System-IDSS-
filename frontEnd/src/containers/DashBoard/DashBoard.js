@@ -4,7 +4,6 @@ import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import ChartContainerPage from '../StockMarket/ChartContainerPage/ChartContainerPage';
 import RealEstateContainer from '../RealEstate/RealEstateContainer/RealEstateContainer';
 import BankContainer from '../Bank/BankContainer/BankContainer';
-import SelectSection from './SelectSection';
 import InformationPage from '../InformationPage/InformationPage';
 
 
@@ -32,7 +31,7 @@ class DashBoardPage extends Component {
                 break;
             case "/dashboard/bank":
                 localStorage.removeItem("sectionName");
-                localStorage.setItem("sectionName", "Bank");
+                localStorage.setItem("sectionName", "Fixed deposits");
                 break;
             case "/admin/stockMarket":
                 localStorage.removeItem("sectionName");
@@ -44,7 +43,7 @@ class DashBoardPage extends Component {
                 break;
             case "/admin/bank":
                 localStorage.removeItem("sectionName");
-                localStorage.setItem("sectionName", "Bank");
+                localStorage.setItem("sectionName", "Fixed deposits");
                 break;
             default: break;
         }
@@ -64,7 +63,7 @@ class DashBoardPage extends Component {
                 break;
             case "/dashboard/bank":
                 localStorage.removeItem("sectionName");
-                localStorage.setItem("sectionName", "Bank");
+                localStorage.setItem("sectionName", "Fixed deposits");
                 break;
             case "/admin/stockMarket":
                 localStorage.removeItem("sectionName");
@@ -77,7 +76,7 @@ class DashBoardPage extends Component {
                 break;
             case "/admin/bank":
                 localStorage.removeItem("sectionName");
-                localStorage.setItem("sectionName", "Bank");
+                localStorage.setItem("sectionName", "Fixed deposits");
                 break;
             default: break;
         }
@@ -121,16 +120,3 @@ class DashBoardPage extends Component {
 
 export default DashBoardPage;
 
-
-// { localStorage.getItem('RDACTP') !== '2485693124578965412478933254895464123648' && 
-//                         <Route 
-//                             exact={true} 
-//                             path={this.props.match.path} 
-//                             render={props => (
-//                                 <SelectSection 
-//                                     {...props} 
-//                                     handleSection={this.handleSection} 
-//                                 />
-//                                 )}
-//                             />
-//                     }

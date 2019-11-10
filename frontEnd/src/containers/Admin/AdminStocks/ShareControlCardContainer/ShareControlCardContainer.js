@@ -8,6 +8,7 @@ import ShareDeleteModal from '../AdminStocksModals/ShareDeleteModal/ShareDeleteM
 import DeleteDataModal from '../AdminStocksModals/DeleteDataModal/DeleteDataModal';
 import lodingStyles from '../../../../assets/css/ReactLoading/ReactLoading.css';
 import styles from '../../../../assets/css/Admin/AdminStocks/ShareControlCardContainer/ShareControlCardContainer.css';
+import ErrorMessageModal from '../../../Utils/ErrorMessageModal/ErrorMessageModal';
 
 class ShareControlCardContainer extends Component {
     state = {
@@ -18,14 +19,19 @@ class ShareControlCardContainer extends Component {
         isOpenDeleteDataModal: false,
         shareId: null,
         shareName: null,
-        shareData: {}
+        shareData: {},
+        error: null,
+        openErrorModal: false
+    }
+
+    handleCloseErrorModal = () => {
+        this.setState({openErrorModal:false});
     }
 
     componentDidMount() {
         this.setState({ isLoading: true});
         axios.get(`${myConstants.SEVER_URL}/admin/adminShares`)
             .then(response => {
-                
                 this.setState(prevState => {
                     return {
                         adminShareDetailsArray: prevState.adminShareDetailsArray.concat(response.data),
@@ -34,7 +40,10 @@ class ShareControlCardContainer extends Component {
                 });
             })
             .catch(error => {
-                console.log(error);
+                this.setState({
+                    error:error.message,
+                    openErrorModal: true
+                })
             })
     }
 
@@ -86,7 +95,9 @@ class ShareControlCardContainer extends Component {
 
 
     render() {
+        
         const { isLoading, isOpenUpdateShareModal, isOpenDeleteShareModal, isOpenDeleteDataModal ,shareId, shareName, shareData } = this.state;
+        
         return(
             <div className={styles.container}>
 
@@ -112,10 +123,36 @@ class ShareControlCardContainer extends Component {
                         </div>
                    
                 }
-                {isOpenUpdateShareModal && <UpdateShareModal closeModal={this.handleCloseUpdateShareModal} shareData={shareData}/>}
-                {isOpenDeleteShareModal && <ShareDeleteModal closeModal={this.handleCloseDeleteShareModal} id={shareId} shareName={shareName} handleCancel={this.handleCancel}/>}
-                {isOpenDeleteDataModal && <DeleteDataModal closeModal={this.handleCloseDeleteDataModal} shareData={shareData} handleCancel={this.handleCancelDeleteDataModal}/>}
+                {isOpenUpdateShareModal && 
+                    <UpdateShareModal 
+                        closeModal={this.handleCloseUpdateShareModal} 
+                        shareData={shareData}
+                    />
+                }
+                {isOpenDeleteShareModal && 
+                    <ShareDeleteModal 
+                        closeModal={this.handleCloseDeleteShareModal} 
+                        id={shareId} 
+                        shareName={shareName} 
+                        handleCancel={this.handleCancel}
+                    />
+                }
+                {isOpenDeleteDataModal && 
+                    <DeleteDataModal 
+                        closeModal={this.handleCloseDeleteDataModal} 
+                        shareData={shareData} 
+                        handleCancel={this.handleCancelDeleteDataModal}
+                        />
+                }
+                {this.state.openErrorModal &&
+                    <ErrorMessageModal 
+                        closeModal={this.handleCloseErrorModal}
+                        error={this.state.error}
+                    />
+
+                }
             </div>
+                    
         )
     }
 }

@@ -13,7 +13,7 @@ class GoogleMap extends Component {
             <div className={styles.map_container}>
                 <Map
                     google={this.props.google}
-                    zoom={9}
+                    zoom={12}
                     style={mapStyles}
                     initialCenter={{ lat: this.props.mapCoordinates.latitude, lng: this.props.mapCoordinates.longitude}}
                     center={{ lat: this.props.mapCoordinates.latitude, lng: this.props.mapCoordinates.longitude}}

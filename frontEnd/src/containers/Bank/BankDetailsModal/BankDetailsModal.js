@@ -4,10 +4,11 @@ import modalStyles from '../../../assets/css/Bank/BankDetailsModal/BankDetailsMo
 import BankDetails from '../BankDetails/BankDetails';
 import FixedCalculator from '../FixedCalculator/FixedCalculator';
 
+
 class BankDetailsModal extends Component {
     state = {
         isOpenBankDetails: true,
-        isOpenFixedCalculator: false,
+        isOpenFixedCalculator: false
     }
 
     handleOpenBankDetails = () => {
@@ -24,8 +25,10 @@ class BankDetailsModal extends Component {
         });
     }
 
+  
+
     render() {
-        const { isOpenBankDetails, isOpenFixedCalculator } = this.state;
+        const { isOpenBankDetails, isOpenFixedCalculator, isOpenBarChartContainerModal } = this.state;
         return (
             <div className={modalStyles.modal}>
                 <div className={modalStyles.modal_container}>
@@ -42,6 +45,7 @@ class BankDetailsModal extends Component {
                         >
                         Fixed Calculator
                         </button>
+                        
                     </div>
                     { isOpenBankDetails && <BankDetails bankId={this.props.bankId}/>}
                     { isOpenFixedCalculator && <FixedCalculator bankId={this.props.bankId} />}
@@ -53,6 +57,7 @@ class BankDetailsModal extends Component {
                     <IoIosCloseCircleOutline size="2em" color="black"/>
                     </button>
                 </div>
+               
             </div>
         );
     }

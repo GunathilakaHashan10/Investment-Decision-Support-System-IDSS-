@@ -156,25 +156,7 @@ class AdsDetailCard extends Component {
                         >
                         View
                         </button>
-                        <button
-                            className={isLoadingBlock ? styles.control_button_loading : isBlocked ? styles.control_button_blocked : styles.control_button}
-                            onClick={this.handleBlockAd}
-                        >
-    
-                        {isLoadingBlock 
-                            ?  <div className={styles.loading_container}>
-                                    <ReactLoading type={'spin'} color={'white'} height={'15%'} width={'15%'} /> 
-                                    <span>wait..</span>
-                                </div>
-                            : isBlocked  ?  "Blocked" : "Block"
-                        }
-                        </button>
-                        <button
-                            className={styles.control_button}
-                            onClick={this.handleOpenAdsDeleteModal}
-                        >
-                        Delete
-                        </button>
+                        
                     </div>
                 
                 </div>

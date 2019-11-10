@@ -2,7 +2,7 @@
 
 .container {
     width: 57%;
-    height: auto;
+    height: 300vh;
     position: relative;
     left: 40%;
     top:126px;
@@ -38,7 +38,7 @@
 }
 
 .sortBy_container {
-    display: flex;
+    display: none;
     flex-direction: row;
     align-items: center;
     width: 40%;

@@ -10,7 +10,6 @@ class ControlPanelSideNav extends Component {
         isOpenRealEstate: false,
         isOpenBank: false,
         isOpenUsers: false,
-        isOpenMessages: false,
         isOpenAddNewShareModal: false,
         isOpenAddNewBankModal: false
     }
@@ -34,9 +33,6 @@ class ControlPanelSideNav extends Component {
         this.setState({ isOpenUsers: !this.state.isOpenUsers});
     }
 
-    handleOpenMessages = () => {
-        this.setState({ isOpenMessages: !this.state.isOpenMessages});
-    }
 
     handleOpenAddNewShareModal = () =>{
         this.setState({
@@ -82,8 +78,7 @@ class ControlPanelSideNav extends Component {
                 isOpenStocks: false,
                 isOpenRealEstate: false,
                 isOpenBank: false,
-                isOpenUsers: false,
-                isOpenMessages: false,
+                isOpenUsers: false
             });
         
     }
@@ -102,8 +97,7 @@ class ControlPanelSideNav extends Component {
             isOpenStocks: false,
             isOpenRealEstate: false,
             isOpenBank: false,
-            isOpenUsers: false,
-            isOpenMessages: false,
+            isOpenUsers: false
         });
     }
 
@@ -202,21 +196,7 @@ class ControlPanelSideNav extends Component {
                         >
                             Users
                         </button>
-                        <button className={styles.dropSide_button}>Block Users</button>
-                        <button className={styles.dropSide_button}>Remover Users</button>
-                    </div>
-                </div>
-
-                <div className={styles.button_container}>
-                    <button 
-                        className={styles.sideNav_button}
-                        onClick={this.handleOpenMessages}
-                    >
-                    <span>Messages</span>
-                    <div>{this.state.isOpenMessages ? <IoMdArrowDropleft size="1.7em" /> :<IoMdArrowDropright size="1.7em" />}</div>
-                    </button>
-                    <div className={this.state.isOpenMessages ? styles.dropSide_container : styles.dropSide_container_hide}>
-                        <button className={styles.dropSide_button}>New Messages</button>
+                        
                     </div>
                 </div>
                 {isOpenAddNewShareModal && 

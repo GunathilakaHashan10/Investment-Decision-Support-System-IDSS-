@@ -56,9 +56,7 @@ class HomeRentCard extends Component {
                         <span className={styles.indicator}></span>
                         <span className={styles.sale_rent_annotation}>{`${this.props.homeDetails.propertyType} for rent`}</span>
                     </div>
-                    <div className={styles.home_card_time_period_annotation}>
-                        5 days on here
-                    </div>
+                    
                     <div className={styles.button_container}>
                         <button
                             onClick={this.handleOpenAdsUpdateModal}

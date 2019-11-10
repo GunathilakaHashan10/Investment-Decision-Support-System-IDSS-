@@ -46,7 +46,6 @@ class UserCard extends Component {
                         <span className={styles.user_data}>{isAdvertiser ? "Yes" : "No"}</span>
                     </div>
                     <div className={styles.button_container}>
-                        <button>Block</button>
                         <button
                             onClick={this.handleOpenUserRemoveModal}
                         >

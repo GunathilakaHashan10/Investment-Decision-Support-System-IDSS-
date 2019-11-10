@@ -46,7 +46,7 @@ class AdvertiserDetailsCard extends Component {
 
     handleCloseDetailModal = () => {
         this.setState({isOpenDetailModal: false});
-        window.location.reload();
+        
     }
 
     render() {
@@ -81,8 +81,6 @@ class AdvertiserDetailsCard extends Component {
                         <span className={styles.user_data}>{contactMe}</span>
                     </div>
                     <div className={styles.button_container}>
-                        <button>Block</button>
-                        <button>Remove</button>
                         <button
                             onClick={this.handleOpenDetailModal}
                         >View</button>

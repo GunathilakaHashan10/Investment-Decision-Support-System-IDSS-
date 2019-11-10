@@ -86,8 +86,9 @@ exports.postAddShare = (req, res, next) => {
                         if(resultDoc) {
                             Share.findOne({shareName: shareName }) 
                                 .then(UpdatedShare => {
+                                    
                                     const newLtp = [];
-                                    const filePath = path.join('/home','/hashan', '/project', '/server', '/public', UpdatedShare.fileName);
+                                    const filePath = path.join(folderPath, UpdatedShare.fileName);
                                     fs.createReadStream(filePath)
                                     .pipe(csv({ separator: '\t' }))
                                     .on('data', (data) => results.push(data))
@@ -147,6 +148,83 @@ exports.postAddShare = (req, res, next) => {
             });
 
 }
+
+exports.updateShare = (req, res, next) => {
+    if(!req.files) {
+        const error = new Error('No tsv file provided.');
+        error.statusCode = 422;
+        throw error;
+    }
+    const shareId = req.body.shareId;
+    const file = req.files;
+    let filePath, fileName = null
+
+
+    for(let i=0; i<file.length; i++){
+        filePath = file[i].path;
+        fileName = file[i].filename;
+    }
+
+    console.log(fileName)
+
+    const results = [];
+
+    Share
+        .findById(shareId)
+        .then((shareDoc) => {
+            if(shareDoc) {
+                shareDoc.update({
+                    filePath: filePath,
+                    fileName: fileName 
+                })
+                .then((UpdatedShare) => {
+                    const newLtp = [];
+                    const filePath = path.join(folderPath, fileName);
+                    fs.createReadStream(filePath)
+                    .pipe(csv())
+                    .on('data', (data) => results.push(data))
+                    .on('end', () => {
+                        results.map(value => {
+                            const ltpObject = {
+                                date: value.date,
+                                open: value.open,
+                                high: value.high,
+                                low: value.low,
+                                close: value.close,
+                                volume: value.volume
+                            }
+                            newLtp.push(ltpObject);
+
+                            Share.update(
+                                {shareName: shareDoc.shareName},
+                                {$push: {ltp: {$each: [ltpObject]}}},
+                                {upsert:true},
+                                function(error) {
+                                    if(error) {
+                                        res.json({success: false, message:`Failed the operation`})
+                                    } else {
+                                        
+                                    }
+                                }
+                                )
+                    })
+    
+                });
+                //  fs.unlinkSync(filePath);
+                })
+                return  res.json({success: true, message:`${shareDoc.shareName} updated successfully`})
+            }
+            
+        })
+        .catch(error => {
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
+        });
+
+}
+
 
 exports.getShares = (req, res, next) => {
     const company = [];

@@ -338,6 +338,10 @@ class CandlestickChart extends React.Component {
 					<SlopeDetails trend={this.state.trends_1} shareId={this.props.shareId}/>
 				</div>
 			</div>
+			<div className={styles.trend_instructions}>
+					<h5>E - Enable trend line</h5>
+					<h5>Delete - Delete Trend line</h5>
+			</div>
 		</div>	
 		);
 	}

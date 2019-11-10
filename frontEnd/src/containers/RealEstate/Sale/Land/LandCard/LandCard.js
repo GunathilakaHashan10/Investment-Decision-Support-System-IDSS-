@@ -40,9 +40,7 @@ class LandCard extends Component {
                         <span className={styles.indicator}></span>
                         <span className={styles.sale_rent_annotation}>Land for sell</span>
                     </div>
-                    <div className={styles.home_card_time_period_annotation}>
-                        5 days on here
-                    </div>
+                    
                     <button 
                         className={styles.love_button} 
                         onClick={state => this.props.getCo(this.state)}

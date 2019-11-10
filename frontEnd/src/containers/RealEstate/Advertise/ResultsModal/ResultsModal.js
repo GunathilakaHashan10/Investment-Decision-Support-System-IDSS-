@@ -14,7 +14,7 @@ class ResultsModal extends Component {
                 loading: false,
                 message: this.props.message
             }) 
-        }, 10000)
+        }, 3000)
         
     }
 
@@ -24,7 +24,7 @@ class ResultsModal extends Component {
                 loading: false,
                 message: this.props.message
             }) 
-        }, 10000)
+        }, 3000)
     }
     render() {
         return(

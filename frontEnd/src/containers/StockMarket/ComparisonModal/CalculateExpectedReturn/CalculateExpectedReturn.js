@@ -283,7 +283,7 @@ class CalculateExpectedReturn extends Component {
 
                 <div className={styles.input_container}>
                     <div className={styles.date_picker_container}>
-                        <span>Investment Amount:</span>
+                        <span>Investment Amount(Rs.):</span>
                         <input 
                             type="number" 
                             name="amount"
@@ -338,7 +338,7 @@ class CalculateExpectedReturn extends Component {
                     }
                     {
                         (expectedReturn !== null && this.state.isLoading !== true)   && (<div className={styles.expectedReturn_container}>
-                            Expected Return: {this.state.expectedReturn}
+                            Expected Return(Rs.): {this.state.expectedReturn}
                         </div>)
                     }
                     

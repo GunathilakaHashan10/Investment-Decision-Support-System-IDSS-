@@ -3,7 +3,7 @@
     flex-direction: row;
     width: 100%;
     justify-content: flex-start;
-    
+    position: relative;
     
 }
 
@@ -14,15 +14,16 @@
 
 .share_slope_container {
     display: none;
-    background-color: white;
+    background-color: rgb(158, 40, 40);
     width: 100%;
     margin-left: 1rem;
     position: absolute;
-    left: 962.91px;
+    /* left: 962.91px; */
     width: 310px;
-    top: 126.81px;
-    right: 0;
+    /* top: 126.81px; */
+    /* right: 0; */
     height: 520.33px;
+  
 }
 
 .compare_button {
@@ -58,4 +59,19 @@
     display: inline;
     position: absolute;
     right: 0;
+}
+
+.trend_instructions {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    right: 200px;
+    top: 0;
+}
+
+.trend_instructions h5 {
+    margin: 0.5rem;
+    font-family: inherit;
+    font-size: 0.8rem;
+    color: rgb(80, 78, 78);
 }

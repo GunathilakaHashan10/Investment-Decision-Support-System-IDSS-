@@ -13,7 +13,7 @@ class ListOfExpectedReturn extends Component {
                     return (
                         <div className={styles.share_container}>
                             <span className={styles.share_name}>{value.share}</span>
-                            <span className={styles.share_slope}>{value.expectedReturn.toFixed(2)}</span>
+                            <span className={styles.share_slope}>{`Rs. ${value.expectedReturn.toFixed(2)}`}</span>
                         </div>
                     );
                 })}

@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import styles from '../../../../assets/css/Admin/AdminStocks/ShareControlCard/ShareControlCard.css';
 
+
 class ShareControlCard extends Component {
     state = {
         shareData: this.props.shareData
     }
+
+
     render() {
         const { shareData } = this.state;
         return(
