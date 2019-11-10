@@ -23,7 +23,7 @@
 }
 
 .bankImage {
-    width: 50%;
+    width: 40%;
     height: 50%;
     margin: 0.5rem;
     border: 1px solid rgba(189, 186, 186, 0.445);
@@ -34,7 +34,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    width: 50%;
+    width: 60%;
 }
 
 .bank_title {
