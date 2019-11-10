@@ -174,3 +174,13 @@
     font-size: 1rem;
     font-weight: 500;
 }
+
+/*** formErrors ***/
+.form_errors {
+    width: 100%;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 0.8rem;
+    color: red;
+    margin-left: 50%;
+}
