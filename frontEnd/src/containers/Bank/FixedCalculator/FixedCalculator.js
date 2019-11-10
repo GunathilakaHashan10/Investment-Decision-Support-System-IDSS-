@@ -82,7 +82,7 @@ class FixedCalculator extends Component {
 
     render() {
         const isFormErrors = this.state.isFormErrors
-        const formErrors = { ... this.state.formErrors }
+        const formErrors = { ...this.state.formErrors }
         return (
             <div className={styles.container}>
                 <h2 className={styles.header}>Fixed Deposit Calculator</h2>

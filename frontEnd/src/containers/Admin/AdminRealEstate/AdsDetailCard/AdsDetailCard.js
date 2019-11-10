@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import ReactLoading from 'react-loading';
 import { IoIosNavigate } from 'react-icons/io';
 import { FaAdversal } from 'react-icons/fa';
 import * as myConstants from '../../../Utils/Constants/Constants';
@@ -132,7 +131,7 @@ class AdsDetailCard extends Component {
 
 
     render() {
-       const {isOpenHomeDetailsModal, isOpenHomeRentDetailsModal, isOpenLandDetailsModal, isBlocked, openErrorModal, isLoadingBlock, isOpenAdsDeleteModal} = this.state;
+       const {isOpenHomeDetailsModal, isOpenHomeRentDetailsModal, isOpenLandDetailsModal, openErrorModal,  isOpenAdsDeleteModal} = this.state;
         return(
             <div>
                 <div className={styles.container}>

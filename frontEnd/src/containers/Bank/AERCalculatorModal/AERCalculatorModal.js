@@ -82,7 +82,7 @@ class AERCalculatorModal extends Component {
 
     render() {
         const isFormErrors = this.state.isFormErrors
-        const formErrors = { ... this.state.formErrors }
+        const formErrors = { ...this.state.formErrors }
         return (
             <div className={modalStyles.modal}>
                 <div className={modalStyles.modal_container}>

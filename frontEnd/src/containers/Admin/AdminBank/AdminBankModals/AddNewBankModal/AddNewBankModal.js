@@ -193,7 +193,7 @@ class AddNewBankModal extends Component {
     }
 
     bankDataSubmitHandler = () => {
-        const { interestRates, bankImage, bankName, description, isFormErrors} = this.state;
+        const { interestRates, bankImage, bankName, description} = this.state;
         const formErrors = {...this.state.formErrors};
 
         if(interestRates.length === 0) {

@@ -5,7 +5,6 @@ import { Route } from 'react-router-dom';
 import ReactLoading from 'react-loading';
 import * as myConstants from '../../../Utils/Constants/Constants';
 import lodingStyles from '../../../../assets/css/ReactLoading/ReactLoading.css';
-import styles from '../../../../assets/css/RealEstate/Advertise/AdsControlPanel/AdsControlPanel.css';
 import AdsSideNav from '../AdsSideNav/AdsSideNav';
 import AllAds from '../AllAds/AllAds';
 import AdsPublishContainer from '../AdsPublishContainer/AdsPublishContainer';

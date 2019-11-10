@@ -28,7 +28,7 @@ class BankDetailsModal extends Component {
   
 
     render() {
-        const { isOpenBankDetails, isOpenFixedCalculator, isOpenBarChartContainerModal } = this.state;
+        const { isOpenBankDetails, isOpenFixedCalculator } = this.state;
         return (
             <div className={modalStyles.modal}>
                 <div className={modalStyles.modal_container}>
