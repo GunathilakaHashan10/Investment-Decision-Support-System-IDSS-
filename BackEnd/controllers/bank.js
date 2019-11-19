@@ -95,7 +95,7 @@ exports.postGetSpecificBank = (request, response, next) => {
 exports.postGetSpecificBankInterestRates = (request, response, next) => {
     const bankId = request.query.id;
 
-    Bank.findOne({bankId}, 'interestRates')
+    Bank.findOne({bankId}, 'interestRates bankName')
         .then((result) => {
             response.json({
                 payload: result
@@ -156,6 +156,19 @@ exports.postGetBankComparison = (request, response, next) => {
         })
 
     
+}
+
+exports.postGetAllBanksName_Id = (request, response, next) => {
+    Bank.find({},'bankId bankName')
+        .then((result) => {
+            response.json({
+                payload: result
+            })
+        })
+        .catch((e) => {
+            console.log(e);
+            response.json({error: e});
+        })
 }
 
 

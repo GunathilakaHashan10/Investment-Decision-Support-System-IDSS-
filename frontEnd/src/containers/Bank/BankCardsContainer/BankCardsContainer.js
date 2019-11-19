@@ -16,6 +16,7 @@ class BankCardsContainer extends Component {
         isOpenAbsoluteReturnModal: false,
         banks: [],
         selectBankId: '',
+        selectBankName:''
     }
 
     componentDidMount() {
@@ -34,10 +35,11 @@ class BankCardsContainer extends Component {
           });
     }
 
-    handleOpenModal = (id) => {
+    handleOpenModal = (id, name) => {
         this.setState(() => ({
              isOpenModal: true,
-             selectBankId: id
+             selectBankId: id,
+             selectBankName: name
          }));
     }
 
@@ -88,6 +90,7 @@ class BankCardsContainer extends Component {
                     this.state.isOpenModal && <BankDetailsModal 
                         closeModal={this.handleCloseModal}
                         bankId={this.state.selectBankId}
+                        bankName={this.state.selectBankName}
                     />
                 }
                 

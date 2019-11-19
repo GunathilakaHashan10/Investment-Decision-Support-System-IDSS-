@@ -5,7 +5,7 @@ import styles from '../../../assets/css/Bank/BankCard/BankCard.css';
 class BankCard extends Component {
     
     render() {
-        console.log(this.props.bank.bankImage[0].imagePath)
+        //console.log(this.props.bank.bankImage[0].imagePath)
         return (
             <div className={styles.container}>
                 <div className={styles.bankCard_container}>
@@ -20,7 +20,7 @@ class BankCard extends Component {
                         <button 
                             className={styles.bank_button}
                             onClick={(e) => {
-                                this.props.handleOpenModal(this.props.bank.bankId);
+                                this.props.handleOpenModal(this.props.bank.bankId, this.props.bank.bankName);
                             }}
                         >more</button>
                     </div>

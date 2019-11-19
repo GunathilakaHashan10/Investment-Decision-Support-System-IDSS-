@@ -80,6 +80,8 @@ class BankDetailsModal extends Component {
                 </div>
                {isOpenInterestRateChartModal && 
                     <InterestRateChartModal 
+                        bankId={this.props.bankId}
+                        bankName={this.props.bankName}
                         closeModal={this.handleCloseInterestRateChartModal}
                     />
                 }
