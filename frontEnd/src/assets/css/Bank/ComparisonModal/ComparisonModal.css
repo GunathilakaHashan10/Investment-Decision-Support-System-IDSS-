@@ -8,7 +8,6 @@
     border-radius: 5px;
     width: 60%;
     height: 80%;
-    box-shadow: 1rem 1rem 3rem 2rem rgba(189, 186, 186, 0.445);
     z-index: 400;
 
     -webkit-transform: translate(-50%, -0%);
@@ -56,8 +55,7 @@
 .modal:before {
     content: "";
     position: fixed;
-    /* background-color: rgba(0, 106, 255, 0.466); */
-    background-color: rgba(255, 255, 255, 0.767);
+    background-color: rgba(0, 0, 0, 0.774);
     top:0;
     left: 0;
     width: 100%;
@@ -67,19 +65,20 @@
 
 .modal_closeButton {
     position: absolute;
-    top: 1rem;
-    right: 0.5rem;
-    border: none;
-    background-color: white;
+    top: 0;
+    right: -40px;
+    border:none;
+    background-color: rgba(0, 0, 0, 0);
+    
    
 }
 
 .modal_closeButton:focus {
-    outline: none;
+    outline-color: #006AFF;
 }
 
 .modal_closeButton:hover {
-    background: #f5f5f0;
+    cursor: pointer;
 }
  /*** modal content styles */
 .input_container {

@@ -4,6 +4,7 @@ import styles from '../../../assets/css/Bank/BankCardsContainer/BankCardsContain
 import BankDetailsModal from '../BankDetailsModal/BankDetailsModal';
 import AERCalculatorModal from '../AERCalculatorModal/AERCalculatorModal';
 import ComparisonModal from '../ComparisonModal/ComparisonModal';
+import AbsoluteReturnModal from '../AbsoluteReturnModal/AbsoluteReturnModal';
 
 import axios from 'axios';
 
@@ -12,6 +13,7 @@ class BankCardsContainer extends Component {
         isOpenModal: false,
         isOpenAERmodal: false,
         isOpenComparisonModal: false,
+        isOpenAbsoluteReturnModal: false,
         banks: [],
         selectBankId: '',
     }
@@ -59,6 +61,14 @@ class BankCardsContainer extends Component {
         this.setState({ isOpenComparisonModal: false });
     }
 
+    handleOpenAbsoluteReturnModal = () => {
+        this.setState({ isOpenAbsoluteReturnModal: true })
+    }
+
+    handleCloseAbsoluteReturnModal = () => {
+        this.setState({ isOpenAbsoluteReturnModal: false })
+    }
+
 
     render() {
         return (
@@ -93,6 +103,12 @@ class BankCardsContainer extends Component {
                     >
                     Comparison
                     </button>
+                    <button 
+                        className={styles.AR_button}
+                        onClick={this.handleOpenAbsoluteReturnModal}
+                    >
+                    Absolute Return
+                    </button>
 
                 {
                     this.state.isOpenAERmodal && <AERCalculatorModal 
@@ -100,7 +116,17 @@ class BankCardsContainer extends Component {
                     banks={this.state.banks}
                     />
                 }
-                {this.state.isOpenComparisonModal && <ComparisonModal closeModal={this.handleCloseComparisonModal}/>}
+                {this.state.isOpenComparisonModal &&
+                     <ComparisonModal 
+                        closeModal={this.handleCloseComparisonModal}
+                    />
+                }
+                {this.state.isOpenAbsoluteReturnModal &&
+                    <AbsoluteReturnModal 
+                        closeModal={this.handleCloseAbsoluteReturnModal}
+                    />
+                }
+
             </div>
         );
     }

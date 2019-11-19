@@ -3,12 +3,14 @@ import { IoIosCloseCircleOutline, IoIosArrowBack } from 'react-icons/io';
 import modalStyles from '../../../assets/css/Bank/BankDetailsModal/BankDetailsModal.css';
 import BankDetails from '../BankDetails/BankDetails';
 import FixedCalculator from '../FixedCalculator/FixedCalculator';
+import InterestRateChartModal from '../InterestRateChartModal/InterestRateChartModal';
 
 
 class BankDetailsModal extends Component {
     state = {
         isOpenBankDetails: true,
-        isOpenFixedCalculator: false
+        isOpenFixedCalculator: false,
+        isOpenInterestRateChartModal: false
     }
 
     handleOpenBankDetails = () => {
@@ -25,10 +27,22 @@ class BankDetailsModal extends Component {
         });
     }
 
+    handleOpenInterestRateChartModal = () => {
+        this.setState({
+            isOpenInterestRateChartModal: true
+        })
+    }
+
+    handleCloseInterestRateChartModal = () => {
+        this.setState({
+            isOpenInterestRateChartModal: false
+        })
+    }
+
   
 
     render() {
-        const { isOpenBankDetails, isOpenFixedCalculator } = this.state;
+        const { isOpenBankDetails, isOpenFixedCalculator, isOpenInterestRateChartModal } = this.state;
         return (
             <div className={modalStyles.modal}>
                 <div className={modalStyles.modal_container}>
@@ -45,6 +59,12 @@ class BankDetailsModal extends Component {
                         >
                         Fixed Calculator
                         </button>
+                        <button
+                            className={modalStyles.chart_button}
+                            onClick={this.handleOpenInterestRateChartModal}
+                         >
+                            chart
+                    </button>
                         
                     </div>
                     { isOpenBankDetails && <BankDetails bankId={this.props.bankId}/>}
@@ -56,8 +76,13 @@ class BankDetailsModal extends Component {
                     >
                     <IoIosCloseCircleOutline size="2em" color="black"/>
                     </button>
+                    
                 </div>
-               
+               {isOpenInterestRateChartModal && 
+                    <InterestRateChartModal 
+                        closeModal={this.handleCloseInterestRateChartModal}
+                    />
+                }
             </div>
         );
     }

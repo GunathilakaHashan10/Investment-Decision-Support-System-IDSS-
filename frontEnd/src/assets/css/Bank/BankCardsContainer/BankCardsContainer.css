@@ -20,12 +20,13 @@
     right: 1rem;
     width: 15%;
     padding: 1rem;
-    background-color: #006AFF;
+    background-color: rgb(6, 40, 88);
     color: white;
     border: none;
     font-family: inherit;
     font-weight: 500;
     font-size: 1rem;
+    border-radius: 3px;
 }
 
 .comparison_button {
@@ -34,12 +35,28 @@
     right: 1rem;
     width: 15%;
     padding: 1rem;
-    background-color: #006AFF;
+    background-color: rgb(6, 40, 88);
     color: white;
     border: none;
     font-family: inherit;
     font-weight: 500;
     font-size: 1rem;
+    border-radius: 3px;
+}
+
+.AR_button {
+    position: fixed;
+    top: 14rem;
+    right: 1rem;
+    width: 15%;
+    padding: 1rem;
+    background-color: rgb(6, 40, 88);
+    color: white;
+    border: none;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 1rem;
+    border-radius: 3px;
 }
 
 .comparison_button:focus,
@@ -49,5 +66,5 @@
 
 .aer_button:hover,
 .comparison_button:hover {
-    background-color: rgb(4, 68, 158);
+    background-color: rgb(6, 30, 65);
 }
