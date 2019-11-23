@@ -95,7 +95,7 @@ exports.postGetSpecificBank = (request, response, next) => {
 exports.postGetSpecificBankInterestRates = (request, response, next) => {
     const bankId = request.query.id;
 
-    Bank.findOne({bankId}, 'interestRates')
+    Bank.findOne({bankId}, 'interestRates bankName')
         .then((result) => {
             response.json({
                 payload: result
@@ -156,6 +156,89 @@ exports.postGetBankComparison = (request, response, next) => {
         })
 
     
+}
+
+exports.postGetAllBanksName_Id = (request, response, next) => {
+    Bank.find({},'bankId bankName')
+        .then((result) => {
+            response.json({
+                payload: result
+            })
+        })
+        .catch((e) => {
+            console.log(e);
+            response.json({error: e});
+        })
+}
+
+exports.postGetAbsoluteReturnChatValues = (request, response, next) => {
+    const depositTime = parseInt(request.body.depositTime,10);
+    const depositAmount = parseFloat(request.body.depositAmount)
+    const bankId = request.body.bankId
+    const Term = request.body.Term.split(' ')
+
+    Bank.findOne({bankId}, 'bankName interestRates')
+        .then((result) => {
+            const { interestRates, bankName}  = result;
+            
+            const interestRateObj = interestRates.find((interestRate) => interestRate.time === parseInt(Term[0]))
+            const chartData = [];
+            let totalInterest = 0;
+            let totalAmount = depositAmount;
+            let i;
+            chartData.push({
+                x: 0,
+                y: 0
+            })
+            if(Term[1] === 'monthly') {
+                const interestRate = interestRateObj.monthly;
+                for(i = 1 ; i <= depositTime; i++){
+                    const interest = totalAmount * interestRate / (100 * 12)
+                    totalInterest += interest;
+                    totalAmount += interest;
+                    chartData.push({
+                        x: i,
+                        y: totalInterest
+                    })
+                }
+            } else if (Term[1] === 'annualy') {
+                const interestRate = interestRateObj.annualy;
+                for(i = 1 ; i <= Math.round(depositTime/12); i++){
+                    const interest = totalAmount * interestRate / (100)
+                    totalInterest += interest;
+                    totalAmount += interest;
+                    chartData.push({
+                        x: i*12,
+                        y: totalInterest
+                    })
+                }
+            } else if (Term[1] === 'maturity') {
+                const interestRate = interestRateObj.maturity;
+                for(i = 1 ; i <= Math.round(depositTime/Term[0]); i++){
+                    const interest = totalAmount * interestRate * Term[0] / (100 * 12)
+                    totalInterest += interest;
+                    totalAmount += interest; 
+                    chartData.push({
+                        x: i*Term[0],
+                        y: totalInterest
+                    })
+                }
+            }
+            const payload = {
+                chartData,
+                totalAmount,
+                totalInterest,
+                bankName
+            }
+           
+            response.json({
+                payload
+            })
+        })
+        .catch((e) => {
+            console.log(e);
+            response.json({error: e});
+        })
 }
 
 

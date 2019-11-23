@@ -11,6 +11,9 @@ router.post('/delete-bank', bankController.postDeleteBank);
 router.post('/get-bank', bankController.postGetSpecificBank);
 router.post('/get-bank-ir', bankController.postGetSpecificBankInterestRates);
 router.post('/compare-bank',bankController.postGetBankComparison);
+router.post('/get-banks-names',bankController.postGetAllBanksName_Id);
+router.post('/get-absolute-return-chart',bankController.postGetAbsoluteReturnChatValues);
+
 
 
 module.exports = router;
