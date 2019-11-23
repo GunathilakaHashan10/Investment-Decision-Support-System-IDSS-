@@ -18,7 +18,7 @@ class InterestRateChartModal extends Component {
         },
         title: {
           display: true,
-          text: "Chart.js Bar Chart"
+          text: "Interest Comparison Bar Chart"
         },
         scales: {
           yAxes: [{
