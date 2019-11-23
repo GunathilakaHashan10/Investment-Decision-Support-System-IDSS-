@@ -3,19 +3,51 @@ import ReactLoading from 'react-loading';
 import styles from '../../../../assets/css/StockMarket/CalculateSlope/ListOfSlope.css';
 
 class ListOfSlope extends Component {    
+    state = {
+        comapanyList: []
+    }
+
+
+    componentWillReceiveProps(props) {
+        console.log(props.company.length)
+        console.log(props.slopeData)
+        if(props.company.length === 0) {
+            this.setState({comapanyList: props.slopeData})
+        } else {
+        const comapanyListCopy = []
+            props.company.forEach((value, index) => {
+                props.slopeData.forEach((company, indexCompany) => {
+                    if(value === indexCompany) {
+                        comapanyListCopy.push(company)
+                       return
+                    }
+                })
+            })
+            
+            this.setState({comapanyList: comapanyListCopy})
+        }
+    }
+
+  
+
     render() {
         return (
             <div className={styles.container}>
                 <div className={styles.main_container} >
                 {
                     (this.props.isLoading === false) && 
-                    this.props.slopeData.map(value => {
-                    return (
-                        <div className={styles.share_container}>
-                            <span className={styles.share_name}>{value.shareName}</span>
-                            <span className={styles.share_slope}>{value.slope.toFixed(2)}</span>
-                        </div>
-                    );
+                    this.state.comapanyList.map((value, index) => {
+                        let company = null
+                        if(value.slope !== null) {
+                            company =  (
+                                <div className={styles.share_container} key={index}>
+                                    <span className={styles.share_name}>{value.shareName}</span>
+                                    <span className={styles.share_slope}>{value.slope.toFixed(2)}</span>
+                                </div>
+                                  
+                            );
+                        } 
+                        return company;
                 })}
                 {
                     (this.props.isLoading === true) && 

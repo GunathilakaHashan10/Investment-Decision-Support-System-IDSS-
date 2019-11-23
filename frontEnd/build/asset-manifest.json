@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.8c8d3caf.chunk.css",
+    "main.js": "/static/js/main.d776abf0.chunk.js",
+    "main.js.map": "/static/js/main.d776abf0.chunk.js.map",
+    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+    "static/css/2.b8352948.chunk.css": "/static/css/2.b8352948.chunk.css",
+    "static/js/2.85a02013.chunk.js": "/static/js/2.85a02013.chunk.js",
+    "static/js/2.85a02013.chunk.js.map": "/static/js/2.85a02013.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.ee3db4ec637b9968e9f236d6bee3ec84.js": "/precache-manifest.ee3db4ec637b9968e9f236d6bee3ec84.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.b8352948.chunk.css.map": "/static/css/2.b8352948.chunk.css.map",
+    "static/css/main.8c8d3caf.chunk.css.map": "/static/css/main.8c8d3caf.chunk.css.map",
+    "static/media/B1.jpg": "/static/media/B1.5a65ae6e.jpg",
+    "static/media/ExH2.jpg": "/static/media/ExH2.a991e97f.jpg",
+    "static/media/R1.jpg": "/static/media/R1.c91c5074.jpg",
+    "static/media/R2.jpg": "/static/media/R2.bf3f2f0a.jpg",
+    "static/media/S2.png": "/static/media/S2.8525d4b4.png",
+    "static/media/BankHomePage.css": "/static/media/bankBackground.f1b40ff9.jpg",
+    "static/media/DashBodard.css": "/static/media/homePageImage.15fe1de0.jpg"
+  }
+}

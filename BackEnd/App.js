@@ -17,6 +17,7 @@ const publisherAds = require('./routes/publisherAds');
 const bankRoutes  = require('./routes/bank');
 const advertiserRoutes = require('./routes/advertiserDetails');
 const messagesRoutes = require('./routes/messages');
+const lpiRoutes = require('./routes/LPI');
 
 // const MONGODB_URI = 'mongodb+srv://Hashan:8vVk7bvOXLSeIf0m@cluster0-ouuzw.gcp.mongodb.net/test?retryWrites=true&w=majority';
 const MONGODB_URI = 'mongodb://localhost:27017/jarvis';
@@ -58,16 +59,18 @@ app.use(bodyparser.urlencoded({extended: false}));
 
 app.use('/auth',authRoutes);
 app.use('/stock',shareHandleRoutes);
-app.use(indexHandleRoutes);
-app.use(ltpRoutes);
+app.use('/lpi', lpiRoutes);
 app.use('/shareCompare',shareComparsionRoutes);
 app.use('/admin',adminRoutes);
+app.use('/advertiser', advertiserRoutes);
+app.use('/contact', messagesRoutes);
+app.use(indexHandleRoutes);
+app.use(ltpRoutes);
 app.use(adsPublishRoutes);
 app.use(adsDetailsRoutes);
 app.use(publisherAds);
 app.use(bankRoutes);
-app.use('/advertiser', advertiserRoutes);
-app.use('/contact', messagesRoutes);
+
 
 
 app.use((error, req, res, next) => {

@@ -3,19 +3,45 @@ import ReactLoading from 'react-loading';
 import styles from '../../../../assets/css/StockMarket/CalculateExpectedReturn/ListOfExpectedReturn.css';
 
 class ListOfExpectedReturn extends Component {
+    state = {
+        comapanyList: []
+    }
+
+
+    componentWillReceiveProps(props) {
+        if(props.company.length === 0) {
+            this.setState({comapanyList: props.expectedReturnData})
+        } else {
+        const comapanyListCopy = []
+            props.company.forEach((value, index) => {
+                props.expectedReturnData.forEach((company, indexCompany) => {
+                    if(value === indexCompany) {
+                        comapanyListCopy.push(company)
+                       return
+                    }
+                })
+            })
+            
+            this.setState({comapanyList: comapanyListCopy})
+        }
+    }
     render() {
         return(
             <div className={styles.container}>
                 <div className={styles.main_container} >
                 {
                     (this.props.isLoading === false) &&
-                    this.props.expectedReturnData.map(value => {
-                    return (
-                        <div className={styles.share_container}>
-                            <span className={styles.share_name}>{value.share}</span>
-                            <span className={styles.share_slope}>{`Rs. ${value.expectedReturn.toFixed(2)}`}</span>
-                        </div>
-                    );
+                    this.state.comapanyList.map((value, index) => {
+                        let company = null
+                        if(value.expectedReturn !== null ){
+                            company = (
+                                <div className={styles.share_container} key={index}>
+                                    <span className={styles.share_name}>{value.share}</span>
+                                    <span className={styles.share_slope}>{`Rs. ${value.expectedReturn.toFixed(2)}`}</span>
+                                </div>
+                            )
+                        }
+                    return company;
                 })}
                 {
                     (this.props.isLoading === true) && 

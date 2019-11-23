@@ -28,12 +28,27 @@ class CalculateExpectedReturn extends Component {
         isLoading: false,
         isLoading02: false,
         error: null,
-        openErrorModal: false
+        openErrorModal: false,
+        companyList: []
         
     }
 
     handleCloseErrorModal = () => {
         this.setState({openErrorModal:false});
+    }
+
+    onChangeHandler = (e) => {
+        let options = e.target.options
+        let value = []
+        for(let i=0; options.length > i; i++){
+            if(options[i].selected) {
+                value.push(options[i].index)
+            }
+            
+        }
+        
+        this.setState({companyList: value})
+       
     }
 
     componentWillMount() {
@@ -249,101 +264,130 @@ class CalculateExpectedReturn extends Component {
         const { startDateError, endDateError, shareIdError, investmentAmountError, expectedReturn } = this.state;
         return (
             <div className={styles.container}>
-                <div className={styles.input_container}>
-                
-                    <div 
-                        className={styles.date_picker_container} 
-                        data-tip={`Select a date between ${this.convert(this.state.specificStartDate)} to ${this.convert(this.state.specificEndDate)}`}
-                    >
-                        <span  >Investment start Date:</span>
-                        <DatePicker
-                            selected={this.state.startDate}
-                            onChange={this.handleStartDateChange}
-                            className={startDateError ? styles.date_input_error :styles.date_input}
-                            minDate={this.state.startDate}
-                            maxDate={this.state.endDate}
-                            
-                        />
-                    </div>
-                    <div 
-                        className={styles.date_picker_container}
-                        data-tip={`Select a date between ${this.convert(this.state.specificStartDate)} to ${this.convert(this.state.specificEndDate)}`}
-                    >
-                        <span>Return Date:</span>
-                        <DatePicker
-                            selected={this.state.endDate}
-                            onChange={this.handleEndDateChange}
-                            className={endDateError ? styles.date_input_error :styles.date_input}
-                            minDate={this.state.startDate}
-                            maxDate={this.state.endDate}
-                        />
-                    </div>
-                    <ReactTooltip place="top" type={endDateError || startDateError || shareIdError ? "error" : "dark" } effect="solid"/>
-                </div>
-
-                <div className={styles.input_container}>
-                    <div className={styles.date_picker_container}>
-                        <span>Investment Amount(Rs.):</span>
-                        <input 
-                            type="number" 
-                            name="amount"
-                            className={ investmentAmountError ? styles.input_error : styles.input}
-                            required={true}
-                            onChange={this.handleChangeAmount}
-                            placeholder="0.00"
-                            />
-                    </div>
-                    <div 
-                        className={styles.date_picker_container}
-                        data-tip={shareIdError ? `Please select a share` : ""}
-                    >
-                        <span>Share:</span>
-                        <select 
-                            className={shareIdError ? styles.price_select_error :styles.price_select} 
-                            onChange={this.handleSelectShare}
+                <div className={styles.data_input_container}>
+                    
+                        <div 
+                            className={styles.date_picker_container} 
+                            data-tip={`Select a date between ${this.convert(this.state.specificStartDate)} to ${this.convert(this.state.specificEndDate)}`}
                         >
-                            <option value="">-Select a share-</option>
-                            {this.state.company.map(value => {
-                                return(
-                                    <option 
-                                        key={value.shareId}
-                                        value={value.shareId}
-                                    >
-                                    {value.shareName}
-                                    </option>
-                                );
+                            <span  >Investment start Date:</span>
+                            <DatePicker
+                                selected={this.state.startDate}
+                                onChange={this.handleStartDateChange}
+                                className={startDateError ? styles.date_input_error :styles.date_input}
+                                minDate={this.state.startDate}
+                                maxDate={this.state.endDate}
+                                
+                            />
+                        </div>
+                        <div 
+                            className={styles.date_picker_container}
+                            data-tip={`Select a date between ${this.convert(this.state.specificStartDate)} to ${this.convert(this.state.specificEndDate)}`}
+                        >
+                            <span>Return Date:</span>
+                            <DatePicker
+                                selected={this.state.endDate}
+                                onChange={this.handleEndDateChange}
+                                className={endDateError ? styles.date_input_error :styles.date_input}
+                                minDate={this.state.startDate}
+                                maxDate={this.state.endDate}
+                            />
+                        </div>
+                        <ReactTooltip place="top" type={endDateError || startDateError || shareIdError ? "error" : "dark" } effect="solid"/>
+                
+
+                
+                        <div className={styles.date_picker_container}>
+                            <span>Investment Amount(Rs.):</span>
+                            <input 
+                                type="number" 
+                                name="amount"
+                                className={ investmentAmountError ? styles.input_error : styles.input}
+                                required={true}
+                                onChange={this.handleChangeAmount}
+                                placeholder="0.00"
+                                />
+                        </div>
+                        <div 
+                            className={styles.date_picker_container}
+                            data-tip={shareIdError ? `Please select a share` : ""}
+                        >
+                            <span>Share:</span>
+                            <select 
+                                className={shareIdError ? styles.price_select_error :styles.price_select} 
+                                onChange={this.handleSelectShare}
+                            >
+                                <option value="">-Select a share-</option>
+                                {this.state.company.map(value => {
+                                    return(
+                                        <option 
+                                            key={value.shareId}
+                                            value={value.shareId}
+                                        >
+                                        {value.shareName}
+                                        </option>
+                                    );
+                                })}
+                            </select>
+                        </div>
+                        <div className={styles.button_container}>
+                        <button 
+                            type="submit"
+                            className={styles.button}
+                            onClick={this.handleCalculateExpectedReturn}
+                        >
+                        Calculate
+                        </button>
+                        <button 
+                            className={styles.button}
+                            onClick={this.handleCalculateExpectedReturnOfAllShares}
+                        >
+                        Compare
+                        </button>
+                        {
+                            (expectedReturn === null && this.state.isLoading === true) && <ReactLoading type={'spin'} color={'#006AFF'} height={'5%'} width={'5%'} />
+                            
+                        }
+                        {
+                            (expectedReturn !== null && this.state.isLoading !== true)   && 
+                            (<div className={styles.expectedReturn_container}>
+                                <span className={styles.expected_result}>Expected Return(Rs.):</span> 
+                                <span className={styles.result}>{this.state.expectedReturn}</span>
+                            </div>)
+                        }
+                        
+                    </div>
+                    <div className={styles.company_list_container}>
+                        <span className={styles.span_header}>Select companies to compare</span>
+                        <select 
+                            multiple={true} 
+                            name="companyList" 
+                            className={styles.company_select}
+                            onChange={this.onChangeHandler}
+                        >
+                            {this.state.expectedReturnOfShares.map((company, index) => {
+                                return (
+                                <option 
+                                    key={index}
+                                    value={index}
+                                    className={styles.option_company_name}
+                                >
+                                    {company.share}
+                                </option>
+                                )
                             })}
                         </select>
+
                     </div>
                     
                 </div>
-                
-                <div className={styles.button_container}>
-                    <button 
-                        type="submit"
-                        className={styles.button}
-                        onClick={this.handleCalculateExpectedReturn}
-                    >
-                    Calculate
-                    </button>
-                    <button 
-                        className={styles.button}
-                        onClick={this.handleCalculateExpectedReturnOfAllShares}
-                    >
-                    Compare
-                    </button>
-                    {
-                        (expectedReturn === null && this.state.isLoading === true) && <ReactLoading type={'spin'} color={'#006AFF'} height={'5%'} width={'5%'} />
-                        
-                    }
-                    {
-                        (expectedReturn !== null && this.state.isLoading !== true)   && (<div className={styles.expectedReturn_container}>
-                            Expected Return(Rs.): {this.state.expectedReturn}
-                        </div>)
-                    }
-                    
-                </div>
-                <ListOfExpectedReturn expectedReturnData={this.state.expectedReturnOfShares} isLoading={this.state.isLoading02}/>
+               
+                <ListOfExpectedReturn 
+                    expectedReturnData={this.state.expectedReturnOfShares} 
+                    isLoading={this.state.isLoading02}
+                    company={this.state.companyList}
+                />
+
                 {this.state.openErrorModal &&
                     <ErrorMessageModal 
                         closeModal={this.handleCloseErrorModal}

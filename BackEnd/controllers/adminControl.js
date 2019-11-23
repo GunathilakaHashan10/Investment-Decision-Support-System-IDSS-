@@ -3,6 +3,7 @@ const LandAds = require('../models/LandAds/LandAds');
 const HomeAds = require('../models/HomeAds/HomeAds');
 const User = require('../models/auth/User');
 const Bank = require('../models/bank/bank');
+const LPI = require('../models/LPI/LPI');
 const { timeParse} = require('d3-time-format');
 
 const parseDate = timeParse("%Y-%m-%d");
@@ -482,6 +483,33 @@ exports.deleteUser = (req, res, next) => {
             return res.status(200).json({message: "success"})
         })
         .catch(error => {
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            return next(error);
+        })
+}
+
+/**Land LPI endpoints */
+exports.postAddLPI = (req, res, next) => {
+    const district = req.body.district;
+    const year = req.body.year;
+    const LPI_1 = req.body.LPI_1;
+    const LPI_2 = req.body.LPI_2;
+
+    const newLPI = new LPI({
+        district: district,
+        year: year,
+        LPI_1: LPI_1,
+        LPI_2: LPI_2
+    })
+
+    newLPI
+        .save()
+        .then(() => {
+            return  res.json({success: true, message:`LPI added to Distrct: ${district} for ${year}`})
+        })
+        .catch((error) => {
             if (!error.statusCode) {
                 error.statusCode = 500;
             }

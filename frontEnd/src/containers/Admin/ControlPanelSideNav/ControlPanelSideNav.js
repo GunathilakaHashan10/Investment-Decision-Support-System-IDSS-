@@ -3,6 +3,7 @@ import { IoMdArrowDropright, IoMdArrowDropleft} from 'react-icons/io';
 import styles from '../../../assets/css/Admin/ControlPanelSideNav/ControlPanelSideNav.css';
 import AddNewShareModal from '../AdminStocks/AdminStocksModals/AddNewShareModal/AddNewShareModal';
 import AddNewBankModal from '../AdminBank/AdminBankModals/AddNewBankModal/AddNewBankModal';
+import AddNewLandLPImodal from '../AdminRealEstate/AddNewLandLPImodal/AddNewLandLPImodal';
 
 class ControlPanelSideNav extends Component {
     state = {
@@ -11,7 +12,8 @@ class ControlPanelSideNav extends Component {
         isOpenBank: false,
         isOpenUsers: false,
         isOpenAddNewShareModal: false,
-        isOpenAddNewBankModal: false
+        isOpenAddNewBankModal: false,
+        isOpenAddNewLandLPImodal: false
     }
 
     
@@ -38,6 +40,7 @@ class ControlPanelSideNav extends Component {
         this.setState({
             isOpenAddNewShareModal: true,
             isOpenStocks: false,
+            isOpenAddNewLandLPImodal: false
         });
         this.handleCloseAllDropUp();
         this.props.history.push(`${this.props.match.url}/stock-control`);
@@ -47,10 +50,28 @@ class ControlPanelSideNav extends Component {
         this.setState({
             isOpenAddNewBankModal: true,
             isOpenStocks: false,
-            isOpenAddNewShareModal: false
+            isOpenAddNewShareModal: false,
+            isOpenAddNewLandLPImodal: false,
         })
         this.handleCloseAllDropUp();
         this.props.history.push(`${this.props.match.url}/bank-control`);
+    }
+
+    handleOpenAddNewLandLPImodal = () => {
+        this.setState({
+            isOpenAddNewLandLPImodal: true,
+            isOpenAddNewBankModal: false,
+            isOpenStocks: false,
+            isOpenAddNewShareModal: false
+        })
+        this.handleCloseAllDropUp();
+        this.props.history.push(`${this.props.match.url}/realEsate-control`);
+    }
+
+    handleCloseAddNewLPImodal = () => {
+        this.setState({
+            isOpenAddNewLandLPImodal: false
+        })
     }
 
     handleCloseAddNewBankModal = () => {
@@ -102,7 +123,7 @@ class ControlPanelSideNav extends Component {
     }
 
      render() {
-        const {isOpenAddNewShareModal, isOpenAddNewBankModal} = this.state;
+        const {isOpenAddNewShareModal, isOpenAddNewBankModal, isOpenAddNewLandLPImodal} = this.state;
         let path = window.location.pathname.split('/');
         let extractedPath = path[path.length - 1];
         
@@ -149,7 +170,13 @@ class ControlPanelSideNav extends Component {
                             id="realEsate-control"
                             onClick={this.handleNavigation}
                         >
-                        Advertisers
+                            Advertisers
+                        </button>
+                        <button
+                            className={styles.dropSide_button}
+                            onClick={this.handleOpenAddNewLandLPImodal}
+                        >
+                            Add Land LPI
                         </button>
                     </div>
                 </div>
@@ -207,6 +234,11 @@ class ControlPanelSideNav extends Component {
                 {isOpenAddNewBankModal && 
                     <AddNewBankModal 
                         closeModal={this.handleCloseAddNewBankModal}
+                    />
+                }
+                {isOpenAddNewLandLPImodal &&
+                    <AddNewLandLPImodal 
+                        closeModal={this.handleCloseAddNewLPImodal}
                     />
                 }
             </div>

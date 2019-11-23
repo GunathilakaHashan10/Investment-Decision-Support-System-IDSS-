@@ -1,9 +1,23 @@
 import React, { Component } from 'react';
 import {IoIosJournal, IoIosPhotos, IoMdSearch} from 'react-icons/io';
 import styles from '../../../assets/css/RealEstate/HomePage/HomePage.css';
+import LandPriceForecastingModal from '../LandPriceForecastingModal/LandPriceForecastingModal';
 
 
 class HomePageRealEstate extends Component {
+    state = {
+        isOpenLandPriceForecastingModal: false
+    }
+
+    LandPriceForecastingModalOpenHandler = () => {
+        this.setState({ isOpenLandPriceForecastingModal: true})
+    }
+
+
+    LandPriceForecastingModalCloseHandler = () => {
+        this.setState({ isOpenLandPriceForecastingModal: false})
+    }
+
     render() {
         return(
             <div className={styles.container}>
@@ -51,16 +65,16 @@ class HomePageRealEstate extends Component {
                             <IoMdSearch size="10em" color="white" className={styles.logo_image}/>
                         </div>
                         <div className={styles.header_contanier}>
-                            <h2>Find a property</h2>
+                            <h2>Calculate future value of your land</h2>
                         </div>
                         <div className={styles.description_container}>
-                            Find a good property to invest your money
+                            Land Price Forecasting Model (Colombo District)
                         </div>
                         <button 
                             className={styles.card_button}
-                            onClick={() => {this.props.history.push(`${this.props.match.url}/homes-sell`)}}
+                            onClick={this.LandPriceForecastingModalOpenHandler}
                         >
-                        See homes
+                            Calculate
                         </button>
                     
                     </div>
@@ -68,6 +82,11 @@ class HomePageRealEstate extends Component {
                 </div>
                     </div>
                 </main>
+                {this.state.isOpenLandPriceForecastingModal &&
+                    <LandPriceForecastingModal 
+                        closeModal={this.LandPriceForecastingModalCloseHandler}
+                    />
+                }
             </div>
         );
     }

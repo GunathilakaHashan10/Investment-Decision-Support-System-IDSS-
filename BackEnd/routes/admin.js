@@ -35,4 +35,6 @@ router.get('/get-all-users', adminController.getAllUsers);
 
 router.post('/delete-user', adminController.deleteUser);
 
+router.post('/add-new-LPI' , adminController.postAddLPI);
+
 module.exports  = router;
