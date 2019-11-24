@@ -42,14 +42,28 @@ class BankAbsoulteReturnCalculator extends Component {
     selectBankHandler = (e) => {
         const selectedBank = e.target.value;
         this.setState(() => ({
-            selectedBank
+            selectedBank,
+            formErrors: {
+                invesmentAmount: "",
+                durationTime: "",
+                selectedBank: "",
+                selectedTerm: ""
+            },
+            isFormErrors: false
         }))
     }
 
     investAmountHandler = (e) => {
         const  investAmount = e.target.value;
         this.setState(() => ({
-            investAmount
+            investAmount,
+            formErrors: {
+                invesmentAmount: "",
+                durationTime: "",
+                selectedBank: "",
+                selectedTerm: ""
+            },
+            isFormErrors: false
         }))
     }
 
@@ -68,14 +82,21 @@ class BankAbsoulteReturnCalculator extends Component {
             durationTime: Math.round(durationTime)*12,
             formErrors,
             isFormErrors,
-            selectedTermDisbaled: false
+            selectedTermDisbaled: false,
         }))
     }
 
     selectedTermHandler = (e) => {
         const selectedTerm = e.target.value
             this.setState(() => ({
-                selectedTerm
+                selectedTerm,
+                formErrors: {
+                    invesmentAmount: "",
+                    durationTime: "",
+                    selectedBank: "",
+                    selectedTerm: ""
+                },
+                isFormErrors: false
             }))
         }
 
@@ -117,7 +138,6 @@ class BankAbsoulteReturnCalculator extends Component {
             formErrors.selectedTerm = "Term is required"
             isFormErrors= true
         } else {
-         
             formErrors.selectedTerm = ""
             isFormErrors= false
         }
@@ -129,7 +149,7 @@ class BankAbsoulteReturnCalculator extends Component {
             isFormErrors= false
         }
 
-        if(!isFormErrors){
+        if(!(isFormErrors || formErrors.invesmentAmount || formErrors.durationTime || formErrors.selectedBank ||formErrors.selectedTerm)){
             const formData = new FormData()
             formData.append('bankId', selectedBank)
             formData.append('Term', selectedTerm)
@@ -152,9 +172,10 @@ class BankAbsoulteReturnCalculator extends Component {
                 // })
             })
         } else {
+            console.log(formErrors)
             this.setState(() => ({
                 formErrors,
-                isFormErrors
+                isFormErrors: true
             }))
         }
         

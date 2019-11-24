@@ -28,7 +28,7 @@ class BankCard extends Component {
     }
 
     calculateHandler = (e) => {
-        const { selectBankId, selectTerm} = this.state
+        const { selectBankId, selectTerm } = this.state
         if(selectBankId && selectTerm) {
             this.setState(() => ({
                 error: ''
