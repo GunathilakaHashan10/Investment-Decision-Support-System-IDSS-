@@ -209,6 +209,14 @@
     margin-left: 60%;
 }
 
+.input_error {
+    height: 33px;
+    padding: 0.5rem 1rem;
+    border: 1px solid red;
+    width: 60%;
+    background-color: rgba(255, 0, 0, 0.192);
+}
+
 /***Date picker ****/
 .date_input {
     padding: 0.5rem 1rem;

@@ -80,6 +80,10 @@
     margin-right: 0.5rem;
 }
 
+.button_hide {
+    display: none;
+}
+
 .button:focus {
     outline: none;
 }
@@ -131,4 +135,15 @@
 
 .option_company_name:hover {
     background-color: rgba(0, 106, 255, 0.116);
+}
+
+
+/*** formErrors ***/
+.form_errors {
+    width: 100%;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 0.7rem;
+    color: red;
+    /* margin-left: 70%; */
 }

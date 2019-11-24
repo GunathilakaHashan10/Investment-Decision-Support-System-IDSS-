@@ -61,6 +61,7 @@
     list-style: none;
     height: 100%;
     margin: 2rem;
+   
 }
 
 .main_nav_list_item_admin {
@@ -96,6 +97,7 @@
     font-family: 'ABeeZee', sans-serif;
     font-size: 1rem;
     color: #3b3b3b;
+    width: auto;
 }
 
 .main_nav_dropdown_button:focus {
@@ -229,4 +231,15 @@
 
 .nav_button:hover {
     color: #006AFF;
+}
+
+/***Mobile Responsive ***/
+@media (max-width: 1000px) {
+    .main_nav_dropdown_button {
+        font-size: 0.8rem;
+    }
+
+    .main_nav_logo > button {
+        font-size: 1rem;
+    }
 }

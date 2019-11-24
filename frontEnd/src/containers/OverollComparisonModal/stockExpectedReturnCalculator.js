@@ -300,7 +300,7 @@ class StockExpectedReturnCalculator extends Component {
                     <input 
                         type="number" 
                         name="amount"
-                        className={modalStyles.input_data}
+                        className={ investmentAmountError ? modalStyles.input_error : modalStyles.input_data}
                         required={true}
                         onChange={this.handleChangeAmount}
                         placeholder="0.00"

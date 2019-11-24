@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { IoIosCloseCircleOutline, IoIosAddCircleOutline } from 'react-icons/io';
+import { IoIosCloseCircleOutline} from 'react-icons/io';
 import modalStyles from '../../assets/css/OverollComparisonModal/OverollComparisonModal.css';
 import LandPriceForecasting from './LandPriceForecasting';
 import StockExpectedReturnCalculator from './stockExpectedReturnCalculator';
+import BankAbsoulteReturnCalculator from './BankAbsoulteReturnCalculator';
 
 class OverollComparisonModal extends Component {
     render() {
@@ -14,14 +15,7 @@ class OverollComparisonModal extends Component {
                        
                         <StockExpectedReturnCalculator />
                         <LandPriceForecasting />
-                       
-
-                        <div className={modalStyles.calculator_container}>
-                            <h3 className={modalStyles.sub_header}>Absolue Return - Fixed deposit</h3>
-
-                        </div>
-
-
+                        <BankAbsoulteReturnCalculator />
 
                     </div>
                     <button 

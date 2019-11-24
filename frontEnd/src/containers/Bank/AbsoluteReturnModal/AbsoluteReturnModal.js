@@ -224,7 +224,7 @@ class AbsoluteReturnModal extends Component {
                                 datasets : this.state.datasets
                             }}
                             width={600}
-                            height={250}
+                            height={220}
                             options={this.options}
                         />
                     </div>

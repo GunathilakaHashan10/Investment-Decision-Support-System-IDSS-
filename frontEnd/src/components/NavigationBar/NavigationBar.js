@@ -300,6 +300,3 @@ class  NavigationBar extends Component {
 
 export default NavigationBar;
 
-{/* <li className={localStorage.getItem('RDACTP') === '2485693124578965412478933254895464123648' ? styles.main_nav_list_item_admin :styles.main_nav_list_item}>
-                            <button className={localStorage.getItem('RDACTP') === '2485693124578965412478933254895464123648' ? styles.nav_button : styles.nav_button_admin}>Help</button>
-                        </li> */}

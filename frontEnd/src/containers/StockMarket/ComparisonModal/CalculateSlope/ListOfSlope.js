@@ -9,8 +9,7 @@ class ListOfSlope extends Component {
 
 
     componentWillReceiveProps(props) {
-        console.log(props.company.length)
-        console.log(props.slopeData)
+      
         if(props.company.length === 0) {
             this.setState({comapanyList: props.slopeData})
         } else {

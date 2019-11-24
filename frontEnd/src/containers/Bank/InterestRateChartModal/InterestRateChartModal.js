@@ -107,6 +107,7 @@ class InterestRateChartModal extends Component {
 
 
     render() {
+        console.table(this.state.datasets)
         return(
             <div className={modalStyles.modal}>
                 <div className={modalStyles.modal_container}>

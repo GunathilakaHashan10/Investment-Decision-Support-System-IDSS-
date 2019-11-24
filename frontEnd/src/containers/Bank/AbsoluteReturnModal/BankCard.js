@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { IoIosCloseCircleOutline, IoIosAddCircleOutline } from 'react-icons/io';
+import { IoIosCloseCircleOutline } from 'react-icons/io';
 import modalStyles from '../../../assets/css/Bank/AbsoluteReturnModal/AbsoluteReturnModal.css';
 import * as myConstants from '../../Utils/Constants/Constants';
 import axios from 'axios';
@@ -41,7 +41,7 @@ class BankCard extends Component {
 
         axios.post(`${myConstants.SEVER_URL}/get-absolute-return-chart`, formData)
             .then(response => {
-                const { chartData, totalAmount, totalInterest, bankName } = response.data.payload
+                const { chartData, totalInterest, bankName } = response.data.payload
                 this.setState(() => ({
                     totalInterest
                 }))
@@ -108,16 +108,21 @@ class BankCard extends Component {
                             {!(this.props.depositTime%60)  && <option value={'60 annualy'}>Five Years - Annualy</option>}
                             {!(this.props.depositTime%60)  && <option value={'60 maturity'}>Five Years - Maturity</option>}
                      </select>
+                     
                 </div>
-                {
-                    this.state.totalInterest && <div>Total Interest : {this.state.totalInterest.toFixed(2)}</div>    
-                }
+                { this.state.error && <span className={modalStyles.form_errors_bank_card}>{this.state.error}</span> }
                 <button
                     onClick={this.calculateHandler}
+                    className={modalStyles.bank_card_button}
                 >
                     Calculate
                 </button>
-                { this.state.error && <span className={modalStyles.form_errors}>{this.state.error}</span> }
+                {
+                    this.state.totalInterest &&
+                         <div className={modalStyles.total_interest}>Total Interest : {this.state.totalInterest.toFixed(2)}</div>    
+                }
+                
+                
                 <button
                     onClick={() => this.props.handleDeletBankCard(this.props.bankCardId)}
                     className={modalStyles.bank_card_remove_button}

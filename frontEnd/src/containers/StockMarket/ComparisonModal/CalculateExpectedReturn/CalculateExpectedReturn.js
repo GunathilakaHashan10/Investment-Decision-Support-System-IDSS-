@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker-cssmodules.css";
 import styles from '../../../../assets/css/StockMarket/CalculateExpectedReturn/CalculateExpectedReturn.css';
 import ListOfExpectedReturn from '../CalculateExpectedReturn/ListOfExpectedReturn';
 import ErrorMessageModal from '../../../Utils/ErrorMessageModal/ErrorMessageModal';
+import ExpectedReturnCompareModal from './ExpectedReturnCompareModal';
 
 
 class CalculateExpectedReturn extends Component {
@@ -29,9 +30,29 @@ class CalculateExpectedReturn extends Component {
         isLoading02: false,
         error: null,
         openErrorModal: false,
-        companyList: []
+        companyList: [],
+        isOpenExpectedReturnCompareModal: false,
+        companySelectedError: ""
         
     }
+
+    expectedReturnCompareModalOpenHandler = () => {
+        if (this.state.companyList.length < 5) {
+            this.setState({companySelectedError: "Minimum 5 companies allowed to compare in graph"})
+        } else if (this.state.companyList.length <= 10) {
+            this.setState({isOpenExpectedReturnCompareModal: true, companySelectedError: ""})
+        } else {
+            this.setState({companySelectedError: "Maximum 10 companies allowed to compare in graph"})
+        }
+
+        
+        
+    }
+
+    expectedReturnCompareModalCloseHandler = () => {
+        this.setState({isOpenExpectedReturnCompareModal: false})
+    }
+
 
     handleCloseErrorModal = () => {
         this.setState({openErrorModal:false});
@@ -47,7 +68,7 @@ class CalculateExpectedReturn extends Component {
             
         }
         
-        this.setState({companyList: value})
+        this.setState({companyList: value, companySelectedError: ""})
        
     }
 
@@ -344,6 +365,12 @@ class CalculateExpectedReturn extends Component {
                         >
                         Compare
                         </button>
+                        <button 
+                            className={this.state.expectedReturnOfShares.length !== 0 ? styles.button : styles.button_hide} 
+                            onClick={this.expectedReturnCompareModalOpenHandler}
+                        >
+                            Graph
+                        </button>
                         {
                             (expectedReturn === null && this.state.isLoading === true) && <ReactLoading type={'spin'} color={'#006AFF'} height={'5%'} width={'5%'} />
                             
@@ -358,6 +385,7 @@ class CalculateExpectedReturn extends Component {
                         
                     </div>
                     <div className={styles.company_list_container}>
+                    {this.state.companySelectedError.length > 0 && <span className={styles.form_errors}>{this.state.companySelectedError}</span>}
                         <span className={styles.span_header}>Select companies to compare</span>
                         <select 
                             multiple={true} 
@@ -394,6 +422,14 @@ class CalculateExpectedReturn extends Component {
                         error={this.state.error}
                     />
                 } 
+                {this.state.isOpenExpectedReturnCompareModal &&
+                    <ExpectedReturnCompareModal 
+                        closeModal={this.expectedReturnCompareModalCloseHandler}
+                        company={this.state.companyList}
+                        expectedReturnData={this.state.expectedReturnOfShares} 
+                    />
+                    
+                }
             </div>
         );
     }

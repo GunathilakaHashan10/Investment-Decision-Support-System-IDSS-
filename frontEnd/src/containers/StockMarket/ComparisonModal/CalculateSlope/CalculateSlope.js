@@ -7,17 +7,39 @@ import * as myConstants from '../../../Utils/Constants/Constants';
 import ListOfSlope from './ListOfSlope';
 import styles from '../../../../assets/css/StockMarket/CalculateSlope/CalculateSlope.css';
 import ErrorMessageModal from '../../../Utils/ErrorMessageModal/ErrorMessageModal';
+import SlopeCompareGraphModal from './SlopeCompareGraphModal';
 
 class CalculateSlope extends Component {
     state = {
     startDate: null,
     endDate: null,
+    startDateFixed: null,
+    endDateFixed: null,
     priceType: null,
     slopeData: [],
     isLoading: false,
     error: null,
     openErrorModal: false,
-    company: []
+    company: [],
+    isOpenSlopeCompareGraphModal: false,
+    companySelectedError: ""
+    }
+
+    slopeCompareGraphModalOpenHandler = () => {
+        if (this.state.company.length < 5) {
+            this.setState({companySelectedError: "Minimum 5 companies allowed to compare in graph"})
+        } else if (this.state.company.length <= 10) {
+            this.setState({isOpenSlopeCompareGraphModal: true, companySelectedError: ""})
+        } else {
+            this.setState({companySelectedError: "Maximum 10 companies allowed to compare in graph"})
+        }
+
+        
+        
+    }
+
+    slopeCompareGraphModalCloseHandler = () => {
+        this.setState({isOpenSlopeCompareGraphModal: false})
     }
 
     handleCloseErrorModal = () => {
@@ -53,7 +75,7 @@ class CalculateSlope extends Component {
             
         }
         
-        this.setState({company: value})
+        this.setState({company: value, companySelectedError: ""})
        
     }
 
@@ -64,7 +86,9 @@ class CalculateSlope extends Component {
             .then(response => {
                 this.setState({
                     startDate: new Date(response.data.startDate),
-                    endDate: new Date(response.data.endDate)
+                    endDate: new Date(response.data.endDate),
+                    startDateFixed: new Date(response.data.startDate),
+                    endDateFixed: new Date(response.data.endDate)
                 })
             })
             .catch(error => {
@@ -122,8 +146,8 @@ class CalculateSlope extends Component {
                             selected={this.state.startDate}
                             onChange={this.handleStartDateChange}
                             className={styles.date_input}
-                            minDate={this.state.startDate}
-                            maxDate={this.state.endDate}
+                            minDate={this.state.startDateFixed}
+                            maxDate={this.state.endDateFixed}
                         />
                     </div>
                     <div 
@@ -135,8 +159,8 @@ class CalculateSlope extends Component {
                             selected={this.state.endDate}
                             onChange={this.handleEndDateChange}
                             className={styles.date_input}
-                            minDate={this.state.startDate}
-                            maxDate={this.state.endDate}
+                            minDate={this.state.startDateFixed}
+                            maxDate={this.state.endDateFixed}
                         />
                     </div>
                     <ReactTooltip place="top" type="dark" effect="solid"/>
@@ -155,9 +179,14 @@ class CalculateSlope extends Component {
                             className={styles.button} 
                             onClick={this.handleSubmit}
                         >Calculate</button>
+                         <button 
+                            className={this.state.slopeData.length !== 0 ? styles.button : styles.button_hide} 
+                            onClick={this.slopeCompareGraphModalOpenHandler}
+                        >Graph</button>
                     </div>
                 </div>
                 <div className={styles.company_list_container}>
+                    {this.state.companySelectedError.length > 0 && <span className={styles.form_errors}>{this.state.companySelectedError}</span>}
                     <span className={styles.span_header}>Select companies to compare</span>
                     <select 
                         multiple={true} 
@@ -192,7 +221,17 @@ class CalculateSlope extends Component {
                         error={this.state.error}
                     />
                 } 
+                 {this.state.isOpenSlopeCompareGraphModal &&
+                    <SlopeCompareGraphModal 
+                        closeModal={this.slopeCompareGraphModalCloseHandler}
+                        company={this.state.company}
+                        slopeData={this.state.slopeData}
+                    />
+                }
+
             </div>
+
+        
         );
     }
 }
