@@ -60,6 +60,12 @@ class ComparisonContainer extends Component {
         this.setState(() => ({
             time
         }))
+        setTimeout(() => {
+            const sortType = document.getElementById('sort-selector').value
+            this.setState(() => ({
+                sortType
+            }))
+        },0)
     }
 
     inputCheckBoxHandler = (e) => {

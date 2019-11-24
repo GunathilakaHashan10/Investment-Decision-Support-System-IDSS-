@@ -23,6 +23,7 @@ const InputArea = (props) => {
             <div className={styles.input_container}>
             <span>Sort: </span>
             <select
+                id="sort-selector"
                 onChange={props.inputSortHandler}
                 className={styles.select_box}
             >
