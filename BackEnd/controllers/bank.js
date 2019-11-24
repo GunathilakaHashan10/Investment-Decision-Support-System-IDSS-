@@ -1,9 +1,5 @@
 const Bank = require('../models/bank/bank')
 
-const interestRateCalculator = (amount , interestRate) => {
-    return amount * interestRate / (12 * 100)
-}
-
 exports.postAddBank = (request, response, next) => {
     
     const bankName = request.body.bankName;
@@ -111,7 +107,6 @@ exports.postGetSpecificBankInterestRates = (request, response, next) => {
 exports.postGetBankComparison = (request, response, next) => {
     const time = parseInt(request.body.time,10);
     const sortType = request.body.sortType;
-    const amount = request.body.amount;
 
     const payload = []
 
@@ -132,10 +127,6 @@ exports.postGetBankComparison = (request, response, next) => {
                     interestRate = interestRateObj.annualy
                 }else if (sortType === 'maturity') {
                     interestRate = interestRateObj.maturity
-                }
-
-                if(amount){
-                    interestRate = interestRateCalculator(amount,interestRate);
                 }
 
                 payload.push({
@@ -198,7 +189,7 @@ exports.postGetAbsoluteReturnChatValues = (request, response, next) => {
                     totalAmount += interest;
                     chartData.push({
                         x: i,
-                        y: totalInterest
+                        y: totalInterest.toFixed(2)
                     })
                 }
             } else if (Term[1] === 'annualy') {
@@ -209,7 +200,7 @@ exports.postGetAbsoluteReturnChatValues = (request, response, next) => {
                     totalAmount += interest;
                     chartData.push({
                         x: i*12,
-                        y: totalInterest
+                        y: totalInterest.toFixed(2)
                     })
                 }
             } else if (Term[1] === 'maturity') {
@@ -220,7 +211,7 @@ exports.postGetAbsoluteReturnChatValues = (request, response, next) => {
                     totalAmount += interest; 
                     chartData.push({
                         x: i*Term[0],
-                        y: totalInterest
+                        y: totalInterest.toFixed(2)
                     })
                 }
             }
